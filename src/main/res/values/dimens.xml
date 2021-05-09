@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--    &lt;!&ndash;    main page start&ndash;&gt;-->
+    <!--    <dimen name="icon_size_of_year_or_month">24dp</dimen>-->
+    <!--&lt;!&ndash;    <dimen name="icon_size_of_on_back">32dp</dimen>&ndash;&gt;-->
+    <!--    <dimen name="icon_size_of_on_back">64px</dimen>-->
+    <!--    <dimen name="space_of_icon_of_year_with_month">5dp</dimen>-->
+
+    <!--&lt;!&ndash;    <dimen name="font_size_of_title">30sp</dimen>&ndash;&gt;-->
+    <!--    <dimen name="font_size_of_title">60px</dimen>-->
+
+    <!--    &lt;!&ndash;    按钮大小 今天&ndash;&gt;-->
+    <!--    <dimen name="height_of_button">30dp</dimen>-->
+    <!--    <dimen name="width_of_button">90dp</dimen>-->
+    <!--    <dimen name="radius_of_button">5dp</dimen>-->
+    <!--    <dimen name="font_size_of_button_today">14sp</dimen>-->
+
+    <!--    &lt;!&ndash;    右侧日程列表&ndash;&gt;-->
+    <!--    <dimen name="line_width_of_left">4dp</dimen>-->
+    <!--    <dimen name="font_size_day_of_list">18sp</dimen>-->
+    <!--    <dimen name="vertical_line_margin_left">107dp</dimen>-->
+    <!--    <dimen name="margin_top_of_start_time">20dp</dimen>-->
+    <!--    <dimen name="margin_end_of_start_time">7dp</dimen>-->
+    <!--    <dimen name="margin_top_of_end_time">12dp</dimen>-->
+    <!--    <dimen name="margin_on_vertical_of_full_day">35dp</dimen>-->
+    <!--    &lt;!&ndash;    main page end&ndash;&gt;-->
+
+    <!--    &lt;!&ndash;    list page start&ndash;&gt;-->
+    <!--    <dimen name="width_of_btn_of_clear_all">100dp</dimen>-->
+    <!--    <dimen name="height_of_btn_that_on_right_top">32dp</dimen>-->
+    <!--    <dimen name="radius_of_btn_of_clear_all">16dp</dimen>-->
+    <!--    <dimen name="font_size_of_button_clear_all">18sp</dimen>-->
+
+    <!--    &lt;!&ndash;    adapter_item&ndash;&gt;-->
+    <!--    <dimen name="font_size_of_title_on_item">20sp</dimen>-->
+    <!--    <dimen name="padding_on_vertical_for_item_of_page">16dp</dimen>-->
+    <!--    <dimen name="font_size_of_time_on_item">14sp</dimen>-->
+    <!--    <dimen name="margin_top_of_time_on_item">9dp</dimen>-->
+    <!--    <dimen name="icon_size_of_delete_for_item">24dp</dimen>-->
+    <!--    <dimen name="dp_span_frequency">15dp</dimen>-->
+    <!--    <dimen name="space_time_and_date">15dp</dimen>-->
+    <!--    &lt;!&ndash;    list page end&ndash;&gt;-->
+
+    <!--    &lt;!&ndash;    form page start&ndash;&gt;-->
+    <!--    <dimen name="width_of_btn_of_save">80dp</dimen>-->
+    <!--    <dimen name="font_size_form_left">20sp</dimen>-->
+    <!--    <dimen name="font_size_detail_key">20sp</dimen>-->
+    <!--    <dimen name="margin_end_for_form_left">15dp</dimen>-->
+    <!--    &lt;!&ndash;    form page end&ndash;&gt;-->
+
+
+    <!--    &lt;!&ndash;    下划线高度&ndash;&gt;-->
+    <!--    <dimen name="space_line_height">1dp</dimen>-->
+
+    <!--    &lt;!&ndash;    font size start&ndash;&gt;-->
+    <!--    <dimen name="font_size_of_title_of_calendar">16sp</dimen>-->
+    <!--    &lt;!&ndash;    font size end&ndash;&gt;-->
+
+    <!--    main page start-->
+    <dimen name="icon_size_of_year_or_month">48px</dimen>
+    <dimen name="icon_size_of_on_back">64px</dimen>
+    <dimen name="space_of_icon_of_year_with_month">10px</dimen>
+
+    <dimen name="font_size_of_title">60px</dimen>
+
+    <!--    按钮大小 今天-->
+    <dimen name="height_of_button">60px</dimen>
+    <dimen name="width_of_button">180px</dimen>
+    <dimen name="radius_of_button">10px</dimen>
+    <dimen name="font_size_of_button_today">28px</dimen>
+
+    <!--    右侧日程列表-->
+    <dimen name="line_width_of_left">8px</dimen>
+    <dimen name="font_size_day_of_list">36px</dimen>
+    <dimen name="vertical_line_margin_left">214px</dimen>
+    <dimen name="margin_top_of_start_time">40px</dimen>
+    <dimen name="margin_end_of_start_time">14px</dimen>
+    <dimen name="margin_top_of_end_time">24px</dimen>
+    <dimen name="margin_on_vertical_of_full_day">70px</dimen>
+    <dimen name="list_of_day_schedule_item_radius">58px</dimen>
+    <!--    main page end-->
+
+    <!--    list page start-->
+    <dimen name="width_of_btn_of_clear_all">225px</dimen>
+    <dimen name="height_of_btn_that_on_right_top">64px</dimen>
+    <dimen name="radius_of_btn_of_clear_all">32px</dimen>
+    <dimen name="font_size_of_button_clear_all">36px</dimen>
+
+    <!--    adapter_item-->
+    <dimen name="font_size_of_title_on_item">40px</dimen>
+    <dimen name="padding_on_vertical_for_item_of_page">32px</dimen>
+    <dimen name="font_size_of_time_on_item">28px</dimen>
+    <dimen name="margin_top_of_time_on_item">18px</dimen>
+    <dimen name="icon_size_of_delete_for_item">48px</dimen>
+    <dimen name="dp_span_frequency">30px</dimen>
+    <dimen name="space_time_and_date">30px</dimen>
+    <!--    list page end-->
+
+    <!--    form page start-->
+    <dimen name="width_of_btn_of_save">160px</dimen>
+    <dimen name="font_size_form_left">40px</dimen>
+    <dimen name="font_size_detail_key">40px</dimen>
+    <dimen name="margin_end_for_form_left">30px</dimen>
+    <!--    form page end-->
+
+
+    <!--    下划线高度-->
+    <dimen name="space_line_height">2px</dimen>
+
+    <!--    font size start-->
+    <dimen name="font_size_of_title_of_calendar">32px</dimen>
+    <!--    font size end-->
+
+    <!--    日历组件 start-->
+    <dimen name="font_size_of_solar_day">28px</dimen>
+    <dimen name="dot_size">6px</dimen>
+    <dimen name="dot_radius">3px</dimen>
+    <dimen name="selector_view_radius">16px</dimen>
+    <!--    日历组件 end-->
+
+    <!-- 新建/编辑日程 界面-->
+    <dimen name="height_of_head">100px</dimen>
+    <dimen name="margin_30_px">30px</dimen>
+    <dimen name="height_130_px">130px</dimen>
+    <dimen name="height_160_px">160px</dimen>
+    <dimen name="height_230_px">230px</dimen>
+    <dimen name="height_260_px">260px</dimen>
+    <dimen name="height_290_px">290px</dimen>
+    <dimen name="height_390_px">390px</dimen>
+    <dimen name="height_420_px">420px</dimen>
+    <dimen name="height_520_px">520px</dimen>
+    <dimen name="height_550_px">550px</dimen>
+    <dimen name="height_650_px">650px</dimen>
+    <dimen name="height_680_px">680px</dimen>
+    <dimen name="height_780_px">780px</dimen>
+    <dimen name="margin_183_px">183px</dimen>
+    <dimen name="margin_261_px">261px</dimen>
+    <dimen name="margin_529_px">529px</dimen>
+    <dimen name="margin_419_px">419px</dimen>
+
+    <dimen name="margin_499_px">499px</dimen>
+    <dimen name="margin_807_px">807px</dimen>
+    <dimen name="margin_693_px">693px</dimen>
+    <dimen name="margin_498_px">498px</dimen>
+</resources>

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/shape_of_main_bg"
+        tools:context=".modules.list.ListFragment">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_v1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.10" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_h1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.04" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_h2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.96" />
+
+        <ImageButton
+            android:id="@+id/ib_on_back"
+            android:layout_width="@dimen/icon_size_of_on_back"
+            android:layout_height="@dimen/icon_size_of_on_back"
+            android:background="@android:color/transparent"
+            android:src="@mipmap/ic_nav_back64"
+            android:scaleType="fitStart"
+            app:layout_constraintBottom_toTopOf="@+id/gl_v1"
+            app:layout_constraintLeft_toLeftOf="@+id/gl_h1"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/title_of_list"
+            android:textColor="@color/primary_of_font"
+            android:textSize="@dimen/font_size_of_title"
+            app:layout_constraintBottom_toTopOf="@+id/gl_v1"
+            app:layout_constraintLeft_toRightOf="@+id/gl_h1"
+            app:layout_constraintRight_toLeftOf="@+id/gl_h2"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/btn_clean_up"
+            android:layout_width="@dimen/width_of_btn_of_clear_all"
+            android:layout_height="@dimen/height_of_btn_that_on_right_top"
+            android:background="@drawable/default_shape_of_btn_of_clear_all"
+            android:padding="0dp"
+            android:text="@string/clear_all"
+            android:textColor="@color/primary_of_font"
+            android:textSize="@dimen/font_size_of_button_clear_all"
+            app:layout_constraintBottom_toTopOf="@+id/gl_v1"
+            app:layout_constraintRight_toLeftOf="@+id/gl_h2"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_list"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:scrollbars="vertical"
+            app:layoutManager="LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/gl_h1"
+            app:layout_constraintRight_toLeftOf="@+id/gl_h2"
+            app:layout_constraintTop_toBottomOf="@+id/gl_v1"
+            tools:listitem="@layout/adapter_schedule_all_of_item" />
+
+        <TextView
+            android:id="@+id/tv_not_schedule"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:text="@string/not_schedule"
+            android:textColor="@color/primary_of_font"
+            android:textSize="@dimen/font_size_day_of_list"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/gl_h1"
+            app:layout_constraintRight_toLeftOf="@+id/gl_h2"
+            app:layout_constraintTop_toBottomOf="@+id/gl_v1"
+            android:visibility="gone"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

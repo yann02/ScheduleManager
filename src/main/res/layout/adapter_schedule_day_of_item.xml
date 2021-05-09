@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="model"
+            type="com.shkj.cm.modules.main.entities.result.Body" />
+
+        <variable
+            name="position"
+            type="Integer" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/default_shape_of_item_bg_of_full_day"
+        android:paddingStart="0dp"
+        android:paddingEnd="15dp">
+
+        <TextView
+            android:layout_width="@dimen/line_width_of_left"
+            android:layout_height="0dp"
+            app:bindOnLineColorForDayScheduleItem="@{position}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_start_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_top_of_start_time"
+            android:layout_marginEnd="@dimen/margin_end_of_start_time"
+            android:textColor="@color/font_color_of_time_on_day"
+            android:textSize="@dimen/font_size_day_of_list"
+            android:visibility="@{model.dtag==2?View.GONE:View.VISIBLE}"
+            app:bindOnTimeForDayScheduleItem="@{model.startTime}"
+            app:layout_constraintRight_toLeftOf="@+id/tv_center_line"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="上午10:00" />
+
+        <TextView
+            android:id="@+id/tv_end_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_top_of_end_time"
+            android:layout_marginEnd="@dimen/margin_end_of_start_time"
+            android:layout_marginBottom="@dimen/margin_top_of_start_time"
+            android:textColor="@color/font_color_of_time_on_day"
+            android:textSize="@dimen/font_size_day_of_list"
+            android:visibility="@{model.dtag==2?View.GONE:View.VISIBLE}"
+            app:bindOnTimeForDayScheduleItem="@{model.endTime}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/tv_center_line"
+            app:layout_constraintTop_toBottomOf="@+id/tv_start_time"
+            tools:text="下午10:00" />
+
+        <TextView
+            android:id="@+id/tv_center_line"
+            android:layout_width="@dimen/space_line_height"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/vertical_line_margin_left"
+            android:layout_marginTop="19dp"
+            android:layout_marginBottom="19dp"
+            android:background="@color/under_line"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_full_day"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_on_vertical_of_full_day"
+            android:layout_marginEnd="@dimen/margin_end_of_start_time"
+            android:layout_marginBottom="@dimen/margin_on_vertical_of_full_day"
+            android:text="@string/all_of_day"
+            android:textColor="@color/font_color_of_time_on_day"
+            android:textSize="@dimen/font_size_day_of_list"
+            android:visibility="@{model.dtag==1?View.GONE:View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/tv_center_line"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_end_of_start_time"
+            android:maxLines="2"
+            android:text="@{model.title}"
+            android:textColor="@color/primary_of_font"
+            android:textSize="@dimen/font_size_day_of_list"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/tv_center_line"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="今天是个好日子今天是个好日子今天是个好日子" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

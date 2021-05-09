@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="customSpinnerStyle" parent="@style/Material.SpinnerStyle">
+        <item name="ms_background_selector">@android:color/transparent</item>
+        <item name="ms_text_color">@drawable/spinner_text_color</item>
+        <item name="ms_dropdown_bg">@drawable/shape_of_main_bg</item>
+        <item name="ms_hide_arrow">true</item>
+
+    </style>
+</resources>

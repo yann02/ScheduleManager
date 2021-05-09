@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ll_root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:orientation="vertical">
+
+    <com.dosmono.platecommon.widget.NamePlateStatusBar
+        android:id="@+id/namePlateStatusBar"
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        app:contentView="@+id/content_container"
+        app:leftMenuView="@+id/left_container"
+        app:rightMenuView="@+id/right_container">
+
+        <RelativeLayout
+            android:id="@+id/left_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical">
+
+            <RelativeLayout
+                android:id="@+id/rl_brightness_left_container"
+                android:layout_marginLeft="@dimen/dp30"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical">
+
+
+                <com.dosmono.platecommon.widget.NamePlateBrightnessSeekBar
+                    android:id="@+id/seekbar_brightness_left_container"
+                    style="@style/whiteboard_PenSize_SeekBar_Style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:ignore="MissingConstraints" />
+
+                <ImageView
+                    android:id="@+id/iv_brightness_left_container"
+                    android:layout_width="@dimen/dp48"
+                    android:layout_height="@dimen/dp48"
+                    android:layout_marginLeft="@dimen/dp15"
+                    android:scaleType="center"
+                    android:src="@mipmap/ic_brightness_nameplate" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_sound_left_container"
+                android:layout_toRightOf="@id/rl_brightness_left_container"
+                android:layout_marginLeft="@dimen/dp10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical">
+
+
+                <com.dosmono.platecommon.widget.NamePlateVoiceSeekBar
+                    android:id="@+id/seekbar_sound_left_container"
+                    style="@style/whiteboard_PenSize_SeekBar_Style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:progress="30"
+                    tools:ignore="MissingConstraints" />
+
+                <ImageView
+                    android:id="@+id/iv_sound_left_container"
+                    android:layout_width="@dimen/dp48"
+                    android:layout_height="@dimen/dp48"
+                    android:layout_marginLeft="@dimen/dp15"
+                    android:scaleType="center"
+                    android:src="@mipmap/ic_played_nameplate" />
+
+            </RelativeLayout>
+
+
+
+            <com.dosmono.platecommon.widget.NamePlateElectricityView
+                android:id="@+id/ll_electricity_left_container"
+                android:layout_width="@dimen/dp48"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/dp30"
+                android:layout_alignParentRight="true"/>
+
+            <com.dosmono.platecommon.widget.NamePlateBluetoothView
+                android:id="@+id/ll_bluetooth_left_container"
+                android:layout_width="@dimen/dp48"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/dp10"
+                android:layout_toLeftOf="@id/ll_electricity_left_container"/>
+
+            <com.dosmono.platecommon.widget.NamePlateWifiView
+                android:id="@+id/ll_wifi_left_container"
+                android:layout_width="@dimen/dp48"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/dp10"
+                android:layout_toLeftOf="@id/ll_bluetooth_left_container" />
+
+            <!--<LinearLayout
+                android:id="@+id/ll_electricity_left_container"
+                android:layout_marginRight="@dimen/dp30"
+                android:layout_width="@dimen/dp48"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/iv_electricity_left_container"
+                    android:layout_width="@dimen/dp48"
+                    android:layout_height="@dimen/dp48"
+                    android:background="@mipmap/ic_statusbar_battery2_1_nameplate"
+                    android:scaleType="center" />
+
+                <TextView
+                    android:id="@+id/tv_electricity_left_container"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp6"
+                    android:text="100%"
+                    android:textColor="@color/app_white"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_bluetooth_left_container"
+                android:layout_width="@dimen/dp48"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/dp10"
+                android:layout_toLeftOf="@id/ll_electricity_left_container"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/iv_bluetooth_left_container"
+                    android:layout_width="@dimen/dp48"
+                    android:layout_height="@dimen/dp48"
+                    android:background="@mipmap/ic_statusbar_bluetoot_n_nameplate"
+                    android:scaleType="center" />
+
+                <TextView
+                    android:id="@+id/tv_bluetooth_left_container"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp6"
+                    android:text="100%"
+                    android:textColor="@color/app_white"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:id="@+id/ll_wifi_left_container"
+                android:layout_width="@dimen/dp48"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/dp10"
+                android:layout_toLeftOf="@id/ll_bluetooth_left_container"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/iv_wifi_left_container"
+                    android:layout_width="@dimen/dp48"
+                    android:layout_height="@dimen/dp48"
+                    android:background="@mipmap/ic_statusbar_wifi_n_nameplate" />
+
+                <TextView
+                    android:id="@+id/tv_wifi_left_container"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp6"
+                    android:text="100%"
+                    android:textColor="@color/app_white"
+                    android:textSize="12sp" />
+
+            </LinearLayout>-->
+
+        </RelativeLayout>
+
+        <!--<RelativeLayout
+            android:id="@+id/content_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:id="@+id/iv_left_content"
+                android:layout_width="@dimen/dp48"
+                android:layout_height="@dimen/dp48"
+                android:background="@mipmap/ic_back96_nameplate" />
+
+
+            <ImageView
+                android:id="@+id/iv_home_page_content"
+                android:layout_width="@dimen/dp48"
+                android:layout_height="@dimen/dp48"
+                android:layout_alignParentRight="true"
+                android:background="@mipmap/ic_home96_nameplate" />
+
+            <ImageView
+                android:id="@+id/iv_message_content"
+                android:layout_width="@dimen/dp48"
+                android:layout_height="@dimen/dp48"
+                android:layout_toLeftOf="@id/iv_home_page_content"
+                android:background="@mipmap/ic_notice96_nameplate" />
+
+
+        </RelativeLayout>-->
+
+        <com.dosmono.platecommon.widget.NamePlateBarContentContainer
+            android:id="@+id/content_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"/>
+
+        <LinearLayout
+            android:id="@+id/right_container"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@color/transparent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/right_menu_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/holo_orange_dark"
+                android:clickable="true"
+                android:padding="20dp"
+                android:text="右侧按钮" />
+
+        </LinearLayout>
+
+    </com.dosmono.platecommon.widget.NamePlateStatusBar>
+</LinearLayout>

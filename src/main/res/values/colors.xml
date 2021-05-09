@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <!--    背景颜色值-->
+    <color name="bg">@android:color/holo_blue_dark</color>
+    <color name="main_bg_gradient_linear_start">#05265d</color>
+    <color name="main_bg_gradient_linear_end">#0b4e96</color>
+    <!--    字体颜色-->
+    <color name="primary_of_font">@color/white</color>
+    <!--    下划线颜色-->
+    <color name="under_line">#33ffffff</color>
+    <!--    按钮默认背景颜色值-->
+    <color name="default_bg_of_button">#1AFFFFFF</color>
+    <color name="pressed_bg_of_button">#FF3700B3</color>
+
+    <!--    form page start-->
+    <color name="default_bg_of_button_for_save">#32C5FF</color>
+    <color name="et_hint_color">#50FFFFFF</color>
+    <color name="font_color_of_form_left">#99FFFFFF</color>
+    <!--    form page end-->
+
+    <!--    main page start-->
+    <!--    日程列表 左侧线条颜色-->
+    <color name="line_color_on_first">#F7B500</color>
+    <color name="line_color_on_second">#44D7B6</color>
+    <color name="line_color_on_third">#0091FF</color>
+    <color name="line_color_on_fourth">#6236FF</color>
+    <!--    时间-->
+    <color name="font_color_of_time_on_day">#80FFFFFF</color>
+    <!--    main page end-->
+</resources>

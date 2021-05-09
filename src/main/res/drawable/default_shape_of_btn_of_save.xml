@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/default_bg_of_button_for_save" />
+    <corners android:radius="@dimen/radius_of_btn_of_clear_all" />
+</shape>

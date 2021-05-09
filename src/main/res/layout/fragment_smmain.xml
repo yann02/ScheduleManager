@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.shkj.cm.MainViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/shape_of_main_bg"
+        tools:context=".modules.main.SMMainFragment">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_v1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.10" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_h1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.04" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_h4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.96" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_h2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.48" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_h3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.52" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_v2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.12" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_v3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.13" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_v4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.22" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_v5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.24" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_v6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.32" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_v7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.80" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_v8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.82" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_v9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.92" />
+
+        <ImageButton
+            android:id="@+id/ib_last_year"
+            android:layout_width="@dimen/icon_size_of_year_or_month"
+            android:layout_height="@dimen/icon_size_of_year_or_month"
+            android:background="@android:color/transparent"
+            android:src="@mipmap/ic_year_left_n"
+            android:scaleType="fitStart"
+            app:layout_constraintBottom_toTopOf="@+id/gl_v4"
+            app:layout_constraintLeft_toLeftOf="@+id/gl_h1"
+            app:layout_constraintTop_toBottomOf="@+id/gl_v3" />
+
+        <ImageButton
+            android:id="@+id/ib_last_month"
+            android:layout_width="@dimen/icon_size_of_year_or_month"
+            android:layout_height="@dimen/icon_size_of_year_or_month"
+            android:layout_marginStart="@dimen/space_of_icon_of_year_with_month"
+            android:scaleType="fitStart"
+            android:background="@android:color/transparent"
+            android:src="@mipmap/ic_month_left_n"
+            app:layout_constraintBottom_toTopOf="@+id/gl_v4"
+            app:layout_constraintLeft_toRightOf="@+id/ib_last_year"
+            app:layout_constraintTop_toBottomOf="@+id/gl_v3" />
+
+        <ImageButton
+            android:id="@+id/ib_next_year"
+            android:layout_width="@dimen/icon_size_of_year_or_month"
+            android:layout_height="@dimen/icon_size_of_year_or_month"
+            android:background="@android:color/transparent"
+            android:src="@mipmap/ic_year_right_n"
+            android:scaleType="fitEnd"
+            app:layout_constraintBottom_toTopOf="@+id/gl_v4"
+            app:layout_constraintRight_toRightOf="@+id/gl_h2"
+            app:layout_constraintTop_toBottomOf="@+id/gl_v3" />
+
+        <ImageButton
+            android:id="@+id/ib_next_month"
+            android:layout_width="@dimen/icon_size_of_year_or_month"
+            android:layout_height="@dimen/icon_size_of_year_or_month"
+            android:layout_marginStart="@dimen/space_of_icon_of_year_with_month"
+            android:layout_marginEnd="@dimen/space_of_icon_of_year_with_month"
+            android:background="@android:color/transparent"
+            android:src="@mipmap/ic_month_right_n"
+            android:scaleType="fitEnd"
+            app:layout_constraintBottom_toTopOf="@+id/gl_v4"
+            app:layout_constraintRight_toLeftOf="@+id/ib_next_year"
+            app:layout_constraintTop_toBottomOf="@+id/gl_v3" />
+
+        <TextView
+            android:id="@+id/tv_title_of_calendar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{@string/title_of_calendar(vm.titleOfYear,vm.titleOfMonth)}"
+            android:textColor="@color/primary_of_font"
+            android:textSize="@dimen/font_size_of_title_of_calendar"
+            app:layout_constraintBottom_toTopOf="@+id/gl_v4"
+            app:layout_constraintLeft_toRightOf="@+id/ib_last_month"
+            app:layout_constraintRight_toLeftOf="@+id/ib_next_month"
+            app:layout_constraintTop_toBottomOf="@+id/gl_v3"
+            tools:text="2021年 4月" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="@dimen/space_line_height"
+            android:background="@color/under_line"
+            app:layout_constraintBottom_toTopOf="@+id/gl_v4"
+            app:layout_constraintLeft_toRightOf="@+id/gl_h1"
+            app:layout_constraintRight_toLeftOf="@+id/gl_h2" />
+
+        <com.shkj.cm.widgets.MyWeekView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@+id/gl_v6"
+            app:layout_constraintLeft_toRightOf="@+id/gl_h1"
+            app:layout_constraintRight_toLeftOf="@+id/gl_h2"
+            app:layout_constraintTop_toBottomOf="@+id/gl_v5"
+            app:week_color="@android:color/white" />
+
+        <com.shkj.cm.calendarview.weiget.CalendarView
+            android:id="@+id/cv_calendar"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/gl_v7"
+            app:layout_constraintLeft_toRightOf="@+id/gl_h1"
+            app:layout_constraintRight_toLeftOf="@+id/gl_h2"
+            app:layout_constraintTop_toBottomOf="@+id/gl_v6"
+            app:show_lunar="false"
+            app:switch_choose="false" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="@dimen/space_line_height"
+            android:background="@color/under_line"
+            app:layout_constraintBottom_toTopOf="@+id/gl_v8"
+            app:layout_constraintLeft_toRightOf="@+id/gl_h1"
+            app:layout_constraintRight_toLeftOf="@+id/gl_h2" />
+
+        <Button
+            android:id="@+id/btn_goto_today"
+            android:layout_width="@dimen/width_of_button"
+            android:layout_height="@dimen/height_of_button"
+            android:background="@drawable/default_shape_of_btn_of_today"
+            android:padding="0dp"
+            android:text="@string/button_today"
+            android:textColor="@color/primary_of_font"
+            android:textSize="@dimen/font_size_of_button_today"
+            app:layout_constraintBottom_toTopOf="@+id/gl_v9"
+            app:layout_constraintLeft_toRightOf="@+id/gl_h1"
+            app:layout_constraintRight_toLeftOf="@+id/gl_h2"
+            app:layout_constraintTop_toBottomOf="@+id/gl_v8" />
+
+        <ImageButton
+            android:id="@+id/ib_on_back"
+            android:layout_width="@dimen/icon_size_of_on_back"
+            android:layout_height="@dimen/icon_size_of_on_back"
+            android:background="@android:color/transparent"
+            android:src="@mipmap/ic_nav_back64"
+            android:scaleType="fitStart"
+            app:layout_constraintBottom_toTopOf="@+id/gl_v1"
+            app:layout_constraintLeft_toLeftOf="@+id/gl_h1"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/title"
+            android:textColor="@color/primary_of_font"
+            android:textSize="@dimen/font_size_of_title"
+            app:layout_constraintBottom_toTopOf="@+id/gl_v1"
+            app:layout_constraintLeft_toRightOf="@+id/gl_h1"
+            app:layout_constraintRight_toLeftOf="@+id/gl_h4"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/ib_on_list"
+            android:layout_width="@dimen/icon_size_of_on_back"
+            android:layout_height="@dimen/icon_size_of_on_back"
+            android:background="@android:color/transparent"
+            android:src="@mipmap/ic_nav_list"
+            android:scaleType="fitCenter"
+            app:layout_constraintBottom_toTopOf="@+id/gl_v1"
+            app:layout_constraintRight_toLeftOf="@+id/gl_h4"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/ib_on_add"
+            android:layout_width="@dimen/icon_size_of_on_back"
+            android:layout_height="@dimen/icon_size_of_on_back"
+            android:background="@android:color/transparent"
+            android:src="@mipmap/ic_nav_add"
+            android:scaleType="fitCenter"
+            app:layout_constraintBottom_toTopOf="@+id/gl_v1"
+            app:layout_constraintRight_toLeftOf="@+id/ib_on_list"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_list"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/gl_h3"
+            app:layout_constraintRight_toLeftOf="@+id/gl_h4"
+            app:layout_constraintTop_toBottomOf="@+id/gl_v2"
+            tools:listitem="@layout/adapter_schedule_day_of_item" />
+
+        <TextView
+            android:id="@+id/tv_not_schedule"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:text="@string/not_schedule"
+            android:textColor="@color/primary_of_font"
+            android:textSize="@dimen/font_size_day_of_list"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/gl_h3"
+            app:layout_constraintRight_toLeftOf="@+id/gl_h4"
+            app:layout_constraintTop_toBottomOf="@+id/gl_v2" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

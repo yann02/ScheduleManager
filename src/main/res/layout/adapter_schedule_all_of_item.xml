@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/padding_on_vertical_for_item_of_page"
+        android:textColor="@color/primary_of_font"
+        android:textSize="@dimen/font_size_of_title_on_item"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="去海口出差" />
+
+    <TextView
+        android:id="@+id/tv_space_of_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_top_of_time_on_item"
+        android:layout_marginBottom="@dimen/padding_on_vertical_for_item_of_page"
+        android:paddingEnd="@dimen/space_time_and_date"
+        android:paddingStart="0dp"
+        android:text="@string/all_of_day"
+        android:textColor="@color/font_color_of_form_left"
+        android:textSize="@dimen/font_size_of_time_on_item"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_title"
+        app:layout_constraintRight_toLeftOf="@+id/tv_space_of_date"/>
+
+    <TextView
+        android:id="@+id/tv_space_of_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/font_color_of_form_left"
+        android:textSize="@dimen/font_size_of_time_on_item"
+        android:layout_marginTop="@dimen/margin_top_of_time_on_item"
+        android:layout_marginBottom="@dimen/padding_on_vertical_for_item_of_page"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_title"
+        app:layout_constraintLeft_toRightOf="@+id/tv_space_of_time"
+        tools:text="2021-02-28 09:00~2021-3-28 18:00" />
+
+    <ImageButton
+        android:id="@+id/ib_for_delete_item"
+        android:layout_width="@dimen/icon_size_of_delete_for_item"
+        android:layout_height="@dimen/icon_size_of_delete_for_item"
+        android:background="@android:color/transparent"
+        android:src="@mipmap/ic_delete48"
+        android:scaleType="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="@dimen/space_line_height"
+        android:background="@color/under_line"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
