@@ -1,7 +1,7 @@
 package com.shkj.cm.modules.list
 
-import com.shkj.cm.modules.list.entities.result.Data
 import androidx.lifecycle.MutableLiveData
+import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
@@ -9,10 +9,12 @@ import com.shkj.cm.Body
 import com.shkj.cm.RequestEntityOfList
 import com.shkj.cm.base.repository.ApiRepository
 import com.shkj.cm.common.state.State
+import com.shkj.cm.db.RoomHelper
 import com.shkj.cm.modules.list.entities.request.BodyDeleteAllOfSchedulesForRequestEntity
 import com.shkj.cm.modules.list.entities.request.BodyDeleteScheduleForRequestEntity
 import com.shkj.cm.modules.list.entities.request.DeleteAllOfSchedulesForRequestEntity
 import com.shkj.cm.modules.list.entities.request.DeleteScheduleForRequestEntity
+import com.shkj.cm.modules.list.entities.result.Data
 import com.shkj.cm.modules.list.entities.result.DeleteAllOfSchedulesForResultEntity
 import com.shkj.cm.modules.list.entities.result.DeleteScheduleForResultEntity
 import com.shkj.cm.modules.list.entities.result.ListEntityForResult
@@ -52,7 +54,13 @@ class ListRepository(var loadState: MutableLiveData<State>) : ApiRepository() {
      * @param monoId 用户ID
      */
     suspend fun deleteAllOfSchedules(monoId: String): DeleteAllOfSchedulesForResultEntity {
-        return apiService.deleteAllOfSchedules(DeleteAllOfSchedulesForRequestEntity(BodyDeleteAllOfSchedulesForRequestEntity(monoId)))
+        return apiService.deleteAllOfSchedules(
+            DeleteAllOfSchedulesForRequestEntity(
+                BodyDeleteAllOfSchedulesForRequestEntity(
+                    monoId
+                )
+            )
+        )
     }
 
     fun getSearchResultStream(monoId: String): Flow<PagingData<Data>> {
@@ -62,6 +70,18 @@ class ListRepository(var loadState: MutableLiveData<State>) : ApiRepository() {
                 enablePlaceholders = false
             ),
             pagingSourceFactory = { SchedulePagingSource(this, monoId) }
+        ).flow
+    }
+
+    /**
+     * 获取日程列表（room+retrofit）
+     */
+    fun getScheduleResultStream(monoId: String): Flow<PagingData<Data>> {
+        @OptIn(ExperimentalPagingApi::class)
+        return Pager(
+            config = PagingConfig(pageSize = NETWORK_PAGE_SIZE, enablePlaceholders = false),
+            remoteMediator = ListPageRemoteMediator(this, monoId),
+            pagingSourceFactory = { RoomHelper.listPageDao?.pagingSource()!! }
         ).flow
     }
 

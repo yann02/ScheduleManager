@@ -72,7 +72,10 @@ class ListFragment : BaseLifeCycleFragment<ListViewModel, FragmentListBinding>()
 
     private fun initPagingData() {
         lifecycleScope.launch {
-            mViewModel.findSchedules().collectLatest {
+//            mViewModel.findSchedules().collectLatest {
+//                adapter?.submitData(it)
+//            }
+            mViewModel.findSchedulesByDB().collectLatest {
                 adapter?.submitData(it)
             }
         }

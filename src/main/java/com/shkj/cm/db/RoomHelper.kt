@@ -12,10 +12,24 @@ import com.dosmono.platecommon.util.UIUtils
  * 作者姓名 修改时间 版本号 描述
  */
 object RoomHelper {
-    private val appDatabase by lazy {
+    val appDatabase by lazy {
         AppDataBase.getInstance(UIUtils.getContext())
     }
     val scheduleDao by lazy {
         appDatabase?.scheduleDao()
+    }
+
+    /**
+     * 分页日程列表对象
+     */
+    val listPageDao by lazy {
+        appDatabase?.listPageDao()
+    }
+
+    /**
+     * 分页日程列表远程keysDao
+     */
+    val remoteKeysDao by lazy {
+        appDatabase?.remoteKeysDao()
     }
 }

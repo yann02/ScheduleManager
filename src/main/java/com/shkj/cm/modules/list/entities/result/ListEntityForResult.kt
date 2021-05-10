@@ -1,6 +1,7 @@
 package com.shkj.cm.modules.list.entities.result
 
-import com.google.gson.annotations.SerializedName
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
 /**
  * Copyright (C), 2015-2021, 海南双猴科技有限公司
@@ -29,6 +30,7 @@ data class Body(
     val upPage: Int
 )
 
+@Entity(tableName = "list_page_entity")
 data class Data(
     val createtime: String,
     val dtag: Int,
@@ -38,6 +40,7 @@ data class Data(
     val monoId: String,
     val startTime: String,
     val statusInfo: Int,
+    @PrimaryKey
     val tid: String,
     val title: String
 )

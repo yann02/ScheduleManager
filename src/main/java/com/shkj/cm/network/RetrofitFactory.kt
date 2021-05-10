@@ -5,25 +5,26 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import java.io.IOException
 import java.util.concurrent.TimeUnit
 
 /**
-* Copyright (C), 2015-2021, 海南双猴科技有限公司
-* @Description: 暂无
-* @Author: Yingyan Wu
-* @CreateDate: 2021/4/16 20:50
-* History:
-* @Author: 暂无
-* @Date: 暂无
-* @Description: 暂无
-*/
+ * Copyright (C), 2015-2021, 海南双猴科技有限公司
+ * @Description: 暂无
+ * @Author: Yingyan Wu
+ * @CreateDate: 2021/4/16 20:50
+ * History:
+ * @Author: 暂无
+ * @Date: 暂无
+ * @Description: 暂无
+ */
 
 private val DEFAULT_TIMEOUT: Long = 30
 
 class RetrofitFactory private constructor() {
-    private val retrofit : Retrofit
+    private val retrofit: Retrofit
 
-    fun <T> createRetrofit(clazz: Class<T>) : T {
+    fun <T> createRetrofit(clazz: Class<T>): T {
         return retrofit.create(clazz)
     }
 

@@ -47,6 +47,19 @@ class ListViewModel : BaseViewModel<ListRepository>() {
     }
 
     /**
+     * 获取日程列表
+     */
+    fun findSchedulesByDB(): Flow<PagingData<Data>> {
+        val lastResult = currentScheduleResult
+        if (lastResult != null) {
+            return lastResult
+        }
+        val newResult: Flow<PagingData<Data>> = mRepository.getScheduleResultStream(monoId).cachedIn(viewModelScope)
+        currentScheduleResult = newResult
+        return newResult
+    }
+
+    /**
      * 删除一条日程
      */
     fun deleteSchedule(tid: String, position: Int) {
