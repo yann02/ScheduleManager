@@ -7,8 +7,10 @@ import android.util.Log
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.dosmono.platecommon.util.UIUtils
 import com.permissionx.guolindev.PermissionX
+
 import com.permissionx.guolindev.request.ExplainScope
 import com.permissionx.guolindev.request.ForwardScope
 import com.shkj.cm.MainViewModel
@@ -342,9 +344,9 @@ class FormFragment : BaseLifeCycleFragment<FormViewModel, FragmentFormBinding>()
                     mViewModel.updateCalendarEvent(requireContext())
                 else
                     mViewModel.addCalendarEvent(requireContext())
-//                findNavController().popBackStack()
-                var eventId = SharedPreUtils.getLong(UIUtils.getContext(), "tempEventId", 0L)
-                CalendarProviderManager.startCalendarForIntentToEdit(requireContext(), eventId)
+                findNavController().popBackStack()
+//                var eventId = SharedPreUtils.getLong(UIUtils.getContext(), "tempEventId", 0L)
+//                CalendarProviderManager.startCalendarForIntentToEdit(requireContext(), eventId)
             }
         })
 
@@ -395,6 +397,7 @@ class FormFragment : BaseLifeCycleFragment<FormViewModel, FragmentFormBinding>()
         scheduleEntity?.apply {
             mViewModel.isEditInit = true
             mViewModel.editScheduleEntity.postValue(this)
+            mViewModel.tid = tid!!
             mViewModel.isEdit = true
             mDataBinding.etTitle.setText(title)
             mViewModel.title.postValue(title)
