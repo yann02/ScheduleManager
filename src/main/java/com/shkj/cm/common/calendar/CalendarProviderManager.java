@@ -12,9 +12,9 @@ import android.os.Build;
 import android.provider.CalendarContract;
 
 
+import com.dosmono.platecommon.util.UIUtils;
 import com.shkj.cm.common.Constant;
 import com.shkj.cm.common.util.SharedPreUtils;
-import com.shkj.cm.common.util.UIUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -261,7 +261,7 @@ public class CalendarProviderManager {
             // 设置事件提醒方式为通知警报
             reminders.put(CalendarContract.Reminders.METHOD, CalendarContract.Reminders.METHOD_ALERT);
             reminderUri = context.getContentResolver().insert(uri2, reminders);
-            SharedPreUtils.saveLong(UIUtils.getContext(), Constant.TEMP_EVENT_ID, eventID);
+            SharedPreUtils.saveLong(UIUtils.INSTANCE.getContext(), Constant.TEMP_EVENT_ID, eventID);
             if (null == reminderUri) {
                 return -1;
             }

@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
+import com.dosmono.platecommon.util.UIUtils
 import com.permissionx.guolindev.PermissionX
 import com.permissionx.guolindev.request.ExplainScope
 import com.permissionx.guolindev.request.ForwardScope
@@ -127,10 +128,12 @@ class FormFragment : BaseLifeCycleFragment<FormViewModel, FragmentFormBinding>()
             mDataBinding.frequencyView5
         ) {
 
-            mViewModel.deleteCalendarEvent(
-                requireContext(),
-                "${it.getSelectIndex() + 1}"
-            )
+//            if(mViewModel.isEdit){
+//                mViewModel.deleteCalendarEvent(
+//                    requireContext(),
+//                    "${it.getSelectIndex() + 1}"
+//                )
+//            }
             //更新频次
             updateFrequencyValue(it, -1)
             //重置选项

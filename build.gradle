@@ -27,10 +27,12 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField("String", "BASE_URL", "\"http://37x80768g8.zicp.vip/\"")
+//            buildConfigField("String", "BASE_URL", "\"http://37x80768g8.zicp.vip/\"")  //  花生壳映射
+            buildConfigField("String", "BASE_URL", "\"https://www.xiaomi.smart0.cn/\"")  //  线上
         }
         debug {
-            buildConfigField("String", "BASE_URL", "\"http://37x80768g8.zicp.vip/\"")
+            buildConfigField("String", "BASE_URL", "\"http://37x80768g8.zicp.vip/\"")  //  花生壳映射
+//            buildConfigField("String", "BASE_URL", "\"https://www.xiaomi.smart0.cn/\"")  //  线上
         }
     }
     compileOptions {

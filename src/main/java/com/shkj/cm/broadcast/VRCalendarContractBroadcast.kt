@@ -2,10 +2,12 @@ package com.shkj.cm.broadcast
 
 import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.provider.CalendarContract
 import android.util.Log
 import android.widget.Toast
+import com.xuexiang.xui.widget.dialog.DialogLoader
 import com.xuexiang.xutil.tip.ToastUtils
 
 class VRCalendarContractBroadcast : BroadcastReceiver() {
@@ -33,6 +35,8 @@ class VRCalendarContractBroadcast : BroadcastReceiver() {
             val startTime = cursor.getString(cursor.getColumnIndex(CalendarContract.Events.DTSTART))
             val endTime = cursor.getString(cursor.getColumnIndex(CalendarContract.Events.DTEND))
             Log.d("dosmono", "time = $title,startTime = $startTime,endTime = $endTime")
+            DialogLoader.getInstance().showConfirmDialog(context,title,"知道了",
+               null,"")
         }
     }
 }

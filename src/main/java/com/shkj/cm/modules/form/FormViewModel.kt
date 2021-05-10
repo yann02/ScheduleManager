@@ -6,6 +6,7 @@ import androidx.annotation.ArrayRes
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
+import com.dosmono.platecommon.util.UIUtils
 import com.shkj.cm.R
 import com.shkj.cm.base.viewmodel.BaseViewModel
 import com.shkj.cm.common.Constant
@@ -16,7 +17,6 @@ import com.shkj.cm.common.calendar.RRuleConstant
 import com.shkj.cm.common.initiateRequestNotState
 import com.shkj.cm.common.util.SharedPreUtils
 import com.shkj.cm.common.util.TimeUtil
-import com.shkj.cm.common.util.UIUtils
 import com.shkj.cm.db.FrequencyEntity
 import com.shkj.cm.db.RoomHelper
 import com.shkj.cm.modules.detail.entity.ScheduleEntity
