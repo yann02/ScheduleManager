@@ -42,7 +42,7 @@
             android:textColor="@color/font_color_of_time_on_day"
             android:textSize="@dimen/font_size_day_of_list"
             android:visibility="@{model.dtag==2?View.GONE:View.VISIBLE}"
-            app:bindOnTimeForDayScheduleItem="@{model.startTime}"
+            app:bindOnTimeForDayScheduleItem="@{model.sechStartTime}"
             app:layout_constraintRight_toLeftOf="@+id/tv_center_line"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="上午10:00" />
