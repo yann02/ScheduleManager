@@ -17,4 +17,10 @@ interface RemoteKeysDao {
 
     @Query("DELETE FROM remote_keys")
     suspend fun clearRemoteKeys()
+
+    /**
+     * 根据tid删除一条记录
+     */
+    @Query("DELETE FROM remote_keys WHERE tId = :tId")
+    suspend fun deleteKeyTid(tId: String)
 }

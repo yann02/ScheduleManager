@@ -1,10 +1,8 @@
 package com.shkj.cm.modules.list
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
@@ -72,9 +70,6 @@ class ListFragment : BaseLifeCycleFragment<ListViewModel, FragmentListBinding>()
 
     private fun initPagingData() {
         lifecycleScope.launch {
-//            mViewModel.findSchedules().collectLatest {
-//                adapter?.submitData(it)
-//            }
             mViewModel.findSchedulesByDB().collectLatest {
                 adapter?.submitData(it)
             }
@@ -93,7 +88,7 @@ class ListFragment : BaseLifeCycleFragment<ListViewModel, FragmentListBinding>()
             override fun onItemDeleteClick(position: Int, tid: String) {
                 //  点击了列表的删除按钮
                 deletePosition = position
-                mViewModel.deleteSchedule(tid, position)
+                mViewModel.deleteSchedule(tid)
             }
         })
         adapter!!.addLoadStateListener {
@@ -102,25 +97,5 @@ class ListFragment : BaseLifeCycleFragment<ListViewModel, FragmentListBinding>()
             showEmptyList(isListEmpty)
         }
         mDataBinding.rvList.adapter = adapter
-    }
-
-    override fun initDataObserver() {
-        super.initDataObserver()
-        mViewModel.deleteTag.observe(this, Observer {
-            initPagingData()
-        })
-        mViewModel.deleteAllOfScheduleTag.observe(this, Observer {
-            initPagingData()
-        })
-    }
-
-    override fun onPause() {
-        super.onPause()
-        Log.d("wyy","onPause")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.d("wyy","onDestroy")
     }
 }

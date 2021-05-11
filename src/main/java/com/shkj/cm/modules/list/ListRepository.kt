@@ -63,16 +63,6 @@ class ListRepository(var loadState: MutableLiveData<State>) : ApiRepository() {
         )
     }
 
-    fun getSearchResultStream(monoId: String): Flow<PagingData<Data>> {
-        return Pager(
-            config = PagingConfig(
-                pageSize = NETWORK_PAGE_SIZE,
-                enablePlaceholders = false
-            ),
-            pagingSourceFactory = { SchedulePagingSource(this, monoId) }
-        ).flow
-    }
-
     /**
      * 获取日程列表（room+retrofit）
      */
@@ -85,7 +75,12 @@ class ListRepository(var loadState: MutableLiveData<State>) : ApiRepository() {
         ).flow
     }
 
+    suspend fun getLastSchedule(): Data? {
+        val schedules = RoomHelper.listPageDao?.findAllSchedule()
+        return schedules?.last()
+    }
+
     companion object {
-        const val NETWORK_PAGE_SIZE = 3
+        const val NETWORK_PAGE_SIZE = 10
     }
 }

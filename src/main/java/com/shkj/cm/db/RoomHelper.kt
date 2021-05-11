@@ -15,6 +15,10 @@ object RoomHelper {
     val appDatabase by lazy {
         AppDataBase.getInstance(UIUtils.getContext())
     }
+
+    /**
+     * 日程创建，本地数据库Dao
+     */
     val scheduleDao by lazy {
         appDatabase?.scheduleDao()
     }

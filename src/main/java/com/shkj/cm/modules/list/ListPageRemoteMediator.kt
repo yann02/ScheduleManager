@@ -10,9 +10,8 @@ import com.shkj.cm.db.RoomHelper
 import com.shkj.cm.modules.list.entities.result.Data
 import retrofit2.HttpException
 import java.io.IOException
-import java.lang.Exception
 
-private const val GITHUB_STARTING_PAGE_INDEX = 1
+private const val SCHEDULE_STARTING_PAGE_INDEX = 1
 
 @OptIn(ExperimentalPagingApi::class)
 class ListPageRemoteMediator(private val list: ListRepository, private val monoId: String) : RemoteMediator<Int, Data>() {
@@ -20,7 +19,7 @@ class ListPageRemoteMediator(private val list: ListRepository, private val monoI
         val page = when (loadType) {
             LoadType.REFRESH -> {
                 val remoteKeys = getRemoteKeyClosestToCurrentPosition(state)
-                remoteKeys?.nextKey?.minus(1) ?: GITHUB_STARTING_PAGE_INDEX
+                remoteKeys?.nextKey?.minus(1) ?: SCHEDULE_STARTING_PAGE_INDEX
             }
             LoadType.PREPEND -> {
                 val remoteKeys = getRemoteKeyForFirstItem(state)
@@ -59,7 +58,7 @@ class ListPageRemoteMediator(private val list: ListRepository, private val monoI
                     RoomHelper.remoteKeysDao?.clearRemoteKeys()
                     RoomHelper.listPageDao?.clearAll()
                 }
-                val prevKey = if (page == GITHUB_STARTING_PAGE_INDEX) null else page - 1
+                val prevKey = if (page == SCHEDULE_STARTING_PAGE_INDEX) null else page - 1
                 val nextKey = if (endOfPaginationReached) null else page + 1
                 val keys = jobs.map {
                     RemoteKeys(tId = it.tid, prevKey = prevKey, nextKey = nextKey)
