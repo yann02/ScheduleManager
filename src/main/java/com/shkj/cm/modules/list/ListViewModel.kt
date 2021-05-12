@@ -132,6 +132,14 @@ class ListViewModel : BaseViewModel<ListRepository>() {
             if (res.code == 8000) {
                 Toast.makeText(UIUtils.getContext(), res.msg, Toast.LENGTH_SHORT).show()
                 withContext(Dispatchers.IO) {
+                    val frequencies = RoomHelper.scheduleDao?.queryAllOfFrequency()
+                    Log.d("wyy","来了来了")
+                    if (!frequencies.isNullOrEmpty()) {
+                        for (frequency in frequencies) {
+                            Log.d("wyy","eventId:${frequency.eventId}")
+                            CalendarProviderManager.deleteCalendarEvent(UIUtils.getContext(), frequency.eventId)
+                        }
+                    }
                     RoomHelper.scheduleDao?.deleteAllOfSchedulesTransaction()
                     RoomHelper.remoteKeysDao?.clearRemoteKeys()
                     RoomHelper.listPageDao?.clearAll()

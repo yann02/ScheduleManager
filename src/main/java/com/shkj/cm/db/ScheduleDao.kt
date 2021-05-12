@@ -116,4 +116,7 @@ interface ScheduleDao {
      */
     @Query("select * from FrequencyEntity where tid= :tid")
     fun queryFrequencyEntitiesOnSchedule(tid: String): List<FrequencyEntity>
+
+    @Query("select * from FrequencyEntity")
+    fun queryAllOfFrequency(): List<FrequencyEntity>
 }
