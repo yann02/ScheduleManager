@@ -96,8 +96,10 @@ interface ScheduleDao {
             insertFrequencyForSchedule(frequencyEntity)
         }
     }
-    // TODO 根据日程查询 频次
 
+    /**
+     * 根据日程查询 频次
+     */
     @Query("select * from FrequencyEntity where tid= :tid")
     fun queryFrequencyEntitiesOnSchedule(tid: String): List<FrequencyEntity>
 }

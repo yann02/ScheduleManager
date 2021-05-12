@@ -1,5 +1,6 @@
 package com.shkj.cm.modules.list
 
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
@@ -7,6 +8,7 @@ import androidx.paging.cachedIn
 import androidx.room.withTransaction
 import com.dosmono.platecommon.util.UIUtils
 import com.shkj.cm.base.viewmodel.BaseViewModel
+import com.shkj.cm.common.calendar.CalendarProviderManager
 import com.shkj.cm.db.RemoteKeys
 import com.shkj.cm.db.RoomHelper
 import com.shkj.cm.modules.list.entities.result.Data
@@ -56,6 +58,14 @@ class ListViewModel : BaseViewModel<ListRepository>() {
                 withContext(Dispatchers.IO) {
                     //  同步删除本地数据库对应的数据
                     RoomHelper.appDatabase?.withTransaction {
+                        val frequencies = RoomHelper.scheduleDao?.queryFrequencyEntitiesOnSchedule(tid)
+                        Log.d("wyy","来了来了")
+                        if (!frequencies.isNullOrEmpty()) {
+                            for (frequency in frequencies) {
+                                Log.d("wyy","eventId:${frequency.eventId}")
+                                CalendarProviderManager.deleteCalendarEvent(UIUtils.getContext(), frequency.eventId)
+                            }
+                        }
                         //  本地创建数据
                         RoomHelper.scheduleDao?.deleteScheduleTransaction(tid)
                         //  接口获取的分页列表数据
