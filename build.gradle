@@ -106,4 +106,7 @@ dependencies {
     //工具类
     implementation 'com.github.xuexiangjys.XUtil:xutil-core:1.1.8'
     implementation "androidx.paging:paging-runtime-ktx:3.0.0"
+
+    //日历
+    implementation 'com.haibin:calendarview:3.7.1'
 }
