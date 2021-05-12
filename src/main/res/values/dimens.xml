@@ -142,4 +142,14 @@
     <dimen name="margin_807_px">807px</dimen>
     <dimen name="margin_693_px">693px</dimen>
     <dimen name="margin_498_px">498px</dimen>
+
+    <!--    弹出框-->
+    <dimen name="px_568">568px</dimen>
+    <dimen name="px_120">120px</dimen>
+    <dimen name="px_48">48px</dimen>
+    <dimen name="px_300">300px</dimen>
+    <dimen name="px_100">100px</dimen>
+    <dimen name="px_60">60px</dimen>
+    <dimen name="px_40">40px</dimen>
+    <dimen name="px_80">80px</dimen>
 </resources>

@@ -46,11 +46,14 @@ class DetailFragment : BaseLifeCycleFragment<DetailViewModel, FragmentDetailBind
                     );putParcelable(ConstantRouterParamKey.SCHEDULE_ENTITY, scheduleEntity)
                 })
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
         tId = arguments?.getString(ConstantRouterParamKey.TID)!!
         com.xuexiang.xutil.common.logger.Logger.dTag("dosmono", "tid=$tId")
         mViewModel.remoteSchedulesById(tId)
     }
-
     lateinit var scheduleEntity: ScheduleEntity
     override fun initDataObserver() {
         mViewModel.remoteSuccess.observe(this, Observer {

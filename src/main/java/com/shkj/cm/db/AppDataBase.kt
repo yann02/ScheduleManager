@@ -56,7 +56,7 @@ abstract class AppDataBase : RoomDatabase() {
 
         val MIGRATION_1_2 = object : Migration(1, 2) {
             override fun migrate(database: SupportSQLiteDatabase) {
-                database.execSQL("ALTER TABLE FrequencyEntity " + " ADD COLUMN eventId INTEGER  " + " NOT NULL DEFAULT 0")
+                database.execSQL("ALTER TABLE FrequencyEntity " + " ADD COLUMN eventId BIGINT  " + " NOT NULL DEFAULT 0")
             }
         }
 
@@ -66,8 +66,8 @@ abstract class AppDataBase : RoomDatabase() {
         val MIGRATION_2_3 = object : Migration(2, 3) {
             override fun migrate(database: SupportSQLiteDatabase) {
                 database.execSQL(
-                    "CREATE TABLE `list_page_entity` (`createtime` TEXT, `dtag` INTEGER, `endTime` TEXT" +
-                            ", `freq` INTEGER , `gmt` TEXT, `monoId` TEXT, `startTime` , `statusInfo` INTEGER TEXT , `tid` TEXT , `title` TEXT PRIMARY KEY(`tid`))"
+                    "CREATE TABLE `list_page_entity` (`createtime` TEXT NOT NULL, `dtag` INTEGER NOT NULL, `endTime` TEXT NOT NULL" +
+                            ", `freq` INTEGER NOT NULL, `gmt` TEXT NOT NULL, `monoId` TEXT NOT NULL, `startTime` TEXT NOT NULL, `statusInfo` INTEGER NOT NULL, `tid` TEXT NOT NULL, `title` TEXT NOT NULL, PRIMARY KEY(`tid`))"
                 )
             }
         }
@@ -78,8 +78,8 @@ abstract class AppDataBase : RoomDatabase() {
         val MIGRATION_3_4 = object : Migration(3, 4) {
             override fun migrate(database: SupportSQLiteDatabase) {
                 database.execSQL(
-                    "CREATE TABLE `remote_keys` (`tId` TEXT, `prevKey` INTEGER, `nextKey` INTEGER" +
-                            " PRIMARY KEY(`tId`))"
+                    "CREATE TABLE `remote_keys` (`tId` TEXT NOT NULL, `prevKey` INTEGER, `nextKey` INTEGER" +
+                            ", PRIMARY KEY(`tId`))"
                 )
             }
         }

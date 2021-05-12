@@ -34,4 +34,8 @@
     <!--    时间-->
     <color name="font_color_of_time_on_day">#80FFFFFF</color>
     <!--    main page end-->
+    <!--    dialog start-->
+    <color name="alert_dialog_bg">#001537</color>
+    <color name="alert_dialog_btn_bg">#32c5ff</color>
+    <!--    dialog end-->
 </resources>

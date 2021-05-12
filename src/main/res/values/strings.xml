@@ -51,4 +51,7 @@
     <string name="explain_ok">确定</string>
     <string name="forward_to_setting_message">请求权限</string>
     <!--    form page end-->
+
+    <!--    alert dialog-->
+    <string name="title_alert_dialog">温馨提示</string>
 </resources>

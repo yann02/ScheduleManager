@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_of_dialog_normal"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="19.5dp"
+            android:text="退出提示"
+            android:textColor="#1A1A1A"
+            android:textSize="18sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="退出提示" />
+
+        <TextView
+            android:id="@+id/tv_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="19.5dp"
+            android:gravity="center"
+            android:text="确定要退出答题？ \n退出后作答历史将不会保存"
+            android:textColor="#808080"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_title"
+            tools:text="确定要退出答题？ \n退出后作答历史将不会保存" />
+
+        <TextView
+            android:id="@+id/tv_line_of_hor"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="29.5dp"
+            android:background="#CCCCCC"
+            app:layout_constraintTop_toBottomOf="@+id/tv_message" />
+
+        <TextView
+            android:id="@+id/tv_line_of_ver"
+            android:layout_width="0.5dp"
+            android:layout_height="60dp"
+            android:background="#CCCCCC"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_line_of_hor" />
+
+        <TextView
+            android:id="@+id/tv_negative"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:text="取消"
+            android:textColor="#1A1A1A"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_line_of_ver"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/tv_line_of_ver"
+            app:layout_constraintTop_toTopOf="@+id/tv_line_of_ver"
+            app:layout_constraintVertical_weight="1"
+            tools:text="取消" />
+
+        <TextView
+            android:id="@+id/tv_positive"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:text="确认"
+            android:textColor="#0B97CC"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_line_of_ver"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintLeft_toRightOf="@+id/tv_line_of_ver"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_line_of_ver"
+            app:layout_constraintVertical_weight="1"
+            tools:text="确认" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
