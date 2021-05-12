@@ -60,10 +60,8 @@ class ListViewModel : BaseViewModel<ListRepository>() {
                     //  同步删除本地数据库对应的数据
                     RoomHelper.appDatabase?.withTransaction {
                         val frequencies = RoomHelper.scheduleDao?.queryFrequencyEntitiesOnSchedule(tid)
-                        Log.d("wyy","来了来了")
                         if (!frequencies.isNullOrEmpty()) {
                             for (frequency in frequencies) {
-                                Log.d("wyy","eventId:${frequency.eventId}")
                                 CalendarProviderManager.deleteCalendarEvent(UIUtils.getContext(), frequency.eventId)
                             }
                         }
@@ -133,10 +131,8 @@ class ListViewModel : BaseViewModel<ListRepository>() {
                 Toast.makeText(UIUtils.getContext(), res.msg, Toast.LENGTH_SHORT).show()
                 withContext(Dispatchers.IO) {
                     val frequencies = RoomHelper.scheduleDao?.queryAllOfFrequency()
-                    Log.d("wyy","来了来了")
                     if (!frequencies.isNullOrEmpty()) {
                         for (frequency in frequencies) {
-                            Log.d("wyy","eventId:${frequency.eventId}")
                             CalendarProviderManager.deleteCalendarEvent(UIUtils.getContext(), frequency.eventId)
                         }
                     }

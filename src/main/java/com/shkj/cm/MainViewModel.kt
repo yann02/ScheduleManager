@@ -100,8 +100,6 @@ class MainViewModel : BaseViewModel<MainRepository>() {
             titleOfMonth.value?.let { month ->
                 //  sechStartTime 每天的开始时间：例如：2020-04-01 00:00:00的时间戳
                 val sechStartTime = TimeUtil.getMilliStringByYearMonthDay(year, month, 1)
-                Log.d("wyy","monoId:$monoId")
-                Log.d("wyy","sechStartTime:$sechStartTime")
                 jobOfDaysByMonth?.cancel()
                 jobOfDaysByMonth = viewModelScope.launch {
 //                    Log.d("wyy", "获取某月内，用户所有日程管理的日期集合 monoId:$monoId")
