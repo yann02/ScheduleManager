@@ -38,5 +38,5 @@ fun bindingDeleteFrequencyCallback(vararg arr: FrequencyView, callback: (Frequen
 fun getWeekOfMonth(date: Date):Int {
     val calendar = Calendar.getInstance()
     calendar.time = date
-    return calendar.get(Calendar.MONTH)
+    return calendar.get(Calendar.WEEK_OF_MONTH)
 }

@@ -35,11 +35,11 @@ object Constant {
     const val VALUE_ADVANCE_TWO_DAY = "9"
     const val VALUE_ADVANCE_A_WEEK = "10"
 
-    const val VALUE_NO_REPEAT = "0"
-    const val VALUE_BY_DAY = "1"
-    const val VALUE_BY_WEEK = "2"
-    const val VALUE_BY_MONTH = "3"
-    const val VALUE_BY_YEAR = "4"
+    const val RULE_NO_REPEAT = "0"
+    const val RULE_BY_DAY = "1"
+    const val RULE_BY_WEEK = "2"
+    const val RULE_BY_MONTH = "3"
+    const val RULE_BY_YEAR = "4"
 
 
     const val CHAR_BY_DAY = "每天"
@@ -66,5 +66,12 @@ object Constant {
     const val KEY_IS_EDIT = ""
 
     const val TEMP_EVENT_ID = "tempEventId"
+
+    const val VOICE_ACTION_ADD = "ADD"
+    const val VOICE_ACTION_DELETE = "DELETE"
+    const val VOICE_ACTION_UPDATE = "UPDATE"
+    const val VOICE_ACTION_QUERY = "QUERY"
+
+
 
 }

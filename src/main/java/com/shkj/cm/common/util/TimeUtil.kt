@@ -146,4 +146,12 @@ object TimeUtil {
         Log.d("wyy", "formDateString:$formDateString")
         return DateUtils.string2Millis(formDateString, DateUtils.yyyyMMddHHmmss.get()).toString()
     }
+
+    fun getEndTimeByStartTime(startTime:String):String{
+        val date = DateUtils.string2Date(startTime, DateUtils.yyyyMMddHHmm.get())
+        val calendar = Calendar.getInstance()
+        calendar.time = date
+        calendar.add(Calendar.HOUR,1)
+        return DateUtils.date2String(calendar.time,DateUtils.yyyyMMddHHmm.get())
+    }
 }
