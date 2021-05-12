@@ -27,6 +27,20 @@ interface ScheduleDao {
     @Insert
     fun insertFrequencyForSchedule(entity: FrequencyEntity)
 
+    /**
+     * 批量增（日程对应的频次）
+     * 一个日程对应多个频次
+     */
+    @Insert
+    fun insertFrequencyForSchedule(entity: List<FrequencyEntity>)
+
+    @Transaction
+    fun insertFrequenciesForSchedule(entity: List<FrequencyEntity>) {
+        entity.map {
+            insertFrequencyForSchedule(it)
+        }
+    }
+
 
     @Update
     fun updateFrequencyForSchedule(entity: Body)
@@ -37,10 +51,10 @@ interface ScheduleDao {
     @Transaction
     fun insertSchedule(entity: Body) {
         insertScheduleEntity(entity)
-        for (it in entity.preTime) {
-            val frequencyEntity = FrequencyEntity(entity.tid, it)
-            insertFrequencyForSchedule(frequencyEntity)
-        }
+//        for (it in entity.preTime) {
+//            val frequencyEntity = FrequencyEntity(entity.tid, it)
+//            insertFrequencyForSchedule(frequencyEntity)
+//        }
     }
 
     /**

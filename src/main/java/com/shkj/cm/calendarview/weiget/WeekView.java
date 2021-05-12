@@ -62,7 +62,7 @@ public class WeekView extends View {
             System.arraycopy(weeks, 0, weekArray, 0, 7);
         }
 
-        weekSize = CalendarUtil.getTextSize1(context, weekSize);
+//        weekSize = CalendarUtil.getTextSize1(context, weekSize);
     }
 
 

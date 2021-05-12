@@ -182,7 +182,8 @@
             app:layout_constraintLeft_toRightOf="@+id/gl_h1"
             app:layout_constraintRight_toLeftOf="@+id/gl_h2"
             app:layout_constraintTop_toBottomOf="@+id/gl_v5"
-            app:week_color="@android:color/white" />
+            app:week_color="@android:color/white"
+            app:week_size="28"/>
 
         <com.shkj.cm.calendarview.weiget.CalendarView
             android:id="@+id/cv_calendar"

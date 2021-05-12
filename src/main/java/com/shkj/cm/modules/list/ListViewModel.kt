@@ -1,5 +1,6 @@
 package com.shkj.cm.modules.list
 
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
@@ -14,6 +15,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlin.math.log
 
 /**
  * Copyright (C), 2015-2021, 海南双猴科技有限公司
