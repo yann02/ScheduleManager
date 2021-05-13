@@ -39,4 +39,9 @@
     <color name="alert_dialog_btn_bg">#32c5ff</color>
     <color name="alert_dialog_negative_btn_bg">#1AFFFFFF</color>
     <!--    dialog end-->
+    <!--    calendar start-->
+    <color name="selector_color_calendar">#32C5FF</color>
+    <color name="other_month_text_color">#4DFFFFFF</color>
+    <color name="dot_color">#F77400</color>
+    <!--    calendar end-->
 </resources>

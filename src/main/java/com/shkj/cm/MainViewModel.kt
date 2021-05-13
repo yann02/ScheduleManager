@@ -1,12 +1,12 @@
 package com.shkj.cm
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import com.dosmono.platecommon.util.PreferencesUtil
 import com.dosmono.platecommon.util.UIUtils
+import com.haibin.calendarview.Calendar
 import com.shkj.cm.base.viewmodel.BaseViewModel
 import com.shkj.cm.common.initiateRequestNotState
 import com.shkj.cm.common.util.TimeUtil
@@ -58,6 +58,31 @@ class MainViewModel : BaseViewModel<MainRepository>() {
 
     //  某月内，用户所有日程管理的日期集合（后台返回的数据）
     var mBodyOnDaysByTheMonthEntities = MutableLiveData<List<BodyOnDaysByTheMonthEntity>>()
+
+    val underPointsForMonthDay = mBodyOnDaysByTheMonthEntities.map {
+        val year = selectorYear.value
+        val month = selectorMonth.value
+        mutableMapOf<String, Calendar>().apply {
+            for (item: BodyOnDaysByTheMonthEntity in it) {
+                put(
+                    getSchemeCalendar(year, month, item.endTime.toInt()).toString(),
+                    getSchemeCalendar(year, month, item.endTime.toInt())
+                )
+            }
+        }
+    }
+
+    private fun getSchemeCalendar(year: Int?, month: Int?, day: Int): Calendar {
+        return Calendar().apply {
+            year?.let {
+                this.year = it
+            }
+            month?.let {
+                this.month = it
+            }
+            this.day = day
+        }
+    }
 
     var jobOfDaysByMonth: Job? = null
 

@@ -206,10 +206,19 @@
             app:layout_constraintRight_toRightOf="@+id/gl_h2"
             app:layout_constraintTop_toTopOf="@+id/gl_v5"
             app:layout_constraintBottom_toBottomOf="@+id/gl_v7"
-            app:month_view="com.shkj.cm.widgets.CustomMonthView"
+            app:month_view="com.shkj.cm.widgets.ScheduleMonthView"
             app:week_background="@android:color/transparent"
             app:week_bar_height="@dimen/px_80"
-            app:week_text_color="@color/primary_of_font"/>
+            app:week_text_color="@color/primary_of_font"
+            app:week_text_size="@dimen/px_28"
+            app:current_day_text_color="@color/primary_of_font"
+            app:selected_text_color="@color/selector_color_calendar"
+            app:current_month_text_color="@color/primary_of_font"
+            app:other_month_text_color="@color/other_month_text_color"
+            app:month_view_show_mode="mode_fix"
+            app:calendar_height="@dimen/px_80"
+            app:day_text_size="@dimen/px_28"
+            app:selected_theme_color="@color/selector_color_calendar"/>
 
         <TextView
             android:layout_width="0dp"

@@ -40,7 +40,12 @@ class SMMainFragment : BaseLifeCycleFragment<MainViewModel, FragmentSmmainBindin
             //  用户点击了列表的某一项
             findNavController().navigate(
                 R.id.action_smmainFragment_to_detailFragment,
-                Bundle().apply { putString(ConstantRouterParamKey.TID, viewModelOfMainActivity.mSchedules.value?.get(position)?.scheTid) })
+                Bundle().apply {
+                    putString(
+                        ConstantRouterParamKey.TID,
+                        viewModelOfMainActivity.mSchedules.value?.get(position)?.scheTid
+                    )
+                })
         }
         mDataBinding.rvList.adapter = adapterOfSchedule
         mDataBinding.cvCalendar.setOnPagerChangeListener {
@@ -99,7 +104,8 @@ class SMMainFragment : BaseLifeCycleFragment<MainViewModel, FragmentSmmainBindin
     private fun initCalendar() {
         var singDate = ""
         if (viewModelOfMainActivity.selectorDay.value != null) {
-            singDate = "${viewModelOfMainActivity.selectorYear.value}.${viewModelOfMainActivity.selectorMonth.value}.${viewModelOfMainActivity.selectorDay.value}"
+            singDate =
+                "${viewModelOfMainActivity.selectorYear.value}.${viewModelOfMainActivity.selectorMonth.value}.${viewModelOfMainActivity.selectorDay.value}"
         }
         mDataBinding.cvCalendar
             .setInitDate("${cDate[0]}.${cDate[1]}")
@@ -193,6 +199,10 @@ class SMMainFragment : BaseLifeCycleFragment<MainViewModel, FragmentSmmainBindin
             } catch (e: Exception) {
                 e.printStackTrace()
             }
+        })
+        //  监听当月日程标记变化
+        viewModelOfMainActivity.underPointsForMonthDay.observe(this, Observer {
+            mDataBinding.cvCanvasCalendar.setSchemeDate(it)
         })
     }
 
