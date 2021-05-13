@@ -22,10 +22,10 @@ import java.lang.Exception
 
 class VRCalendarContractBroadcast : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
-        ToastUtils.toast(
-            "接收到" +
-                    "事件！", Toast.LENGTH_LONG
-        )
+//        ToastUtils.toast(
+//            "接收到" +
+//                    "事件！", Toast.LENGTH_LONG
+//        )
         Log.d("dosmono", "接收到事件！")
         val uri = intent.data!!
         val alertTime = uri.lastPathSegment!!
@@ -74,6 +74,7 @@ class VRCalendarContractBroadcast : BroadcastReceiver() {
         val wlp: WindowManager.LayoutParams = alertDialog.window?.attributes!!
         wlp.gravity = Gravity.TOP or Gravity.CENTER_HORIZONTAL
         wlp.y = 1143
+        alertDialog.setCanceledOnTouchOutside(false)
         alertDialog.show()
         alertDialog.window?.setLayout(780, ViewGroup.LayoutParams.WRAP_CONTENT)
         view.findViewById<TextView>(R.id.tv_positive).setOnClickListener {
