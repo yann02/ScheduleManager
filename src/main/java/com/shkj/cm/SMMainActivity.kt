@@ -1,12 +1,15 @@
 package com.shkj.cm
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import androidx.fragment.app.DialogFragment
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment.findNavController
 import com.shkj.cm.base.view.BaseLifeCycleActivity
 import com.shkj.cm.common.Constant
 import com.shkj.cm.databinding.ActivitySmmainBinding
+import com.shkj.cm.widgets.NormalDialogByFragment
 import com.xuexiang.xui.XUI
 
 class SMMainActivity : BaseLifeCycleActivity<MainViewModel, ActivitySmmainBinding>() {

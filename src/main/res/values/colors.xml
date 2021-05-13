@@ -37,5 +37,6 @@
     <!--    dialog start-->
     <color name="alert_dialog_bg">#001537</color>
     <color name="alert_dialog_btn_bg">#32c5ff</color>
+    <color name="alert_dialog_negative_btn_bg">#1AFFFFFF</color>
     <!--    dialog end-->
 </resources>

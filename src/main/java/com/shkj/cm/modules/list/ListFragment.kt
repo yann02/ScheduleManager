@@ -1,11 +1,18 @@
 package com.shkj.cm.modules.list
 
+import android.app.AlertDialog
+import android.os.Build
 import android.os.Bundle
+import android.view.Gravity
 import android.view.View
+import android.view.ViewGroup
+import android.view.WindowManager
+import android.widget.TextView
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
+import com.dosmono.platecommon.util.UIUtils
 import com.shkj.cm.MainViewModel
 import com.shkj.cm.R
 import com.shkj.cm.base.view.BaseLifeCycleFragment
@@ -29,9 +36,6 @@ class ListFragment : BaseLifeCycleFragment<ListViewModel, FragmentListBinding>()
 
     //  日程列表适配器
     private var adapter: AdapterOnPageSchedules? = null
-
-    //  当前选中的日程删除项下标
-    private var deletePosition: Int? = null
     override fun getLayoutId() = R.layout.fragment_list
 
     override fun initView() {
@@ -44,8 +48,14 @@ class ListFragment : BaseLifeCycleFragment<ListViewModel, FragmentListBinding>()
             activity?.onBackPressed()
         }
         mDataBinding.btnCleanUp.setOnClickListener {
-            mViewModel.deleteAllOfSchedules()
+            adapter?.let {
+                if (it.itemCount > 0) {
+                    //  数据不为空时再提示
+                    onDialogForDeleteAllSchedule(getString(R.string.tip_of_delete_all_schedule), true)
+                }
+            }
         }
+
     }
 
     /**
@@ -87,8 +97,7 @@ class ListFragment : BaseLifeCycleFragment<ListViewModel, FragmentListBinding>()
 
             override fun onItemDeleteClick(position: Int, tid: String) {
                 //  点击了列表的删除按钮
-                deletePosition = position
-                mViewModel.deleteSchedule(tid)
+                onDialogForDeleteAllSchedule(getString(R.string.tip_of_delete_schedule), false, tid)
             }
         })
         adapter!!.addLoadStateListener {
@@ -97,5 +106,39 @@ class ListFragment : BaseLifeCycleFragment<ListViewModel, FragmentListBinding>()
             showEmptyList(isListEmpty)
         }
         mDataBinding.rvList.adapter = adapter
+    }
+
+    fun onDialogForDeleteAllSchedule(msg: String, deleteAll: Boolean, tid: String = "") {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(UIUtils.getContext())
+
+        val alertDialog: AlertDialog = builder.create()
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+            alertDialog.window?.setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT)
+        } else {
+            alertDialog.window?.setType(WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY)
+        }
+        val view: View = alertDialog.layoutInflater.inflate(R.layout.dialog_schedule, null)
+        val tvMessage: TextView = view.findViewById(R.id.tv_alert_message)
+        tvMessage.text = msg
+        builder.setView(view)
+        alertDialog.setView(view, 0, 0, 0, 0)
+        val wlp: WindowManager.LayoutParams = alertDialog.window?.attributes!!
+        wlp.gravity = Gravity.TOP or Gravity.CENTER_HORIZONTAL
+        wlp.y = 1143
+        alertDialog.show()
+        alertDialog.window?.setLayout(780, ViewGroup.LayoutParams.WRAP_CONTENT)
+        view.findViewById<TextView>(R.id.tv_positive).setOnClickListener {
+            if (deleteAll) {
+                mViewModel.deleteAllOfSchedules()
+            } else {
+                if (tid.isNotEmpty()) {
+                    mViewModel.deleteSchedule(tid)
+                }
+            }
+            alertDialog.dismiss()
+        }
+        view.findViewById<TextView>(R.id.tv_negative).setOnClickListener {
+            alertDialog.dismiss()
+        }
     }
 }
