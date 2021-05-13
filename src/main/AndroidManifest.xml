@@ -27,7 +27,7 @@
             android:value="1920" />
         <activity
             android:name=".SMMainActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
