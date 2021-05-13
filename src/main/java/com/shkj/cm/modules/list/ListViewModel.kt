@@ -1,5 +1,6 @@
 package com.shkj.cm.modules.list
 
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
@@ -7,6 +8,7 @@ import androidx.paging.cachedIn
 import androidx.room.withTransaction
 import com.dosmono.platecommon.util.UIUtils
 import com.shkj.cm.base.viewmodel.BaseViewModel
+import com.shkj.cm.common.calendar.CalendarProviderManager
 import com.shkj.cm.db.RemoteKeys
 import com.shkj.cm.db.RoomHelper
 import com.shkj.cm.modules.list.entities.result.Data
@@ -14,6 +16,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlin.math.log
 
 /**
  * Copyright (C), 2015-2021, 海南双猴科技有限公司
@@ -56,6 +59,12 @@ class ListViewModel : BaseViewModel<ListRepository>() {
                 withContext(Dispatchers.IO) {
                     //  同步删除本地数据库对应的数据
                     RoomHelper.appDatabase?.withTransaction {
+                        val frequencies = RoomHelper.scheduleDao?.queryFrequencyEntitiesOnSchedule(tid)
+                        if (!frequencies.isNullOrEmpty()) {
+                            for (frequency in frequencies) {
+                                CalendarProviderManager.deleteCalendarEvent(UIUtils.getContext(), frequency.eventId)
+                            }
+                        }
                         //  本地创建数据
                         RoomHelper.scheduleDao?.deleteScheduleTransaction(tid)
                         //  接口获取的分页列表数据
@@ -121,6 +130,12 @@ class ListViewModel : BaseViewModel<ListRepository>() {
             if (res.code == 8000) {
                 Toast.makeText(UIUtils.getContext(), res.msg, Toast.LENGTH_SHORT).show()
                 withContext(Dispatchers.IO) {
+                    val frequencies = RoomHelper.scheduleDao?.queryAllOfFrequency()
+                    if (!frequencies.isNullOrEmpty()) {
+                        for (frequency in frequencies) {
+                            CalendarProviderManager.deleteCalendarEvent(UIUtils.getContext(), frequency.eventId)
+                        }
+                    }
                     RoomHelper.scheduleDao?.deleteAllOfSchedulesTransaction()
                     RoomHelper.remoteKeysDao?.clearRemoteKeys()
                     RoomHelper.listPageDao?.clearAll()

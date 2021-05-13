@@ -13,6 +13,7 @@
         tools:context=".SMMainActivity">
 
         <include layout="@layout/include_nameplate_public_view_sm"/>
+<!--        <include layout="@layout/include_nameplate_public_view"/>-->
 
         <fragment
             android:id="@+id/fragment"

@@ -1,4 +1,4 @@
-package com.hnsh.dialogue.jet.common.widgets.dialogs
+package com.shkj.cm.widgets
 
 import android.app.Dialog
 import android.content.Context
@@ -75,10 +75,18 @@ class NormalDialogByFragment : DialogFragment() {
         val tvMessage = view.findViewById<TextView>(R.id.tv_message)
         val tvNegative = view.findViewById<TextView>(R.id.tv_negative)
         val tvPositive = view.findViewById<TextView>(R.id.tv_positive)
-        tvTitle.text = title
-        tvMessage.text = message
-        tvNegative.text = negative
-        tvPositive.text = positive
+        title?.let {
+            tvTitle.text = it
+        }
+        message?.let {
+            tvMessage.text = it
+        }
+        negative?.let {
+            tvNegative.text = it
+        }
+        positive?.let {
+            tvPositive.text = it
+        }
         tvNegative.setOnClickListener {
             mNegativeListener?.onDialogNegativeClick(this)
             dialog?.dismiss()
@@ -98,15 +106,23 @@ class NormalDialogByFragment : DialogFragment() {
     }
 
     companion object {
-        fun getInstance(title: String, message: String, negative: String, positive: String): NormalDialogByFragment {
-            val f = NormalDialogByFragment()
-            val args = Bundle()
-            args.putString(TITLE, title)
-            args.putString(MESSAGE, message)
-            args.putString(NEGATIVE, negative)
-            args.putString(POSITIVE, positive)
-            f.arguments = args
-            return f
+        fun getInstance(title: String?, message: String?, negative: String?, positive: String?): NormalDialogByFragment {
+            return NormalDialogByFragment().apply {
+                arguments = Bundle().also {
+                    title?.let { mit ->
+                        it.putString(TITLE, mit)
+                    }
+                    message?.let { mit ->
+                        it.putString(MESSAGE, mit)
+                    }
+                    negative?.let { mit ->
+                        it.putString(NEGATIVE, mit)
+                    }
+                    positive?.let { mit ->
+                        it.putString(POSITIVE, mit)
+                    }
+                }
+            }
         }
     }
 

@@ -18,6 +18,12 @@ fun initFrequencySelectListener(vararg arr: FrequencyView, callback: (FrequencyV
     }
 }
 
+fun switchDayModel(dayModel:Boolean,vararg arr: FrequencyView){
+    arr.forEach {
+        it.switchDayModel(dayModel)
+    }
+}
+
 fun FrequencyView.bindingAddFrequencyCallback(callback: (FrequencyView) -> Unit) {
     var addFrequencyView = this.findViewById<ImageButton>(R.id.ib_add_frequency)
     addFrequencyView.setOnClickListener {
@@ -38,5 +44,5 @@ fun bindingDeleteFrequencyCallback(vararg arr: FrequencyView, callback: (Frequen
 fun getWeekOfMonth(date: Date):Int {
     val calendar = Calendar.getInstance()
     calendar.time = date
-    return calendar.get(Calendar.MONTH)
+    return calendar.get(Calendar.WEEK_OF_MONTH)
 }

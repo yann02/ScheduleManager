@@ -1,6 +1,7 @@
 package com.shkj.cm.modules.form
 
 import android.content.Context
+import android.util.Log
 import android.widget.Toast
 import androidx.annotation.ArrayRes
 import androidx.lifecycle.MutableLiveData
@@ -65,6 +66,7 @@ class FormViewModel : BaseViewModel<FormRepository>() {
     var startTimeStr = ""
     var endTimeStr = ""
     var isEdit = false
+    var isVoiceAdd = false
     var tid = ""
     val editScheduleEntity = MutableLiveData<ScheduleEntity>()
     var isEditInit = false
@@ -102,7 +104,7 @@ class FormViewModel : BaseViewModel<FormRepository>() {
      */
     private fun refreshTimeForFullOfDay(dateForm: DateFormat) {
         //判断 是否 编辑初始化，是 不用下面的操作
-        if (isEditInit) return
+        if (isEditInit || isVoiceAdd) return
         val startFormatString = if (startTimeOnFormat.value != null) {
             TimeUtil.notFullOfDayToFullOfDay(startTimeOnFormat.value!!)
         } else {
@@ -116,8 +118,10 @@ class FormViewModel : BaseViewModel<FormRepository>() {
 
         startTimeOnFormat.postValue(startFormatString)
         endTimeOnFormat.postValue(endFormatString)
-        startTime.postValue(DateUtils.string2Millis(startFormatString, dateForm).toString())
-        endTime.postValue(DateUtils.string2Millis(endFormatString, dateForm).toString())
+//        startTime.postValue(DateUtils.string2Millis(startFormatString, dateForm).toString())
+        startTime.postValue("${TimeUtil.datePlus9Hours2Millis(DateUtils.string2Date(startFormatString,dateForm))}")
+        endTime.postValue("${TimeUtil.datePlus10Hours2Millis(DateUtils.string2Date(endFormatString,dateForm))}")
+//        endTime.postValue(DateUtils.string2Millis(endFormatString, dateForm).toString())
     }
 
     /**
@@ -156,6 +160,7 @@ class FormViewModel : BaseViewModel<FormRepository>() {
     var repeatLevel = MutableLiveData<@ArrayRes Int>(R.array.no_repeat_array)
 
     var success = MutableLiveData<Boolean>()
+
     /**
      * 创建日程
      */
@@ -197,6 +202,7 @@ class FormViewModel : BaseViewModel<FormRepository>() {
             }
         }
     }
+
 
     fun onEditSchedule() {
         if (checkSubmitUnable()) {
@@ -252,6 +258,7 @@ class FormViewModel : BaseViewModel<FormRepository>() {
 //        val entity = com.shkj.cm.db.Body("1618900793724", 1, "1618794000000", 0, "GMT+8:00", "2000206", "1618621200000", "512747712564572161", "测试标题5")
 //        val arrayList = arrayListOf("1", "2", "3")
 //        entity.preTime = arrayList
+        tid = body.tid
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 RoomHelper.scheduleDao?.insertSchedule(getLocalBody(body))
@@ -303,8 +310,8 @@ class FormViewModel : BaseViewModel<FormRepository>() {
      */
     private fun checkSubmitUnable() = title.value.isNullOrEmpty()
 
-    fun addCalendarEvent(context: Context): List<Long> {
-        val eventList = emptyList<Long>()
+    fun addCalendarEvent(context: Context) {
+        val eventList = mutableListOf<FrequencyEntity>()
         for (frequency in preTime.value!!) {
             var advanceTime = when (frequency) {
                 //五分钟前
@@ -330,10 +337,10 @@ class FormViewModel : BaseViewModel<FormRepository>() {
             }
             var rrule = when (freq.value!!) {
 
-                Constant.VALUE_BY_DAY -> RRuleConstant.REPEAT_CYCLE_DAILY_UNTIL_END_DATE
-                Constant.VALUE_BY_MONTH -> RRuleConstant.REPEAT_CYCLE_MONTH_UNTIL_END_DATE
-                Constant.VALUE_BY_WEEK -> RRuleConstant.REPEAT_CYCLE_WEEK_UNTIL_END_DATE
-                Constant.VALUE_BY_YEAR -> RRuleConstant.REPEAT_CYCLE_YEAR_UNTIL_END_DATE
+                Constant.RULE_BY_DAY -> RRuleConstant.REPEAT_CYCLE_DAILY_UNTIL_END_DATE
+                Constant.RULE_BY_MONTH -> RRuleConstant.REPEAT_CYCLE_MONTH_UNTIL_END_DATE
+                Constant.RULE_BY_WEEK -> RRuleConstant.REPEAT_CYCLE_WEEK_UNTIL_END_DATE
+                Constant.RULE_BY_YEAR -> RRuleConstant.REPEAT_CYCLE_YEAR_UNTIL_END_DATE
                 else -> ""
             }
 
@@ -342,7 +349,7 @@ class FormViewModel : BaseViewModel<FormRepository>() {
                 CalendarEvent(
                     title.value,
                     title.value,
-                    "Sanya",
+                    "Earth",
                     startTime.value!!.toLong(),
                     endTime.value!!.toLong(),
                     advanceTime,
@@ -353,11 +360,21 @@ class FormViewModel : BaseViewModel<FormRepository>() {
                 var tempEventId =
                     SharedPreUtils.getLong(UIUtils.getContext(), Constant.TEMP_EVENT_ID, 0L);
                 if (tempEventId != 0L) {
-                    eventList.plus(tempEventId)
+//                    eventList.plus(FrequencyEntity(tid, "$advanceTime", tempEventId))
+                    eventList.add(FrequencyEntity(tid, "$advanceTime", tempEventId))
                 }
             }
         }
-        return eventList
+        Log.d("wyy", "eventList:$eventList")
+        //
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                if (eventList.isNotEmpty()) {
+//                    RoomHelper.scheduleDao?.insertFrequencyForSchedule(eventList)
+                    RoomHelper.scheduleDao?.insertFrequenciesForSchedule(eventList)
+                }
+            }
+        }
     }
 
 
@@ -373,17 +390,7 @@ class FormViewModel : BaseViewModel<FormRepository>() {
                 //删除日程对应的频次
                 RoomHelper.scheduleDao?.deleteFrequencyEntitiesOnSchedule(tid)
                 //添加新的日程事件和数据
-                addCalendarEvent(context).apply {
-                    forEach { eventId ->
-                        RoomHelper.scheduleDao?.insertFrequencyForSchedule(
-                            FrequencyEntity(
-                                tid,
-                                editScheduleEntity.value!!.createtime!!,
-                                eventId
-                            )
-                        )
-                    }
-                }
+                addCalendarEvent(context)
             }
         }
     }

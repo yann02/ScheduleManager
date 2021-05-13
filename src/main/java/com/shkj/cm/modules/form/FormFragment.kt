@@ -55,12 +55,6 @@ class FormFragment : BaseLifeCycleFragment<FormViewModel, FragmentFormBinding>()
         showSuccess()
         mViewModel.monoId = viewModelOfMainActivity.monoId
 
-//        Permissions(this).request(
-//            Manifest.permission.READ_CALENDAR,
-//            Manifest.permission.READ_EXTERNAL_STORAGE,
-//            Manifest.permission.WRITE_CALENDAR
-//        )
-
         requestPermission()
         //  监听用户点击返回
         mDataBinding.ibOnBack.setOnClickListener {
@@ -70,6 +64,9 @@ class FormFragment : BaseLifeCycleFragment<FormViewModel, FragmentFormBinding>()
         mDataBinding.btnSave.setOnClickListener {
             //  用户点击了保存按钮
             //  添加日程
+            if (mViewModel.dtag.value!! == "2") {
+
+            }
             if (mViewModel.isEdit) mViewModel.onEditSchedule()
             else mViewModel.onAddSchedule()
         }
@@ -90,6 +87,16 @@ class FormFragment : BaseLifeCycleFragment<FormViewModel, FragmentFormBinding>()
         mDataBinding.sbAllOfDay.setOnCheckedChangeListener { _, isChecked ->
             //  更新标记值
             mViewModel.isEditInit = false
+            mViewModel.isVoiceAdd = false
+
+            switchDayModel(
+                isChecked,
+                frequencyView1,
+                frequencyView2,
+                frequencyView3,
+                frequencyView4,
+                frequencyView5
+            )
             mViewModel.dtag.postValue(getDtagValue(isChecked))
 
         }
@@ -148,9 +155,13 @@ class FormFragment : BaseLifeCycleFragment<FormViewModel, FragmentFormBinding>()
             if (getBoolean(ConstantRouterParamKey.IS_EDIT)) {
                 mDataBinding.tvTitle.text =
                     resources.getString(R.string.title_of_edit)
+                scheduleEntity =
+                    getParcelable<ScheduleEntity>(ConstantRouterParamKey.SCHEDULE_ENTITY)
+                initScheduleInfo()
             }
-            scheduleEntity = getParcelable<ScheduleEntity>(ConstantRouterParamKey.SCHEDULE_ENTITY)
-            initScheduleInfo()
+            if (getString("handle") != null) {
+                voiceAdd()
+            }
         }
     }
 
@@ -483,5 +494,14 @@ class FormFragment : BaseLifeCycleFragment<FormViewModel, FragmentFormBinding>()
             }
             .request { _, _, _ ->
             }
+    }
+
+    fun voiceAdd() {
+        mViewModel.isVoiceAdd = true
+        mDataBinding.tvStartTime.text = requireArguments().getString("startTime")
+        mDataBinding.etTitle.setText(requireArguments().getString("content"))
+        mDataBinding.tvEndTime.text =
+            TimeUtil.getEndTimeByStartTime(requireArguments().getString("startTime")!!)
+
     }
 }

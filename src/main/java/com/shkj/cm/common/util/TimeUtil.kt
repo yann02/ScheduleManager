@@ -83,6 +83,22 @@ object TimeUtil {
         return DateUtils.date2String(Date(mss), formatOfResult)
     }
 
+    //加九个小时
+    fun datePlus9Hours2Millis(date:Date):Long{
+        var calendar  = Calendar.getInstance()
+        calendar.time = date
+        calendar.add(Calendar.HOUR,10)
+        return DateUtils.date2Millis(calendar.time)
+    }
+
+    //加10个小时
+    fun datePlus10Hours2Millis(date:Date):Long{
+        var calendar  = Calendar.getInstance()
+        calendar.time = date
+        calendar.add(Calendar.HOUR,11)
+        return DateUtils.date2Millis(calendar.time)
+    }
+
     /**
      * 全天转非全天
      */
@@ -145,5 +161,13 @@ object TimeUtil {
         val formDateString = DateUtils.date2String(date, DateUtils.yyyyMMddHHmmss.get())
         Log.d("wyy", "formDateString:$formDateString")
         return DateUtils.string2Millis(formDateString, DateUtils.yyyyMMddHHmmss.get()).toString()
+    }
+
+    fun getEndTimeByStartTime(startTime:String):String{
+        val date = DateUtils.string2Date(startTime, DateUtils.yyyyMMddHHmm.get())
+        val calendar = Calendar.getInstance()
+        calendar.time = date
+        calendar.add(Calendar.HOUR,1)
+        return DateUtils.date2String(calendar.time,DateUtils.yyyyMMddHHmm.get())
     }
 }

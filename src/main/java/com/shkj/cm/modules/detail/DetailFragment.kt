@@ -12,7 +12,6 @@ import com.shkj.cm.common.Constant
 import com.shkj.cm.common.symbols.ConstantRouterParamKey
 import com.shkj.cm.databinding.FragmentDetailBinding
 import com.shkj.cm.modules.detail.entity.ScheduleEntity
-import java.util.logging.Logger
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -77,10 +76,10 @@ class DetailFragment : BaseLifeCycleFragment<DetailViewModel, FragmentDetailBind
 
             mDataBinding.tvSubtitleValue.text = it.body.title
             mDataBinding.tvRepeatValue.text = when (it.body.freq) {
-                Constant.VALUE_BY_DAY -> Constant.CHAR_BY_DAY
-                Constant.VALUE_BY_MONTH -> Constant.CHAR_BY_MONTH
-                Constant.VALUE_BY_WEEK -> Constant.CHAR_BY_WEEK
-                Constant.VALUE_BY_YEAR -> Constant.CHAR_BY_YEAR
+                Constant.RULE_BY_DAY -> Constant.CHAR_BY_DAY
+                Constant.RULE_BY_MONTH -> Constant.CHAR_BY_MONTH
+                Constant.RULE_BY_WEEK -> Constant.CHAR_BY_WEEK
+                Constant.RULE_BY_YEAR -> Constant.CHAR_BY_YEAR
                 else -> Constant.CHAR_NO_REPEAT
             }
             mDataBinding.tvTimeValue.text =

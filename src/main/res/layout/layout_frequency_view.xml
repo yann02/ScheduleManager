@@ -30,7 +30,7 @@
                 android:textColor="@color/primary_of_font"
                 android:textSize="@dimen/font_size_form_left"
                 app:ms_arrow_image="@mipmap/ic_down48"
-                app:ms_entries="@array/day_array"
+                app:ms_entries="@array/no_all_day_array"
                 app:ms_hide_arrow="true"></com.xuexiang.xui.widget.spinner.materialspinner.MaterialSpinner>
 
             <ImageButton

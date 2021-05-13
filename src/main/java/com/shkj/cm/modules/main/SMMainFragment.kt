@@ -97,10 +97,8 @@ class SMMainFragment : BaseLifeCycleFragment<MainViewModel, FragmentSmmainBindin
      * 初始化日历
      */
     private fun initCalendar() {
-        Log.d("wyy", "initCalendar")
         var singDate = ""
         if (viewModelOfMainActivity.selectorDay.value != null) {
-            Log.d("wyy", "选择的日期不为空")
             singDate = "${viewModelOfMainActivity.selectorYear.value}.${viewModelOfMainActivity.selectorMonth.value}.${viewModelOfMainActivity.selectorDay.value}"
         }
         mDataBinding.cvCalendar
@@ -212,4 +210,5 @@ class SMMainFragment : BaseLifeCycleFragment<MainViewModel, FragmentSmmainBindin
             mDataBinding.rvList.visibility = View.VISIBLE
         }
     }
+
 }

@@ -17,14 +17,15 @@ import com.dosmono.platecommon.util.UIUtils
 import com.orhanobut.logger.Logger
 import com.shkj.cm.R
 import com.xuexiang.xutil.tip.ToastUtils
+import java.lang.Exception
 
 
 class VRCalendarContractBroadcast : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
-        ToastUtils.toast(
-            "接收到" +
-                    "事件！", Toast.LENGTH_LONG
-        )
+//        ToastUtils.toast(
+//            "接收到" +
+//                    "事件！", Toast.LENGTH_LONG
+//        )
         Log.d("dosmono", "接收到事件！")
         val uri = intent.data!!
         val alertTime = uri.lastPathSegment!!
@@ -41,14 +42,19 @@ class VRCalendarContractBroadcast : BroadcastReceiver() {
             null
         )
 
-        cursor?.apply {
-            moveToFirst()
-            val title = cursor.getString(cursor.getColumnIndex(CalendarContract.Events.TITLE))
-            val startTime = cursor.getString(cursor.getColumnIndex(CalendarContract.Events.DTSTART))
-            val endTime = cursor.getString(cursor.getColumnIndex(CalendarContract.Events.DTEND))
-            Log.d("dosmono", "time = $title,startTime = $startTime,endTime = $endTime")
-            showDialog(title)
+        try {
+            cursor?.apply {
+                moveToFirst()
+                val title = cursor.getString(cursor.getColumnIndex(CalendarContract.Events.TITLE))
+                val startTime = cursor.getString(cursor.getColumnIndex(CalendarContract.Events.DTSTART))
+                val endTime = cursor.getString(cursor.getColumnIndex(CalendarContract.Events.DTEND))
+                Log.d("dosmono", "time = $title,startTime = $startTime,endTime = $endTime")
+                showDialog(title)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
+
     }
 
     fun showDialog(msg: String) {
@@ -68,8 +74,9 @@ class VRCalendarContractBroadcast : BroadcastReceiver() {
         val wlp: WindowManager.LayoutParams = alertDialog.window?.attributes!!
         wlp.gravity = Gravity.TOP or Gravity.CENTER_HORIZONTAL
         wlp.y = 1143
+        alertDialog.setCanceledOnTouchOutside(false)
         alertDialog.show()
-        alertDialog.window?.setLayout(780,ViewGroup.LayoutParams.WRAP_CONTENT)
+        alertDialog.window?.setLayout(780, ViewGroup.LayoutParams.WRAP_CONTENT)
         view.findViewById<TextView>(R.id.tv_positive).setOnClickListener {
             alertDialog.dismiss()
         }
