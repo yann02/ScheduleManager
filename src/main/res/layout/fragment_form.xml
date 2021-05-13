@@ -346,9 +346,9 @@
 
                 <TextView
                     android:id="@+id/textView11"
-                    android:layout_marginTop="@dimen/common_margin_30px"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
                     android:layout_marginRight="@dimen/margin_30_px"
                     android:text="@string/form_frequency"
                     android:textColor="@color/font_color_of_form_left"

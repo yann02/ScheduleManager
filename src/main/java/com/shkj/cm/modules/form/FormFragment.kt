@@ -64,6 +64,9 @@ class FormFragment : BaseLifeCycleFragment<FormViewModel, FragmentFormBinding>()
         mDataBinding.btnSave.setOnClickListener {
             //  用户点击了保存按钮
             //  添加日程
+            if (mViewModel.dtag.value!! == "2") {
+
+            }
             if (mViewModel.isEdit) mViewModel.onEditSchedule()
             else mViewModel.onAddSchedule()
         }
@@ -85,6 +88,15 @@ class FormFragment : BaseLifeCycleFragment<FormViewModel, FragmentFormBinding>()
             //  更新标记值
             mViewModel.isEditInit = false
             mViewModel.isVoiceAdd = false
+
+            switchDayModel(
+                isChecked,
+                frequencyView1,
+                frequencyView2,
+                frequencyView3,
+                frequencyView4,
+                frequencyView5
+            )
             mViewModel.dtag.postValue(getDtagValue(isChecked))
 
         }
@@ -143,10 +155,11 @@ class FormFragment : BaseLifeCycleFragment<FormViewModel, FragmentFormBinding>()
             if (getBoolean(ConstantRouterParamKey.IS_EDIT)) {
                 mDataBinding.tvTitle.text =
                     resources.getString(R.string.title_of_edit)
-                scheduleEntity = getParcelable<ScheduleEntity>(ConstantRouterParamKey.SCHEDULE_ENTITY)
+                scheduleEntity =
+                    getParcelable<ScheduleEntity>(ConstantRouterParamKey.SCHEDULE_ENTITY)
                 initScheduleInfo()
             }
-            if(getString("handle") != null){
+            if (getString("handle") != null) {
                 voiceAdd()
             }
         }
@@ -483,11 +496,12 @@ class FormFragment : BaseLifeCycleFragment<FormViewModel, FragmentFormBinding>()
             }
     }
 
-    fun voiceAdd(){
+    fun voiceAdd() {
         mViewModel.isVoiceAdd = true
         mDataBinding.tvStartTime.text = requireArguments().getString("startTime")
         mDataBinding.etTitle.setText(requireArguments().getString("content"))
-        mDataBinding.tvEndTime.text = TimeUtil.getEndTimeByStartTime(requireArguments().getString("startTime")!!)
+        mDataBinding.tvEndTime.text =
+            TimeUtil.getEndTimeByStartTime(requireArguments().getString("startTime")!!)
 
     }
 }

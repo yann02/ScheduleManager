@@ -61,7 +61,7 @@ class SMMainActivity : BaseLifeCycleActivity<MainViewModel, ActivitySmmainBindin
             setGraph(navInflater.inflate(R.navigation.dialogue_nav).apply {
                 startDestination = when (handle) {
                     Constant.VOICE_ACTION_ADD -> R.id.formFragment
-                    Constant.VOICE_ACTION_DELETE -> R.id.smmainFragment
+                    Constant.VOICE_ACTION_DELETE -> R.id.listFragment
                     Constant.VOICE_ACTION_UPDATE -> R.id.formFragment
                     else -> R.id.smmainFragment
                 }

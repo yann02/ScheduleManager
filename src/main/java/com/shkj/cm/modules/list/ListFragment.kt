@@ -18,6 +18,7 @@ import com.shkj.cm.R
 import com.shkj.cm.base.view.BaseLifeCycleFragment
 import com.shkj.cm.common.symbols.ConstantRouterParamKey
 import com.shkj.cm.databinding.FragmentListBinding
+import com.xuexiang.xui.widget.dialog.materialdialog.MaterialDialog
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -82,6 +83,7 @@ class ListFragment : BaseLifeCycleFragment<ListViewModel, FragmentListBinding>()
         lifecycleScope.launch {
             mViewModel.findSchedulesByDB().collectLatest {
                 adapter?.submitData(it)
+                voiceDelete()
             }
         }
     }
@@ -107,8 +109,18 @@ class ListFragment : BaseLifeCycleFragment<ListViewModel, FragmentListBinding>()
         }
         mDataBinding.rvList.adapter = adapter
     }
+    fun voiceDelete(){
+        arguments?.getString("handle")?.apply {
+            MaterialDialog.Builder(requireContext())
+                .content(R.string.confirm_delete_all_schedules)
+                .positiveText(R.string.confirm_yes)
+                .negativeText(R.string.confirm_no)
+                .onPositive { _, _ -> mViewModel.deleteAllOfSchedules()  }
+                .show()
+            mViewModel.deleteAllOfSchedules()
+        }
 
-    fun onDialogForDeleteAllSchedule(msg: String, deleteAll: Boolean, tid: String = "") {
+    }    fun onDialogForDeleteAllSchedule(msg: String, deleteAll: Boolean, tid: String = "") {
         val builder: AlertDialog.Builder = AlertDialog.Builder(UIUtils.getContext())
 
         val alertDialog: AlertDialog = builder.create()
@@ -140,5 +152,4 @@ class ListFragment : BaseLifeCycleFragment<ListViewModel, FragmentListBinding>()
         view.findViewById<TextView>(R.id.tv_negative).setOnClickListener {
             alertDialog.dismiss()
         }
-    }
-}
+    }}

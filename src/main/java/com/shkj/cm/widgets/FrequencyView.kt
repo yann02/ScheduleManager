@@ -10,6 +10,7 @@ import android.widget.FrameLayout
 import android.widget.LinearLayout
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.shkj.cm.R
+import com.xuexiang.xui.utils.ResUtils
 import kotlinx.android.synthetic.main.layout_frequency_view.view.*
 import kotlin.properties.Delegates
 
@@ -37,11 +38,18 @@ class FrequencyView @JvmOverloads constructor(
         materialspinner.selectedIndex = 0
     }
 
-    fun getSelectIndex():Int{
+    fun getSelectIndex(): Int {
         return materialspinner.selectedIndex
     }
 
     fun setSelectedIndex(index: Int) {
         materialspinner.selectedIndex = index
+    }
+
+    fun switchDayModel(isAllDay: Boolean) {
+        if (isAllDay) materialspinner.setItems(
+            ResUtils.getStringArray(R.array.all_day_array).toList()
+        )
+        else materialspinner.setItems(ResUtils.getStringArray(R.array.no_all_day_array).toList())
     }
 }

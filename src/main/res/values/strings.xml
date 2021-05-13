@@ -54,8 +54,11 @@
 
     <!--    alert dialog-->
     <string name="title_alert_dialog">温馨提示</string>
-    <string name="cancel">取消</string>
+    <string name="confirm_delete_all_schedules">是否清空所有日程？</string>
+    <string name="confirm_yes">是</string>
+    <string name="confirm_no">否</string>
     <string name="confirm">确认</string>
+    <string name="cancel">取消</string>
     <string name="tip_of_delete_all_schedule">确认清空所有日程记录吗？</string>
     <string name="tip_of_delete_schedule">确认删除该日程记录吗？</string>
 </resources>

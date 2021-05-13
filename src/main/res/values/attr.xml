@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string-array name="day_array">
+    <string-array name="all_day_array">
+        <item>当天(上午9点)</item>
+        <item>1天前(上午9点)</item>
+        <item>2天前(上午9点)</item>
+        <item>1周前(上午9点)</item>
+    </string-array>
+
+    <string-array name="no_all_day_array">
         <item>5分钟</item>
         <item>10分钟</item>
         <item>15分钟</item>
         <item>30分钟</item>
         <item>1小时</item>
         <item>2小时</item>
-        <item>当天</item>
-        <item>1天前</item>
-        <item>2天前</item>
-        <item>1周前</item>
     </string-array>
+
 
     <string-array name="no_repeat_array">
         <item>不重复</item>

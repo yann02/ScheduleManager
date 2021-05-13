@@ -210,4 +210,5 @@ class SMMainFragment : BaseLifeCycleFragment<MainViewModel, FragmentSmmainBindin
             mDataBinding.rvList.visibility = View.VISIBLE
         }
     }
+
 }

@@ -118,8 +118,10 @@ class FormViewModel : BaseViewModel<FormRepository>() {
 
         startTimeOnFormat.postValue(startFormatString)
         endTimeOnFormat.postValue(endFormatString)
-        startTime.postValue(DateUtils.string2Millis(startFormatString, dateForm).toString())
-        endTime.postValue(DateUtils.string2Millis(endFormatString, dateForm).toString())
+//        startTime.postValue(DateUtils.string2Millis(startFormatString, dateForm).toString())
+        startTime.postValue("${TimeUtil.datePlus9Hours2Millis(DateUtils.string2Date(startFormatString,dateForm))}")
+        endTime.postValue("${TimeUtil.datePlus10Hours2Millis(DateUtils.string2Date(endFormatString,dateForm))}")
+//        endTime.postValue(DateUtils.string2Millis(endFormatString, dateForm).toString())
     }
 
     /**
@@ -200,6 +202,7 @@ class FormViewModel : BaseViewModel<FormRepository>() {
             }
         }
     }
+
 
     fun onEditSchedule() {
         if (checkSubmitUnable()) {

@@ -67,10 +67,10 @@ object Constant {
 
     const val TEMP_EVENT_ID = "tempEventId"
 
-    const val VOICE_ACTION_ADD = "ADD"
-    const val VOICE_ACTION_DELETE = "DELETE"
-    const val VOICE_ACTION_UPDATE = "UPDATE"
-    const val VOICE_ACTION_QUERY = "QUERY"
+    const val VOICE_ACTION_ADD = "0"
+    const val VOICE_ACTION_DELETE = "1"
+    const val VOICE_ACTION_UPDATE = "2"
+    const val VOICE_ACTION_QUERY = "3"
 
 
 

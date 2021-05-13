@@ -83,6 +83,22 @@ object TimeUtil {
         return DateUtils.date2String(Date(mss), formatOfResult)
     }
 
+    //加九个小时
+    fun datePlus9Hours2Millis(date:Date):Long{
+        var calendar  = Calendar.getInstance()
+        calendar.time = date
+        calendar.add(Calendar.HOUR,10)
+        return DateUtils.date2Millis(calendar.time)
+    }
+
+    //加10个小时
+    fun datePlus10Hours2Millis(date:Date):Long{
+        var calendar  = Calendar.getInstance()
+        calendar.time = date
+        calendar.add(Calendar.HOUR,11)
+        return DateUtils.date2Millis(calendar.time)
+    }
+
     /**
      * 全天转非全天
      */
