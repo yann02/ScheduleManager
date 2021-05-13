@@ -176,6 +176,7 @@
             app:layout_constraintRight_toLeftOf="@+id/gl_h2" />
 
         <com.shkj.cm.widgets.MyWeekView
+            android:visibility="gone"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="@+id/gl_v6"
@@ -194,7 +195,21 @@
             app:layout_constraintRight_toLeftOf="@+id/gl_h2"
             app:layout_constraintTop_toBottomOf="@+id/gl_v6"
             app:show_lunar="false"
-            app:switch_choose="false" />
+            app:switch_choose="false"
+            android:visibility="gone"/>
+
+        <com.haibin.calendarview.CalendarView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:id="@+id/cv_canvas_calendar"
+            app:layout_constraintLeft_toLeftOf="@+id/gl_h1"
+            app:layout_constraintRight_toRightOf="@+id/gl_h2"
+            app:layout_constraintTop_toTopOf="@+id/gl_v5"
+            app:layout_constraintBottom_toBottomOf="@+id/gl_v7"
+            app:month_view="com.shkj.cm.widgets.CustomMonthView"
+            app:week_background="@android:color/transparent"
+            app:week_bar_height="@dimen/px_80"
+            app:week_text_color="@color/primary_of_font"/>
 
         <TextView
             android:layout_width="0dp"
