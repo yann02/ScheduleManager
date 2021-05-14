@@ -9,7 +9,6 @@
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
         android:layout_weight="1"
         android:orientation="vertical">
 
@@ -54,19 +53,21 @@
 
     <ImageButton
         android:id="@+id/ib_delete_frequency"
-        android:layout_width="@dimen/icon_size_of_year_or_month"
-        android:layout_height="@dimen/icon_size_of_year_or_month"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_marginStart="@dimen/margin_30_px"
+        android:layout_marginLeft="@dimen/common_margin_20px"
+        android:padding="@dimen/common_margin_15px"
         android:background="@android:color/transparent"
         android:src="@mipmap/ic_delete48" />
 
     <ImageButton
         android:id="@+id/ib_add_frequency"
-        android:layout_width="@dimen/icon_size_of_year_or_month"
-        android:layout_height="@dimen/icon_size_of_year_or_month"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_marginStart="@dimen/common_margin_30px"
+        android:layout_marginLeft="@dimen/common_margin_15px"
+        android:padding="@dimen/common_margin_10px"
         android:background="@android:color/transparent"
         android:src="@mipmap/ic_nav_add" />
 

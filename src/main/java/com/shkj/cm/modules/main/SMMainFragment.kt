@@ -12,8 +12,10 @@ import com.shkj.cm.base.view.BaseLifeCycleFragment
 import com.shkj.cm.calendarview.utils.CalendarUtil
 import com.shkj.cm.common.symbols.ConstantRouterParamKey
 import com.shkj.cm.databinding.FragmentSmmainBinding
+import com.xuexiang.xui.widget.dialog.materialdialog.MaterialDialog
+import com.xuexiang.xutil.data.DateUtils
+import java.util.*
 import kotlin.math.log
-
 /**
  * Copyright (C), 2015-2021, 海南双猴科技有限公司
  * @Description: 日程备忘首页
@@ -91,6 +93,8 @@ class SMMainFragment : BaseLifeCycleFragment<MainViewModel, FragmentSmmainBindin
         }
         //  初始化日历
         initCalendar()
+
+
     }
 
     /**
@@ -155,11 +159,14 @@ class SMMainFragment : BaseLifeCycleFragment<MainViewModel, FragmentSmmainBindin
         //  日历标题日期
         viewModelOfMainActivity.titleOfYear.postValue(cDate[0])
         viewModelOfMainActivity.titleOfMonth.postValue(cDate[1])
-
+        if(voiceQuery()) return
         //  当前选择日期
         viewModelOfMainActivity.selectorYear.postValue(cDate[0])
         viewModelOfMainActivity.selectorMonth.postValue(cDate[1])
         viewModelOfMainActivity.selectorDay.postValue(cDate[2])
+
+
+
     }
 
     /**
@@ -211,4 +218,18 @@ class SMMainFragment : BaseLifeCycleFragment<MainViewModel, FragmentSmmainBindin
         }
     }
 
+    private fun voiceQuery():Boolean{
+        arguments?.getString("handle")?.apply {
+           var startTime = arguments?.getString("startTime")
+            var date = DateUtils.string2Date(startTime,DateUtils.yyyyMMdd.get())
+            var calendar = Calendar.getInstance()
+            calendar.time = date
+            viewModelOfMainActivity.selectorYear.postValue(calendar.get(Calendar.YEAR))
+            viewModelOfMainActivity.selectorMonth.postValue(calendar.get(Calendar.MONTH) + 1)
+            viewModelOfMainActivity.selectorDay.postValue(calendar.get(Calendar.DAY_OF_MONTH))
+            return true
+        }
+        return false
+    }
 }
+

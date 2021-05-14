@@ -8,7 +8,7 @@ import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import com.dosmono.platecommon.util.UIUtils
+import com.dosmono.library.opus.Logger
 import com.permissionx.guolindev.PermissionX
 
 import com.permissionx.guolindev.request.ExplainScope
@@ -16,7 +16,6 @@ import com.permissionx.guolindev.request.ForwardScope
 import com.shkj.cm.MainViewModel
 import com.shkj.cm.R
 import com.shkj.cm.base.view.BaseLifeCycleFragment
-import com.shkj.cm.common.calendar.CalendarProviderManager
 import com.shkj.cm.common.symbols.ConstantRouterParamKey
 import com.shkj.cm.common.util.*
 import com.shkj.cm.databinding.FragmentFormBinding
@@ -64,9 +63,7 @@ class FormFragment : BaseLifeCycleFragment<FormViewModel, FragmentFormBinding>()
         mDataBinding.btnSave.setOnClickListener {
             //  用户点击了保存按钮
             //  添加日程
-            if (mViewModel.dtag.value!! == "2") {
 
-            }
             if (mViewModel.isEdit) mViewModel.onEditSchedule()
             else mViewModel.onAddSchedule()
         }
@@ -97,6 +94,24 @@ class FormFragment : BaseLifeCycleFragment<FormViewModel, FragmentFormBinding>()
                 frequencyView4,
                 frequencyView5
             )
+
+            arrayOf(frequencyView1,
+                frequencyView2,
+                frequencyView3,
+                frequencyView4,
+                frequencyView5).forEachIndexed { index, frequencyView ->
+                if(isChecked && frequencyView.isVisible) {
+                    Logger.d("update before ${mViewModel.fullDayFrequencyValue[index]} ")
+                    mViewModel.fullDayFrequencyValue[index] = "${frequencyView.getSelectIndex() + 7}"
+                    Logger.d("update after ${mViewModel.fullDayFrequencyValue[index]} ")
+                }else if(!isChecked && frequencyView.isVisible) {
+                    Logger.d("no checked update before ${mViewModel.noFullDayFrequencyValue[index]} ")
+                    mViewModel.noFullDayFrequencyValue[index] = "${frequencyView.getSelectIndex()+1}"
+                    Logger.d("no checked update before ${mViewModel.noFullDayFrequencyValue[index]} ")
+
+                }
+            }
+
             mViewModel.dtag.postValue(getDtagValue(isChecked))
 
         }
@@ -119,15 +134,27 @@ class FormFragment : BaseLifeCycleFragment<FormViewModel, FragmentFormBinding>()
             mDataBinding.frequencyView3,
             mDataBinding.frequencyView4,
             mDataBinding.frequencyView5
-        ) { view, i ->
-
-            updateFrequencyValue(view, i + 1)
+        ) { view, selectIndex ->
+            if(mViewModel.dtag.value == DTAG_FULL_OF_DAY){
+                updateFullDayFrequencyValue(view, selectIndex + 7)
+            }else{
+                updateNotFullDayFrequencyValue(view, selectIndex + 1)
+            }
         }
         frequencyView1.bindingAddFrequencyCallback {
 
             //更新频次
             addFrequencyView()?.let { frequencyView ->
-                updateFrequencyValue(frequencyView)
+                //非全天
+                if(mViewModel.dtag.value == DTAG_NOT_FULL_OF_DAY){
+                    updateNotFullDayFrequencyValue(frequencyView,frequencyView.getSelectIndex()+1)
+                }else{
+                    //全天
+                    updateFullDayFrequencyValue(frequencyView,frequencyView.getSelectIndex()+7)
+                }
+                mDataBinding.scrollView.post {
+                    mDataBinding.scrollView.fullScroll(View.FOCUS_DOWN);
+                }
             }
         }
         bindingDeleteFrequencyCallback(
@@ -136,15 +163,9 @@ class FormFragment : BaseLifeCycleFragment<FormViewModel, FragmentFormBinding>()
             mDataBinding.frequencyView4,
             mDataBinding.frequencyView5
         ) {
-
-//            if(mViewModel.isEdit){
-//                mViewModel.deleteCalendarEvent(
-//                    requireContext(),
-//                    "${it.getSelectIndex() + 1}"
-//                )
-//            }
             //更新频次
-            updateFrequencyValue(it, -1)
+            updateNotFullDayFrequencyValue(it, -1)
+            updateFullDayFrequencyValue(it,-1)
             //重置选项
             it.resetSelectedIndex()
         }
@@ -364,14 +385,16 @@ class FormFragment : BaseLifeCycleFragment<FormViewModel, FragmentFormBinding>()
     }
 
     private fun addFrequencyView(): FrequencyView? {
-        for (frequencyView in arrayOf(
+
+        arrayOf(
             mDataBinding.frequencyView2,
             mDataBinding.frequencyView3,
             mDataBinding.frequencyView4,
             mDataBinding.frequencyView5
-        )) {
+        ).forEachIndexed { index, frequencyView ->
             if (!frequencyView.isVisible) {
                 frequencyView.visibility = View.VISIBLE
+                frequencyView.setSelectedIndex((index+1) % frequencyView.getItemSize())
                 return frequencyView
             }
         }
@@ -388,20 +411,44 @@ class FormFragment : BaseLifeCycleFragment<FormViewModel, FragmentFormBinding>()
     /**
      * 更新频次
      */
-    private fun updateFrequencyValue(view: FrequencyView, value: Int = 1) {
+    private fun updateNotFullDayFrequencyValue(view: FrequencyView, value: Int = 1) {
         when (view) {
             mDataBinding.frequencyView1 ->
-                mViewModel.frequencyValue[0] = "$value"
+                mViewModel.noFullDayFrequencyValue[0] = "$value"
             mDataBinding.frequencyView2 ->
-                mViewModel.frequencyValue[1] = "$value"
+                mViewModel.noFullDayFrequencyValue[1] = "$value"
             mDataBinding.frequencyView3 ->
-                mViewModel.frequencyValue[2] = "$value"
+                mViewModel.noFullDayFrequencyValue[2] = "$value"
             mDataBinding.frequencyView4 ->
-                mViewModel.frequencyValue[3] = "$value"
+                mViewModel.noFullDayFrequencyValue[3] = "$value"
             mDataBinding.frequencyView5 ->
-                mViewModel.frequencyValue[4] = "$value"
+                mViewModel.noFullDayFrequencyValue[4] = "$value"
         }
     }
+
+    /**
+     * 更新频次
+     */
+    private fun updateFullDayFrequencyValue(view: FrequencyView,value: Int = 7) {
+        Logger.d("before updateFullDayFrequencyValue ${mViewModel.fullDayFrequencyValue}")
+        when (view) {
+            mDataBinding.frequencyView1 ->
+                mViewModel.fullDayFrequencyValue[0] = "$value"
+            mDataBinding.frequencyView2 ->
+                mViewModel.fullDayFrequencyValue[1] = "$value"
+            mDataBinding.frequencyView3 ->
+                mViewModel.fullDayFrequencyValue[2] = "$value"
+            mDataBinding.frequencyView4 ->
+                mViewModel.fullDayFrequencyValue[3] = "$value"
+            mDataBinding.frequencyView5 ->
+                mViewModel.fullDayFrequencyValue[4] = "$value"
+        }
+
+        Logger.d("after updateFullDayFrequencyValue ${mViewModel.fullDayFrequencyValue}")
+
+    }
+
+
 
     private fun initScheduleInfo() {
 
@@ -442,8 +489,13 @@ class FormFragment : BaseLifeCycleFragment<FormViewModel, FragmentFormBinding>()
                         frequencyView5
                     )[index].let { view ->
                         view.visibility = View.VISIBLE
-                        view.setSelectedIndex(preTime!![index].toInt() - 1)
-                        mViewModel.frequencyValue[index] = preTime!![index]
+                        if(dtag == 2){
+                            view.setSelectedIndex(preTime!![index].toInt() - 7)
+                            mViewModel.fullDayFrequencyValue[index] = preTime!![index]
+                        }else{
+                            view.setSelectedIndex(preTime!![index].toInt()-1)
+                            mViewModel.noFullDayFrequencyValue[index] = preTime!![index]
+                        }
                     }
                 }
             }

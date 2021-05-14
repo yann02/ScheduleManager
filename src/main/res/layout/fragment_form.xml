@@ -22,12 +22,13 @@
 
             <ImageButton
                 android:id="@+id/ib_on_back"
-                android:layout_width="@dimen/icon_size_of_on_back"
-                android:layout_height="@dimen/icon_size_of_on_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/common_margin_50px"
                 android:background="@android:color/transparent"
                 android:src="@mipmap/ic_nav_back64"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="@+id/gl_h1"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
@@ -71,6 +72,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ScrollView
+            android:id="@+id/scroll_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -549,9 +551,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    app:layout_constraintGuide_end="@dimen/margin_183_px" />
-
-
+                    app:layout_constraintGuide_end="@dimen/margin_163_px" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
     </LinearLayout>

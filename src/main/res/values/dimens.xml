@@ -134,11 +134,12 @@
     <dimen name="height_680_px">680px</dimen>
     <dimen name="height_780_px">780px</dimen>
     <dimen name="margin_183_px">183px</dimen>
+    <dimen name="margin_163_px">163px</dimen>
     <dimen name="margin_261_px">261px</dimen>
     <dimen name="margin_529_px">529px</dimen>
     <dimen name="margin_419_px">419px</dimen>
 
-    <dimen name="margin_499_px">499px</dimen>
+    <dimen name="margin_499_px">485px</dimen>
     <dimen name="margin_807_px">807px</dimen>
     <dimen name="margin_693_px">693px</dimen>
     <dimen name="margin_498_px">498px</dimen>
