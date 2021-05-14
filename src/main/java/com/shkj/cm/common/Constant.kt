@@ -57,10 +57,10 @@ object Constant {
     const val CHAR_THIRTY_MINUTE = "30分钟"
     const val CHAR_A_HOUR = "1小时"
     const val CHAR_TWO_HOUR = "2小时"
-    const val CHAR_TODAY = "当天"
-    const val CHAR_ADVANCE_A_DAY = "1天前"
-    const val CHAR_ADVANCE_TWO_DAY = "2天前"
-    const val CHAR_ADVANCE_A_WEEK = "1周前"
+    const val CHAR_TODAY = "当天(早上9点)"
+    const val CHAR_ADVANCE_A_DAY = "1天前(早上9点)"
+    const val CHAR_ADVANCE_TWO_DAY = "2天前(早上9点)"
+    const val CHAR_ADVANCE_A_WEEK = "1周前(早上9点)"
 
 
     const val KEY_IS_EDIT = ""

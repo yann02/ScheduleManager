@@ -12,6 +12,7 @@ import com.shkj.cm.common.Constant
 import com.shkj.cm.common.symbols.ConstantRouterParamKey
 import com.shkj.cm.databinding.FragmentDetailBinding
 import com.shkj.cm.modules.detail.entity.ScheduleEntity
+import com.xuexiang.xutil.data.DateUtils
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -72,9 +73,7 @@ class DetailFragment : BaseLifeCycleFragment<DetailViewModel, FragmentDetailBind
                 it.body.title,
                 it.body.preTime
             )
-
-
-            mDataBinding.tvSubtitleValue.text = it.body.title
+            mDataBinding.tvSubtitleValue.text = if(it.body.title.length <= 20) it.body.title else it.body.title.substring(0,20)+"..."
             mDataBinding.tvRepeatValue.text = when (it.body.freq) {
                 Constant.RULE_BY_DAY -> Constant.CHAR_BY_DAY
                 Constant.RULE_BY_MONTH -> Constant.CHAR_BY_MONTH
@@ -84,10 +83,19 @@ class DetailFragment : BaseLifeCycleFragment<DetailViewModel, FragmentDetailBind
             }
             mDataBinding.tvTimeValue.text =
                 if (it.body.dtag == 1) Constant.CHAR_NO_DAY else Constant.CHAR_DAY
+            //设置开始时间
+            mDataBinding.tvStartTimeValue.text = if (it.body.dtag == 1)
+                DateUtils.millis2String(it.body.startTime.toLong(),DateUtils.yyyyMMddHHmm.get())
+            else DateUtils.millis2String(it.body.startTime.toLong(),DateUtils.yyyyMMdd.get())
+            //设置结束时间
+            mDataBinding.tvEndTimeValue.text = if (it.body.dtag == 1)
+                DateUtils.millis2String(it.body.endTime.toLong(),DateUtils.yyyyMMddHHmm.get())
+            else DateUtils.millis2String(it.body.endTime.toLong(),DateUtils.yyyyMMdd.get())
+
             mDataBinding.tvTimezoneValue.text = it.body.gmt
             repeat(it.body.preTime.size) { index ->
                 arrayOf(
-                    mDataBinding.tvFrequencyValue,
+                    mDataBinding.tvFrequencyValue1,
                     mDataBinding.tvFrequencyValue2,
                     mDataBinding.tvFrequencyValue3,
                     mDataBinding.tvFrequencyValue4,
@@ -100,7 +108,7 @@ class DetailFragment : BaseLifeCycleFragment<DetailViewModel, FragmentDetailBind
                         Constant.VALUE_ADVANCE_FIFTH_MINUTES -> Constant.CHAR_FIFTY_MINUTE
                         Constant.VALUE_ADVANCE_THIRTY_MINUTES -> Constant.CHAR_THIRTY_MINUTE
                         Constant.VALUE_ADVANCE_A_HOUR -> Constant.CHAR_A_HOUR
-                        Constant.VALUE_ADVANCE_TWO_HOUR -> Constant.CHAR_ADVANCE_TWO_DAY
+                        Constant.VALUE_ADVANCE_TWO_HOUR -> Constant.CHAR_TWO_HOUR
                         Constant.VALUE_ADVANCE_A_DAY -> Constant.CHAR_ADVANCE_A_DAY
                         Constant.VALUE_ADVANCE_A_WEEK -> Constant.CHAR_ADVANCE_A_WEEK
                         Constant.VALUE_ADVANCE_TWO_DAY -> Constant.CHAR_ADVANCE_TWO_DAY

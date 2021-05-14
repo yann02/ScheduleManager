@@ -109,18 +109,19 @@ class ListFragment : BaseLifeCycleFragment<ListViewModel, FragmentListBinding>()
         }
         mDataBinding.rvList.adapter = adapter
     }
-    fun voiceDelete(){
+
+    private fun voiceDelete(){
         arguments?.getString("handle")?.apply {
             MaterialDialog.Builder(requireContext())
-                .content(R.string.confirm_delete_all_schedules)
-                .positiveText(R.string.confirm_yes)
-                .negativeText(R.string.confirm_no)
+                .content(R.string.tip_of_delete_all_schedule)
+                .positiveText(R.string.confirm)
+                .negativeText(R.string.cancel)
                 .onPositive { _, _ -> mViewModel.deleteAllOfSchedules()  }
                 .show()
-            mViewModel.deleteAllOfSchedules()
         }
+    }
 
-    }    fun onDialogForDeleteAllSchedule(msg: String, deleteAll: Boolean, tid: String = "") {
+    fun onDialogForDeleteAllSchedule(msg: String, deleteAll: Boolean, tid: String = "") {
         val builder: AlertDialog.Builder = AlertDialog.Builder(UIUtils.getContext())
 
         val alertDialog: AlertDialog = builder.create()

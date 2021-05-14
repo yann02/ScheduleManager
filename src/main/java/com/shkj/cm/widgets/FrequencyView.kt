@@ -43,7 +43,12 @@ class FrequencyView @JvmOverloads constructor(
     }
 
     fun setSelectedIndex(index: Int) {
+
         materialspinner.selectedIndex = index
+    }
+
+    fun getItemSize():Int{
+        return materialspinner.getItems<String>().size
     }
 
     fun switchDayModel(isAllDay: Boolean) {

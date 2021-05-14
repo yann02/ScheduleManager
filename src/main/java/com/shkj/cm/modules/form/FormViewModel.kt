@@ -156,7 +156,8 @@ class FormViewModel : BaseViewModel<FormRepository>() {
     //  频次(1, 5分钟；2, 10分钟；3, 15分钟；4，30分钟；5, 1小时；6,  2小时；7，当天；8，1天前；,9, 2天前；10，1周前；)
     var preTime = MutableLiveData<MutableList<String>>(mutableListOf())
 
-    var frequencyValue = mutableListOf("1", "-1", "-1", "-1", "-1")
+    var noFullDayFrequencyValue = mutableListOf("1", "-1", "-1", "-1", "-1")
+    var fullDayFrequencyValue = mutableListOf("7", "-1", "-1", "-1", "-1")
     var repeatLevel = MutableLiveData<@ArrayRes Int>(R.array.no_repeat_array)
 
     var success = MutableLiveData<Boolean>()
@@ -175,12 +176,13 @@ class FormViewModel : BaseViewModel<FormRepository>() {
             ).show()
             return
         }
-        preTime.value!!.clear()
-        for (value in frequencyValue) {
-            if (value != "-1") {
-                preTime.value!!.add(value)
-            }
-        }
+//        preTime.value!!.clear()
+//        for (value in noFullDayFrequencyValue) {
+//            if (value != "-1") {
+//                preTime.value!!.add(value)
+//            }
+//        }
+        setPreTimes()
         initiateRequestNotState {
             val httpBaseBean =
                 mRepository.userScheAddTime(
@@ -204,6 +206,23 @@ class FormViewModel : BaseViewModel<FormRepository>() {
     }
 
 
+    fun setPreTimes(){
+        preTime.value!!.clear()
+        if(dtag.value == DTAG_NOT_FULL_OF_DAY) {
+            for (value in noFullDayFrequencyValue) {
+                if (value != "-1") {
+                    preTime.value!!.add(value)
+                }
+            }
+        }else{
+            for (value in fullDayFrequencyValue) {
+                if (value != "-1") {
+                    preTime.value!!.add(value)
+                }
+            }
+        }
+    }
+
     fun onEditSchedule() {
         if (checkSubmitUnable()) {
             //  校验未通过
@@ -215,12 +234,13 @@ class FormViewModel : BaseViewModel<FormRepository>() {
             ).show()
             return
         }
-        preTime.value!!.clear()
-        for (value in frequencyValue) {
-            if (value != "-1") {
-                preTime.value!!.add(value)
-            }
-        }
+//        preTime.value!!.clear()
+//        for (value in noFullDayFrequencyValue) {
+//            if (value != "-1") {
+//                preTime.value!!.add(value)
+//            }
+//        }
+        setPreTimes()
         initiateRequestNotState {
             val httpBaseBean =
                 mRepository.userScheEditTime(
