@@ -10,8 +10,8 @@ import com.haibin.calendarview.CalendarView
 import com.shkj.cm.MainViewModel
 import com.shkj.cm.R
 import com.shkj.cm.base.view.BaseLifeCycleFragment
-import com.shkj.cm.calendarview.utils.CalendarUtil
 import com.shkj.cm.common.symbols.ConstantRouterParamKey
+import com.shkj.cm.common.util.CommonUtil
 import com.shkj.cm.databinding.FragmentSmmainBinding
 import com.xuexiang.xutil.data.DateUtils
 import java.util.*
@@ -29,7 +29,7 @@ import java.util.*
 class SMMainFragment : BaseLifeCycleFragment<MainViewModel, FragmentSmmainBinding>(), CalendarView.OnCalendarSelectListener,
     CalendarView.OnMonthChangeListener {
     private val viewModelOfMainActivity by activityViewModels<MainViewModel>()
-    private val cDate = CalendarUtil.getCurrentDate()
+    private val cDate = CommonUtil.getCurrentDate()
     private val adapterOfSchedule = AdapterOnDaySchedules(mutableListOf())
     override fun getLayoutId() = R.layout.fragment_smmain
 

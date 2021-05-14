@@ -40,7 +40,7 @@ object CommonUtil {
      * 计算当前日期
      * @return
      */
-    fun getCurrentDate(): IntArray? {
+    fun getCurrentDate(): IntArray {
         val calendar = Calendar.getInstance()
         return intArrayOf(calendar[Calendar.YEAR], calendar[Calendar.MONTH] + 1, calendar[Calendar.DAY_OF_MONTH])
     }
