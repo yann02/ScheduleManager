@@ -44,4 +44,20 @@ object CommonUtil {
         val calendar = Calendar.getInstance()
         return intArrayOf(calendar[Calendar.YEAR], calendar[Calendar.MONTH] + 1, calendar[Calendar.DAY_OF_MONTH])
     }
+
+    private var lastClickTime: Long = 0
+
+    /**
+     * 防止按钮的连击事件
+     * @return true：捕获连击； false：非连击
+     */
+    fun isFastDoubleClick(): Boolean {
+        val time = System.currentTimeMillis()
+        val timeD = time - lastClickTime
+        if (timeD in 1..999) {
+            return true
+        }
+        lastClickTime = time
+        return false
+    }
 }

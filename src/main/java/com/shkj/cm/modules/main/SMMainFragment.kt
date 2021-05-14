@@ -16,6 +16,7 @@ import com.xuexiang.xui.widget.dialog.materialdialog.MaterialDialog
 import com.xuexiang.xutil.data.DateUtils
 import java.util.*
 import kotlin.math.log
+
 /**
  * Copyright (C), 2015-2021, 海南双猴科技有限公司
  * @Description: 日程备忘首页
@@ -42,7 +43,12 @@ class SMMainFragment : BaseLifeCycleFragment<MainViewModel, FragmentSmmainBindin
             //  用户点击了列表的某一项
             findNavController().navigate(
                 R.id.action_smmainFragment_to_detailFragment,
-                Bundle().apply { putString(ConstantRouterParamKey.TID, viewModelOfMainActivity.mSchedules.value?.get(position)?.scheTid) })
+                Bundle().apply {
+                    putString(
+                        ConstantRouterParamKey.TID,
+                        viewModelOfMainActivity.mSchedules.value?.get(position)?.scheTid
+                    )
+                })
         }
         mDataBinding.rvList.adapter = adapterOfSchedule
         mDataBinding.cvCalendar.setOnPagerChangeListener {
@@ -82,11 +88,19 @@ class SMMainFragment : BaseLifeCycleFragment<MainViewModel, FragmentSmmainBindin
         }
         mDataBinding.ibOnAdd.setOnClickListener {
             //  跳转到新建日程页面
-            findNavController().navigate(R.id.action_smmainFragment_to_formFragment)
+            try {
+                findNavController().navigate(R.id.action_smmainFragment_to_formFragment)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
         mDataBinding.ibOnList.setOnClickListener {
             //  跳转到日程列表
-            findNavController().navigate(R.id.action_smmainFragment_to_listFragment)
+            try {
+                findNavController().navigate(R.id.action_smmainFragment_to_listFragment)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
         mDataBinding.ibOnBack.setOnClickListener {
             activity?.onBackPressed()
@@ -103,7 +117,8 @@ class SMMainFragment : BaseLifeCycleFragment<MainViewModel, FragmentSmmainBindin
     private fun initCalendar() {
         var singDate = ""
         if (viewModelOfMainActivity.selectorDay.value != null) {
-            singDate = "${viewModelOfMainActivity.selectorYear.value}.${viewModelOfMainActivity.selectorMonth.value}.${viewModelOfMainActivity.selectorDay.value}"
+            singDate =
+                "${viewModelOfMainActivity.selectorYear.value}.${viewModelOfMainActivity.selectorMonth.value}.${viewModelOfMainActivity.selectorDay.value}"
         }
         mDataBinding.cvCalendar
             .setInitDate("${cDate[0]}.${cDate[1]}")
@@ -159,12 +174,11 @@ class SMMainFragment : BaseLifeCycleFragment<MainViewModel, FragmentSmmainBindin
         //  日历标题日期
         viewModelOfMainActivity.titleOfYear.postValue(cDate[0])
         viewModelOfMainActivity.titleOfMonth.postValue(cDate[1])
-        if(voiceQuery()) return
+        if (voiceQuery()) return
         //  当前选择日期
         viewModelOfMainActivity.selectorYear.postValue(cDate[0])
         viewModelOfMainActivity.selectorMonth.postValue(cDate[1])
         viewModelOfMainActivity.selectorDay.postValue(cDate[2])
-
 
 
     }
@@ -218,10 +232,10 @@ class SMMainFragment : BaseLifeCycleFragment<MainViewModel, FragmentSmmainBindin
         }
     }
 
-    private fun voiceQuery():Boolean{
+    private fun voiceQuery(): Boolean {
         arguments?.getString("handle")?.apply {
-           var startTime = arguments?.getString("startTime")
-            var date = DateUtils.string2Date(startTime,DateUtils.yyyyMMdd.get())
+            var startTime = arguments?.getString("startTime")
+            var date = DateUtils.string2Date(startTime, DateUtils.yyyyMMdd.get())
             var calendar = Calendar.getInstance()
             calendar.time = date
             viewModelOfMainActivity.selectorYear.postValue(calendar.get(Calendar.YEAR))

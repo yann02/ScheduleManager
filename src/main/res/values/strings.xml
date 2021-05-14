@@ -13,6 +13,7 @@
     <!--    form page start-->
     <string name="save">保存</string>
     <string name="edit">编辑</string>
+    <string name="double_submit">请勿重复提交</string>
     <!--    form page end-->
     <!--    list page start-->
     <string name="title_of_list">日程列表</string>
