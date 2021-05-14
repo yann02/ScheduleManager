@@ -1,10 +1,14 @@
 package com.shkj.cm.broadcast
 
+import android.app.AlarmManager
 import android.app.AlertDialog
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.media.MediaPlayer
+import android.media.RingtoneManager
 import android.os.Build
+import android.provider.AlarmClock
 import android.provider.CalendarContract
 import android.util.Log
 import android.view.Gravity
@@ -51,12 +55,13 @@ class VRCalendarContractBroadcast : BroadcastReceiver() {
                 Log.d("dosmono", "time = $title,startTime = $startTime,endTime = $endTime")
                 showDialog(title)
             }
+
         } catch (e: Exception) {
             e.printStackTrace()
         }
 
     }
-
+    private val ringtonePath = "/system/media/audio/alarms/Alarm_Classic.ogg"
     fun showDialog(msg: String) {
         val builder: AlertDialog.Builder = AlertDialog.Builder(UIUtils.getContext())
 
@@ -76,9 +81,16 @@ class VRCalendarContractBroadcast : BroadcastReceiver() {
         wlp.y = 1143
         alertDialog.setCanceledOnTouchOutside(false)
         alertDialog.show()
+        var mediaPlayer = MediaPlayer().apply {
+            setDataSource(ringtonePath)
+            prepare()
+            start()
+        }
         alertDialog.window?.setLayout(780, ViewGroup.LayoutParams.WRAP_CONTENT)
         view.findViewById<TextView>(R.id.tv_positive).setOnClickListener {
             alertDialog.dismiss()
+            mediaPlayer.stop()
         }
+
     }
 }

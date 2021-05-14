@@ -13,6 +13,7 @@
     <!--    form page start-->
     <string name="save">保存</string>
     <string name="edit">编辑</string>
+    <string name="double_submit">请勿重复提交</string>
     <!--    form page end-->
     <!--    list page start-->
     <string name="title_of_list">日程列表</string>
@@ -28,6 +29,8 @@
     <string name="form_title">标&#8195;&#8194;题</string>
     <string name="form_time_zone">时&#8195;&#8194;区</string>
     <string name="form_time">时&#8195;&#8194;间</string>
+    <string name="start_time">开&#8195;&#8194;始</string>
+    <string name="end_time">结&#8195;&#8194;束</string>
     <string name="form_repeat">重&#8195;&#8194;复</string>
     <string name="form_frequency">频&#8195;&#8194;次</string>
     <string name="time_zone_of_normal">GMT+8:00</string>
@@ -54,9 +57,6 @@
 
     <!--    alert dialog-->
     <string name="title_alert_dialog">温馨提示</string>
-    <string name="confirm_delete_all_schedules">是否清空所有日程？</string>
-    <string name="confirm_yes">是</string>
-    <string name="confirm_no">否</string>
     <string name="confirm">确认</string>
     <string name="cancel">取消</string>
     <string name="tip_of_delete_all_schedule">确认清空所有日程记录吗？</string>

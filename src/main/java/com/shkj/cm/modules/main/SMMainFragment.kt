@@ -1,7 +1,6 @@
 package com.shkj.cm.modules.main
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -14,6 +13,8 @@ import com.shkj.cm.base.view.BaseLifeCycleFragment
 import com.shkj.cm.calendarview.utils.CalendarUtil
 import com.shkj.cm.common.symbols.ConstantRouterParamKey
 import com.shkj.cm.databinding.FragmentSmmainBinding
+import com.xuexiang.xutil.data.DateUtils
+import java.util.*
 
 /**
  * Copyright (C), 2015-2021, 海南双猴科技有限公司
@@ -78,11 +79,19 @@ class SMMainFragment : BaseLifeCycleFragment<MainViewModel, FragmentSmmainBindin
         }
         mDataBinding.ibOnAdd.setOnClickListener {
             //  跳转到新建日程页面
-            findNavController().navigate(R.id.action_smmainFragment_to_formFragment)
+            try {
+                findNavController().navigate(R.id.action_smmainFragment_to_formFragment)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
         mDataBinding.ibOnList.setOnClickListener {
             //  跳转到日程列表
-            findNavController().navigate(R.id.action_smmainFragment_to_listFragment)
+            try {
+                findNavController().navigate(R.id.action_smmainFragment_to_listFragment)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
         mDataBinding.ibOnBack.setOnClickListener {
             activity?.onBackPressed()
@@ -114,11 +123,13 @@ class SMMainFragment : BaseLifeCycleFragment<MainViewModel, FragmentSmmainBindin
         //  日历标题日期
         viewModelOfMainActivity.titleOfYear.postValue(cDate[0])
         viewModelOfMainActivity.titleOfMonth.postValue(cDate[1])
-
+        if (voiceQuery()) return
         //  当前选择日期
         viewModelOfMainActivity.selectorYear.postValue(cDate[0])
         viewModelOfMainActivity.selectorMonth.postValue(cDate[1])
         viewModelOfMainActivity.selectorDay.postValue(cDate[2])
+
+
     }
 
     /**
@@ -204,4 +215,26 @@ class SMMainFragment : BaseLifeCycleFragment<MainViewModel, FragmentSmmainBindin
         }
     }
 
+    private fun voiceQuery(): Boolean {
+        arguments?.getString("handle")?.apply {
+            var startTime = arguments?.getString("startTime")
+            var date = DateUtils.string2Date(startTime, DateUtils.yyyyMMdd.get())
+            var calendar = java.util.Calendar.getInstance()
+            calendar.time = date
+            viewModelOfMainActivity.selectorYear.postValue(calendar.get(java.util.Calendar.YEAR))
+            viewModelOfMainActivity.selectorMonth.postValue(calendar.get(java.util.Calendar.MONTH) + 1)
+            viewModelOfMainActivity.selectorDay.postValue(calendar.get(java.util.Calendar.DAY_OF_MONTH))
+            try {
+                mDataBinding.cvCanvasCalendar.scrollToCalendar(
+                    viewModelOfMainActivity.selectorYear.value!!,
+                    viewModelOfMainActivity.selectorMonth.value!!,
+                    viewModelOfMainActivity.selectorDay.value!!
+                )
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+            return true
+        }
+        return false
+    }
 }
