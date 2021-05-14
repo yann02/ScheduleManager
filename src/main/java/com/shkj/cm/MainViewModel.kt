@@ -1,6 +1,5 @@
 package com.shkj.cm
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
@@ -59,9 +58,10 @@ class MainViewModel : BaseViewModel<MainRepository>() {
     //  某月内，用户所有日程管理的日期集合（后台返回的数据）
     var mBodyOnDaysByTheMonthEntities = MutableLiveData<List<BodyOnDaysByTheMonthEntity>>()
 
+    //  某月内，用户所有日程管理的日期集合(日历中使用)
     val underPointsForMonthDay = mBodyOnDaysByTheMonthEntities.map {
-        val year = selectorYear.value
-        val month = selectorMonth.value
+        val year = titleOfYear.value
+        val month = titleOfMonth.value
         mutableMapOf<String, Calendar>().apply {
             for (item: BodyOnDaysByTheMonthEntity in it) {
                 put(
@@ -85,16 +85,6 @@ class MainViewModel : BaseViewModel<MainRepository>() {
     }
 
     var jobOfDaysByMonth: Job? = null
-
-    //  某月内，用户所有日程管理的日期集合(日历中使用)
-    var mIntBodyOnDaysByTheMonthEntities: LiveData<List<Int>> = mBodyOnDaysByTheMonthEntities.map {
-        val res = mutableListOf<Int>()
-        for (item: BodyOnDaysByTheMonthEntity in it) {
-            res.add(item.endTime.toInt())
-        }
-        res.sort()
-        res
-    }
 
     /**
      * 获取用户某日，所有日程

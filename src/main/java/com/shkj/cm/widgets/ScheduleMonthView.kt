@@ -2,20 +2,15 @@ package com.shkj.cm.widgets
 
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.RectF
+import android.util.Log
 import androidx.core.content.ContextCompat
 import com.haibin.calendarview.Calendar
 import com.haibin.calendarview.MonthView
 import com.shkj.cm.R
 
 class ScheduleMonthView(context: Context) : MonthView(context) {
-    /**
-     * 自定义魅族标记的文本画笔
-     */
-    private val mTextPaint = Paint()
-
     /**
      * 背景圆点
      */
@@ -31,86 +26,86 @@ class ScheduleMonthView(context: Context) : MonthView(context) {
      */
     private var mPointRadius = 3f
 
-    private var mPadding = 0
-
-    private var mCircleRadius = 0f
-
-    /**
-     * 自定义魅族标记的圆形背景
-     */
-    private val mSchemeBasicPaint = Paint()
-
-    private var mSchemeBaseLine = 0f
-
     init {
-        mTextPaint.textSize = dipToPx(context, 8f).toFloat()
-        mTextPaint.color = -0x1
-        mTextPaint.isAntiAlias = true
-        mTextPaint.isFakeBoldText = true
-
-        mSchemeBasicPaint.isAntiAlias = true
-        mSchemeBasicPaint.style = Paint.Style.FILL
-        mSchemeBasicPaint.textAlign = Paint.Align.CENTER
-        mSchemeBasicPaint.isFakeBoldText = true
-        mSchemeBasicPaint.color = Color.WHITE
-
-
         mCurrentDayPaint.isAntiAlias = true
         mCurrentDayPaint.style = Paint.Style.FILL
         mCurrentDayPaint.color = ContextCompat.getColor(context, R.color.selector_color_calendar)
-
         mPointPaint.isAntiAlias = true
         mPointPaint.style = Paint.Style.FILL
         mPointPaint.textAlign = Paint.Align.CENTER
-        mPointPaint.color = Color.RED
-
-        mCircleRadius = dipToPx(getContext(), 7f).toFloat()
-
-        val metrics = mSchemeBasicPaint.fontMetrics
-        mSchemeBaseLine =
-            mCircleRadius - metrics.descent + (metrics.bottom - metrics.top) / 2 + dipToPx(getContext(), 1f)
+        mPointPaint.color = ContextCompat.getColor(context, R.color.dot_color)
     }
 
     /**
-     * dp转px
+     * 绘制选中的日子（这个绘制会覆盖标记点的显示）
      *
-     * @param context context
-     * @param dpValue dp
-     * @return px
+     * @param canvas    canvas
+     * @param calendar  日历日历calendar
+     * @param x         日历Card x起点坐标
+     * @param y         日历Card y起点坐标
+     * @param hasScheme hasScheme 非标记的日期
+     * @return 返回true 则绘制onDrawScheme，因为这里背景色不是是互斥的，所以返回true
      */
-    private fun dipToPx(context: Context, dpValue: Float): Int {
-        val scale = context.resources.displayMetrics.density
-        return (dpValue * scale + 0.5f).toInt()
-    }
-
-    override fun onDrawSelected(canvas: Canvas?, calendar: Calendar?, x: Int, y: Int, hasScheme: Boolean): Boolean {
-        if (!calendar!!.isCurrentDay) {
+    override fun onDrawSelected(canvas: Canvas, calendar: Calendar, x: Int, y: Int, hasScheme: Boolean): Boolean {
+        if (!calendar.isCurrentDay) {
             mSelectedPaint.style = Paint.Style.STROKE
             mSelectedPaint.strokeWidth = 2f
             val rectF = RectF(x.toFloat(), y.toFloat(), (x + mItemWidth).toFloat(), (y + mItemHeight).toFloat())
-            canvas!!.drawRoundRect(rectF, 16f, 16f, mSelectedPaint)
+            canvas.drawRoundRect(rectF, 16f, 16f, mSelectedPaint)
         }
         return true
     }
 
-    override fun onDrawScheme(canvas: Canvas?, calendar: Calendar?, x: Int, y: Int) {
-        mPointPaint.color = ContextCompat.getColor(context, R.color.dot_color)
-        canvas!!.drawCircle((x + mItemWidth / 2).toFloat(), (y + mItemHeight - 13).toFloat(), mPointRadius, mPointPaint)
+    /**
+     * 绘制标记的事件日子(只绘制非当天的标记点，避免重复绘制)
+     *
+     * @param canvas   canvas
+     * @param calendar 日历calendar
+     * @param x        日历Card x起点坐标
+     * @param y        日历Card y起点坐标
+     */
+    override fun onDrawScheme(canvas: Canvas, calendar: Calendar, x: Int, y: Int) {
+        if (!calendar.isCurrentDay) {
+            canvas.drawCircle((x + mItemWidth / 2).toFloat(), (y + mItemHeight - 13).toFloat(), mPointRadius, mPointPaint)
+        }
     }
 
+    /**
+     * 绘制文本（如果今天有标记点，这里还需要绘制当天的标记点）
+     *
+     * @param canvas     canvas
+     * @param calendar   日历calendar
+     * @param x          日历Card x起点坐标
+     * @param y          日历Card y起点坐标
+     * @param hasScheme  是否是标记的日期
+     * @param isSelected 是否选中
+     */
     override fun onDrawText(canvas: Canvas?, calendar: Calendar?, x: Int, y: Int, hasScheme: Boolean, isSelected: Boolean) {
         val cx = x + mItemWidth / 2
-        if (calendar!!.isCurrentDay) {
-            val rectF = RectF(x.toFloat(), y.toFloat(), (x + mItemWidth).toFloat(), (y + mItemHeight).toFloat())
-            canvas!!.drawRoundRect(rectF, 16f, 16f, mCurrentDayPaint)
+        calendar?.let {
+            canvas?.let { cit ->
+                if (it.isCurrentDay) {
+                    val rectF = RectF(x.toFloat(), y.toFloat(), (x + mItemWidth).toFloat(), (y + mItemHeight).toFloat())
+                    cit.drawRoundRect(rectF, 16f, 16f, mCurrentDayPaint)
+                    if (hasScheme) {
+                        //  绘制当天的标记点
+                        cit.drawCircle(
+                            (x + mItemWidth / 2).toFloat(),
+                            (y + mItemHeight - 13).toFloat(),
+                            mPointRadius,
+                            mPointPaint
+                        )
+                    }
+                }
+                val drawPaint = if (isSelected && !it.isCurrentDay) {
+                    mSelectTextPaint
+                } else if (hasScheme) {
+                    if (it.isCurrentMonth) mSchemeTextPaint else mOtherMonthTextPaint
+                } else {
+                    if (it.isCurrentDay) mCurDayTextPaint else if (it.isCurrentMonth) mCurMonthTextPaint else mOtherMonthTextPaint
+                }
+                cit.drawText(it.day.toString(), cx.toFloat(), mTextBaseLine + y, drawPaint)
+            }
         }
-        val drawPaint = if (isSelected && !calendar.isCurrentDay) {
-            mSelectTextPaint
-        } else if (hasScheme) {
-            if (calendar.isCurrentMonth) mSchemeTextPaint else mOtherMonthTextPaint
-        } else {
-            if (calendar.isCurrentDay) mCurDayTextPaint else if (calendar.isCurrentMonth) mCurMonthTextPaint else mOtherMonthTextPaint
-        }
-        canvas!!.drawText(calendar.day.toString(), cx.toFloat(), mTextBaseLine + y, drawPaint)
     }
 }

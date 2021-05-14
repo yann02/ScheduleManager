@@ -6,13 +6,14 @@ import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.haibin.calendarview.Calendar
+import com.haibin.calendarview.CalendarView
 import com.shkj.cm.MainViewModel
 import com.shkj.cm.R
 import com.shkj.cm.base.view.BaseLifeCycleFragment
 import com.shkj.cm.calendarview.utils.CalendarUtil
 import com.shkj.cm.common.symbols.ConstantRouterParamKey
 import com.shkj.cm.databinding.FragmentSmmainBinding
-import kotlin.math.log
 
 /**
  * Copyright (C), 2015-2021, 海南双猴科技有限公司
@@ -24,7 +25,8 @@ import kotlin.math.log
  * @Date: 暂无
  * @Description: 暂无
  */
-class SMMainFragment : BaseLifeCycleFragment<MainViewModel, FragmentSmmainBinding>() {
+class SMMainFragment : BaseLifeCycleFragment<MainViewModel, FragmentSmmainBinding>(), CalendarView.OnCalendarSelectListener,
+    CalendarView.OnMonthChangeListener {
     private val viewModelOfMainActivity by activityViewModels<MainViewModel>()
     private val cDate = CalendarUtil.getCurrentDate()
     private val adapterOfSchedule = AdapterOnDaySchedules(mutableListOf())
@@ -34,8 +36,6 @@ class SMMainFragment : BaseLifeCycleFragment<MainViewModel, FragmentSmmainBindin
         super.initView()
         //隐藏默认的加载框
         showSuccess()
-        //  初始化当前日期
-        initDate()
         adapterOfSchedule.setOnItemClickListener { _, _, position ->
             //  用户点击了列表的某一项
             findNavController().navigate(
@@ -48,40 +48,33 @@ class SMMainFragment : BaseLifeCycleFragment<MainViewModel, FragmentSmmainBindin
                 })
         }
         mDataBinding.rvList.adapter = adapterOfSchedule
-        mDataBinding.cvCalendar.setOnPagerChangeListener {
-            //  监听日历切换
-            viewModelOfMainActivity.titleOfYear.postValue(it[0])
-            viewModelOfMainActivity.titleOfMonth.postValue(it[1])
-        }
-        mDataBinding.cvCalendar.setOnSingleChooseListener { _, date ->
-            //  监听用户点击日历的某一项
-            viewModelOfMainActivity.selectorYear.postValue(date.solar[0])
-            viewModelOfMainActivity.selectorMonth.postValue(date.solar[1])
-            viewModelOfMainActivity.selectorDay.postValue(date.solar[2])
-        }
         mDataBinding.btnGotoToday.setOnClickListener {
             //  跳转到今天
-            if (!selectorDateNotToday()) {
-                mDataBinding.cvCalendar.today()
-                //  设置选择的日期为今天的日期
-                setSelectorDateToTheToday()
-            }
+            mDataBinding.cvCanvasCalendar.scrollToCurrent()
+            //  设置选择的日期为今天的日期
+            setSelectorDateToTheToday()
         }
         mDataBinding.ibLastYear.setOnClickListener {
             //  上一年
-            mDataBinding.cvCalendar.lastYear()
+            viewModelOfMainActivity.titleOfYear.value?.let {
+                mDataBinding.cvCanvasCalendar.monthViewPager.currentItem =
+                    mDataBinding.cvCanvasCalendar.monthViewPager.currentItem - 12
+            }
         }
         mDataBinding.ibNextYear.setOnClickListener {
             //  下一年
-            mDataBinding.cvCalendar.nextYear()
+            viewModelOfMainActivity.titleOfYear.value?.let {
+                mDataBinding.cvCanvasCalendar.monthViewPager.currentItem =
+                    mDataBinding.cvCanvasCalendar.monthViewPager.currentItem + 12
+            }
         }
         mDataBinding.ibLastMonth.setOnClickListener {
             //  上一月
-            mDataBinding.cvCalendar.lastMonth()
+            mDataBinding.cvCanvasCalendar.scrollToPre()
         }
         mDataBinding.ibNextMonth.setOnClickListener {
             //  下一月
-            mDataBinding.cvCalendar.nextMonth()
+            mDataBinding.cvCanvasCalendar.scrollToNext()
         }
         mDataBinding.ibOnAdd.setOnClickListener {
             //  跳转到新建日程页面
@@ -94,24 +87,9 @@ class SMMainFragment : BaseLifeCycleFragment<MainViewModel, FragmentSmmainBindin
         mDataBinding.ibOnBack.setOnClickListener {
             activity?.onBackPressed()
         }
-        //  初始化日历
-        initCalendar()
-    }
-
-    /**
-     * 初始化日历
-     */
-    private fun initCalendar() {
-        var singDate = ""
-        if (viewModelOfMainActivity.selectorDay.value != null) {
-            singDate =
-                "${viewModelOfMainActivity.selectorYear.value}.${viewModelOfMainActivity.selectorMonth.value}.${viewModelOfMainActivity.selectorDay.value}"
-        }
-        mDataBinding.cvCalendar
-            .setInitDate("${cDate[0]}.${cDate[1]}")
-            .setSingleDate(singDate)
-            .setCurrentDate("${cDate[0]}.${cDate[1]}.${cDate[2]}")
-            .init()
+        mDataBinding.cvCanvasCalendar.setOnCalendarSelectListener(this)
+        mDataBinding.cvCanvasCalendar.setOnMonthChangeListener(this)
+        mDataBinding.cvCanvasCalendar.scrollToCurrent()
     }
 
     /**
@@ -123,33 +101,8 @@ class SMMainFragment : BaseLifeCycleFragment<MainViewModel, FragmentSmmainBindin
         viewModelOfMainActivity.selectorDay.postValue(viewModelOfMainActivity.currentDay.value)
     }
 
-    /**
-     * 判断选择的日期是否为当天的日期
-     * @return true : 是当天 ；false ： 不是当天
-     */
-    private fun selectorDateNotToday(): Boolean {
-        if (viewModelOfMainActivity.titleOfYear.value != viewModelOfMainActivity.currentYear.value) {
-            return false
-        }
-        if (viewModelOfMainActivity.titleOfMonth.value != viewModelOfMainActivity.currentMonth.value) {
-            return false
-        }
-        if (viewModelOfMainActivity.selectorDay.value != viewModelOfMainActivity.currentDay.value) {
-            return false
-        }
-        if (viewModelOfMainActivity.selectorMonth.value != viewModelOfMainActivity.currentMonth.value) {
-            return false
-        }
-        if (viewModelOfMainActivity.selectorYear.value != viewModelOfMainActivity.currentYear.value) {
-            return false
-        }
-        return true
-    }
-
-    /**
-     * 初始化当前日期
-     */
-    private fun initDate() {
+    override fun initData() {
+        super.initData()
         if (viewModelOfMainActivity.currentYear.value != null) {
             return
         }
@@ -175,13 +128,14 @@ class SMMainFragment : BaseLifeCycleFragment<MainViewModel, FragmentSmmainBindin
         super.initDataObserver()
         mDataBinding.vm = viewModelOfMainActivity
         viewModelOfMainActivity.titleOfYear.observe(this, Observer {
+            //  加载当月日程标记
             viewModelOfMainActivity.remoteDaysByTheMonth()
         })
         viewModelOfMainActivity.titleOfMonth.observe(this, Observer {
+            //  加载当月日程标记
             viewModelOfMainActivity.remoteDaysByTheMonth()
         })
         viewModelOfMainActivity.selectorDay.observe(this, Observer {
-            Log.d("wyy", "当天$it")
             //  加载当天日程
             viewModelOfMainActivity.remoteSchedulesOnDay()
         })
@@ -191,13 +145,6 @@ class SMMainFragment : BaseLifeCycleFragment<MainViewModel, FragmentSmmainBindin
                 adapterOfSchedule.setNewData(it)
 //                adapterOfSchedule.setList(it)
                 showEmptyList(it.isEmpty())
-            }
-        })
-        viewModelOfMainActivity.mIntBodyOnDaysByTheMonthEntities.observe(this, Observer {
-            try {
-                mDataBinding.cvCalendar.refreshDot(it)
-            } catch (e: Exception) {
-                e.printStackTrace()
             }
         })
         //  监听当月日程标记变化
@@ -218,6 +165,42 @@ class SMMainFragment : BaseLifeCycleFragment<MainViewModel, FragmentSmmainBindin
             //  列表不为空时显示列表和隐藏为空的视图
             mDataBinding.tvNotSchedule.visibility = View.GONE
             mDataBinding.rvList.visibility = View.VISIBLE
+        }
+    }
+
+    override fun onCalendarOutOfRange(calendar: Calendar?) {}
+
+    /**
+     * 监听日历的回调
+     * 滑动和点击日历的事件
+     */
+    override fun onCalendarSelect(calendar: Calendar?, isClick: Boolean) {
+        calendar?.let {
+            if (isClick) {
+                //  设置当前选择的日期
+                if (viewModelOfMainActivity.selectorYear.value != it.year) {
+                    //  设置选择的年份
+                    viewModelOfMainActivity.selectorYear.postValue(it.year)
+                }
+                if (viewModelOfMainActivity.selectorMonth.value != it.month) {
+                    //  设置选择的月份
+                    viewModelOfMainActivity.selectorMonth.postValue(it.month)
+                }
+                if (viewModelOfMainActivity.selectorDay.value != it.day) {
+                    //  设置选择的天
+                    viewModelOfMainActivity.selectorDay.postValue(it.day)
+                }
+            }
+        }
+    }
+
+    override fun onMonthChange(year: Int, month: Int) {
+        //  设置日历标题年月
+        if (viewModelOfMainActivity.titleOfYear.value != year) {
+            viewModelOfMainActivity.titleOfYear.postValue(year)
+        }
+        if (viewModelOfMainActivity.titleOfMonth.value != month) {
+            viewModelOfMainActivity.titleOfMonth.postValue(month)
         }
     }
 

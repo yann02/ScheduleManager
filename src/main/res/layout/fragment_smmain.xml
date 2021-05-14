@@ -112,8 +112,8 @@
             android:layout_width="@dimen/icon_size_of_year_or_month"
             android:layout_height="@dimen/icon_size_of_year_or_month"
             android:background="@android:color/transparent"
-            android:src="@mipmap/ic_year_left_n"
             android:scaleType="fitStart"
+            android:src="@mipmap/ic_year_left_n"
             app:layout_constraintBottom_toTopOf="@+id/gl_v4"
             app:layout_constraintLeft_toLeftOf="@+id/gl_h1"
             app:layout_constraintTop_toBottomOf="@+id/gl_v3" />
@@ -123,8 +123,8 @@
             android:layout_width="@dimen/icon_size_of_year_or_month"
             android:layout_height="@dimen/icon_size_of_year_or_month"
             android:layout_marginStart="@dimen/space_of_icon_of_year_with_month"
-            android:scaleType="fitStart"
             android:background="@android:color/transparent"
+            android:scaleType="fitStart"
             android:src="@mipmap/ic_month_left_n"
             app:layout_constraintBottom_toTopOf="@+id/gl_v4"
             app:layout_constraintLeft_toRightOf="@+id/ib_last_year"
@@ -135,8 +135,8 @@
             android:layout_width="@dimen/icon_size_of_year_or_month"
             android:layout_height="@dimen/icon_size_of_year_or_month"
             android:background="@android:color/transparent"
-            android:src="@mipmap/ic_year_right_n"
             android:scaleType="fitEnd"
+            android:src="@mipmap/ic_year_right_n"
             app:layout_constraintBottom_toTopOf="@+id/gl_v4"
             app:layout_constraintRight_toRightOf="@+id/gl_h2"
             app:layout_constraintTop_toBottomOf="@+id/gl_v3" />
@@ -148,8 +148,8 @@
             android:layout_marginStart="@dimen/space_of_icon_of_year_with_month"
             android:layout_marginEnd="@dimen/space_of_icon_of_year_with_month"
             android:background="@android:color/transparent"
-            android:src="@mipmap/ic_month_right_n"
             android:scaleType="fitEnd"
+            android:src="@mipmap/ic_month_right_n"
             app:layout_constraintBottom_toTopOf="@+id/gl_v4"
             app:layout_constraintRight_toLeftOf="@+id/ib_next_year"
             app:layout_constraintTop_toBottomOf="@+id/gl_v3" />
@@ -176,49 +176,50 @@
             app:layout_constraintRight_toLeftOf="@+id/gl_h2" />
 
         <com.shkj.cm.widgets.MyWeekView
-            android:visibility="gone"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/gl_v6"
             app:layout_constraintLeft_toRightOf="@+id/gl_h1"
             app:layout_constraintRight_toLeftOf="@+id/gl_h2"
             app:layout_constraintTop_toBottomOf="@+id/gl_v5"
             app:week_color="@android:color/white"
-            app:week_size="28"/>
+            app:week_size="28" />
 
         <com.shkj.cm.calendarview.weiget.CalendarView
             android:id="@+id/cv_calendar"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@+id/gl_v7"
             app:layout_constraintLeft_toRightOf="@+id/gl_h1"
             app:layout_constraintRight_toLeftOf="@+id/gl_h2"
             app:layout_constraintTop_toBottomOf="@+id/gl_v6"
             app:show_lunar="false"
-            app:switch_choose="false"
-            android:visibility="gone"/>
+            app:switch_choose="false" />
 
         <com.haibin.calendarview.CalendarView
+            android:id="@+id/cv_canvas_calendar"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:id="@+id/cv_canvas_calendar"
+            app:calendar_height="@dimen/px_80"
+            app:current_day_text_color="@color/primary_of_font"
+            app:current_month_text_color="@color/primary_of_font"
+            app:day_text_size="@dimen/px_28"
+            app:layout_constraintBottom_toBottomOf="@+id/gl_v7"
             app:layout_constraintLeft_toLeftOf="@+id/gl_h1"
             app:layout_constraintRight_toRightOf="@+id/gl_h2"
             app:layout_constraintTop_toTopOf="@+id/gl_v5"
-            app:layout_constraintBottom_toBottomOf="@+id/gl_v7"
             app:month_view="com.shkj.cm.widgets.ScheduleMonthView"
+            app:other_month_text_color="@color/other_month_text_color"
+            app:selected_text_color="@color/selector_color_calendar"
+            app:selected_theme_color="@color/selector_color_calendar"
             app:week_background="@android:color/transparent"
             app:week_bar_height="@dimen/px_80"
             app:week_text_color="@color/primary_of_font"
             app:week_text_size="@dimen/px_28"
-            app:current_day_text_color="@color/primary_of_font"
-            app:selected_text_color="@color/selector_color_calendar"
-            app:current_month_text_color="@color/primary_of_font"
-            app:other_month_text_color="@color/other_month_text_color"
             app:month_view_show_mode="mode_fix"
-            app:calendar_height="@dimen/px_80"
-            app:day_text_size="@dimen/px_28"
-            app:selected_theme_color="@color/selector_color_calendar"/>
+            app:select_mode="single_mode"/>
 
         <TextView
             android:layout_width="0dp"
@@ -247,8 +248,8 @@
             android:layout_width="@dimen/icon_size_of_on_back"
             android:layout_height="@dimen/icon_size_of_on_back"
             android:background="@android:color/transparent"
-            android:src="@mipmap/ic_nav_back64"
             android:scaleType="fitStart"
+            android:src="@mipmap/ic_nav_back64"
             app:layout_constraintBottom_toTopOf="@+id/gl_v1"
             app:layout_constraintLeft_toLeftOf="@+id/gl_h1"
             app:layout_constraintTop_toTopOf="parent" />
@@ -270,8 +271,8 @@
             android:layout_width="@dimen/icon_size_of_on_back"
             android:layout_height="@dimen/icon_size_of_on_back"
             android:background="@android:color/transparent"
-            android:src="@mipmap/ic_nav_list"
             android:scaleType="fitCenter"
+            android:src="@mipmap/ic_nav_list"
             app:layout_constraintBottom_toTopOf="@+id/gl_v1"
             app:layout_constraintRight_toLeftOf="@+id/gl_h4"
             app:layout_constraintTop_toTopOf="parent" />
@@ -281,8 +282,8 @@
             android:layout_width="@dimen/icon_size_of_on_back"
             android:layout_height="@dimen/icon_size_of_on_back"
             android:background="@android:color/transparent"
-            android:src="@mipmap/ic_nav_add"
             android:scaleType="fitCenter"
+            android:src="@mipmap/ic_nav_add"
             app:layout_constraintBottom_toTopOf="@+id/gl_v1"
             app:layout_constraintRight_toLeftOf="@+id/ib_on_list"
             app:layout_constraintTop_toTopOf="parent" />
