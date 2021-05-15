@@ -15,6 +15,7 @@ import androidx.paging.LoadState
 import com.dosmono.platecommon.util.UIUtils
 import com.shkj.cm.MainViewModel
 import com.shkj.cm.R
+import com.shkj.cm.base.navController
 import com.shkj.cm.base.view.BaseLifeCycleFragment
 import com.shkj.cm.common.symbols.ConstantRouterParamKey
 import com.shkj.cm.databinding.FragmentListBinding
@@ -92,9 +93,10 @@ class ListFragment : BaseLifeCycleFragment<ListViewModel, FragmentListBinding>()
         adapter = AdapterOnPageSchedules(object : PageScheduleViewHolder.OnPageListItemClickListener {
             override fun onItemClick(position: Int, tid: String) {
                 //  点击了日程列表的某一项
-                findNavController().navigate(
-                    R.id.action_listFragment_to_detailFragment,
-                    Bundle().apply { putString(ConstantRouterParamKey.TID, tid) })
+                navController(this@ListFragment,R.id.action_listFragment_to_detailFragment,  Bundle().apply { putString(ConstantRouterParamKey.TID, tid) })
+//                findNavController().navigate(
+//                    R.id.action_listFragment_to_detailFragment,
+//                    Bundle().apply { putString(ConstantRouterParamKey.TID, tid) })
             }
 
             override fun onItemDeleteClick(position: Int, tid: String) {

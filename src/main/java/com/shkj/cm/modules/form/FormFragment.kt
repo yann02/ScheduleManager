@@ -17,6 +17,7 @@ import com.permissionx.guolindev.request.ForwardScope
 import com.shkj.cm.MainViewModel
 import com.shkj.cm.R
 import com.shkj.cm.base.view.BaseLifeCycleFragment
+import com.shkj.cm.common.calendar.CalendarProviderManager
 import com.shkj.cm.common.symbols.ConstantRouterParamKey
 import com.shkj.cm.common.util.*
 import com.shkj.cm.databinding.FragmentFormBinding
@@ -107,14 +108,9 @@ class FormFragment : BaseLifeCycleFragment<FormViewModel, FragmentFormBinding>()
                 frequencyView5
             ).forEachIndexed { index, frequencyView ->
                 if (isChecked && frequencyView.isVisible) {
-                    Logger.d("update before ${mViewModel.fullDayFrequencyValue[index]} ")
                     mViewModel.fullDayFrequencyValue[index] = "${frequencyView.getSelectIndex() + 7}"
-                    Logger.d("update after ${mViewModel.fullDayFrequencyValue[index]} ")
                 } else if (!isChecked && frequencyView.isVisible) {
-                    Logger.d("no checked update before ${mViewModel.noFullDayFrequencyValue[index]} ")
                     mViewModel.noFullDayFrequencyValue[index] = "${frequencyView.getSelectIndex() + 1}"
-                    Logger.d("no checked update before ${mViewModel.noFullDayFrequencyValue[index]} ")
-
                 }
             }
 
@@ -131,6 +127,11 @@ class FormFragment : BaseLifeCycleFragment<FormViewModel, FragmentFormBinding>()
         }
         mDataBinding.tvNotRepeatContent.setOnItemSelectedListener { view, position, id, item ->
             mViewModel.freq.postValue("$position")
+        }
+
+        mDataBinding.tvTitle.setOnClickListener {
+            var eventId = SharedPreUtils.getLong(requireContext(), "tempEventId", 0L)
+            CalendarProviderManager.startCalendarForIntentToEdit(requireContext(), eventId)
         }
 
         //初始化频次下拉选择事件
@@ -382,7 +383,7 @@ class FormFragment : BaseLifeCycleFragment<FormViewModel, FragmentFormBinding>()
                     mViewModel.updateCalendarEvent(requireContext())
                 else
                     mViewModel.addCalendarEvent(requireContext())
-                findNavController().popBackStack()
+                findNavController().navigateUp()
 //                var eventId = SharedPreUtils.getLong(UIUtils.getContext(), "tempEventId", 0L)
 //                CalendarProviderManager.startCalendarForIntentToEdit(requireContext(), eventId)
             }
@@ -436,7 +437,6 @@ class FormFragment : BaseLifeCycleFragment<FormViewModel, FragmentFormBinding>()
      * 更新频次
      */
     private fun updateFullDayFrequencyValue(view: FrequencyView, value: Int = 7) {
-        Logger.d("before updateFullDayFrequencyValue ${mViewModel.fullDayFrequencyValue}")
         when (view) {
             mDataBinding.frequencyView1 ->
                 mViewModel.fullDayFrequencyValue[0] = "$value"

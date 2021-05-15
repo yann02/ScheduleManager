@@ -7,6 +7,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.shkj.cm.MainViewModel
 import com.shkj.cm.R
+import com.shkj.cm.base.navController
 import com.shkj.cm.base.view.BaseLifeCycleFragment
 import com.shkj.cm.common.Constant
 import com.shkj.cm.common.symbols.ConstantRouterParamKey
@@ -38,13 +39,19 @@ class DetailFragment : BaseLifeCycleFragment<DetailViewModel, FragmentDetailBind
             findNavController().popBackStack()
         }
         mDataBinding.btnEdit.setOnClickListener {
-            findNavController().navigate(R.id.action_detailFragment_to_formFragment,
-                Bundle().apply {
-                    putBoolean(
-                        ConstantRouterParamKey.IS_EDIT,
-                        true
-                    );putParcelable(ConstantRouterParamKey.SCHEDULE_ENTITY, scheduleEntity)
-                })
+            navController(this,R.id.action_detailFragment_to_formFragment,Bundle().apply {
+                putBoolean(
+                    ConstantRouterParamKey.IS_EDIT,
+                    true
+                );putParcelable(ConstantRouterParamKey.SCHEDULE_ENTITY, scheduleEntity)
+            })
+//            findNavController().navigate(R.id.action_detailFragment_to_formFragment,
+//                Bundle().apply {
+//                    putBoolean(
+//                        ConstantRouterParamKey.IS_EDIT,
+//                        true
+//                    );putParcelable(ConstantRouterParamKey.SCHEDULE_ENTITY, scheduleEntity)
+//                })
         }
     }
 
