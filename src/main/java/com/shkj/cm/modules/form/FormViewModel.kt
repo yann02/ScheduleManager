@@ -7,6 +7,7 @@ import androidx.annotation.ArrayRes
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
+import com.dosmono.logger.Logger
 import com.dosmono.platecommon.util.UIUtils
 import com.shkj.cm.R
 import com.shkj.cm.base.viewmodel.BaseViewModel
@@ -118,10 +119,10 @@ class FormViewModel : BaseViewModel<FormRepository>() {
 
         startTimeOnFormat.postValue(startFormatString)
         endTimeOnFormat.postValue(endFormatString)
-//        startTime.postValue(DateUtils.string2Millis(startFormatString, dateForm).toString())
-        startTime.postValue("${TimeUtil.datePlus9Hours2Millis(DateUtils.string2Date(startFormatString,dateForm))}")
-        endTime.postValue("${TimeUtil.datePlus10Hours2Millis(DateUtils.string2Date(endFormatString,dateForm))}")
-//        endTime.postValue(DateUtils.string2Millis(endFormatString, dateForm).toString())
+        startTime.postValue(DateUtils.string2Millis(startFormatString, dateForm).toString())
+//        startTime.postValue("${TimeUtil.datePlus9Hours2Millis(DateUtils.string2Date(startFormatString,dateForm))}")
+//        endTime.postValue("${TimeUtil.datePlus10Hours2Millis(DateUtils.string2Date(endFormatString,dateForm))}")
+        endTime.postValue(DateUtils.string2Millis(endFormatString, dateForm).toString())
     }
 
     /**
@@ -176,13 +177,12 @@ class FormViewModel : BaseViewModel<FormRepository>() {
             ).show()
             return
         }
-//        preTime.value!!.clear()
-//        for (value in noFullDayFrequencyValue) {
-//            if (value != "-1") {
-//                preTime.value!!.add(value)
-//            }
-//        }
         setPreTimes()
+        Logger.d("startTime =${startTime.value},endTime = ${endTime.value}")
+        if(dtag.value == DTAG_FULL_OF_DAY){
+            startTime.postValue("${TimeUtil.datePlus9Hours2Millis(DateUtils.string2Date(startTimeOnFormat.value,mDateForm.value))}")
+            endTime.postValue("${TimeUtil.datePlus9Hours2Millis(DateUtils.string2Date(endTimeOnFormat.value,mDateForm.value))}")
+        }
         initiateRequestNotState {
             val httpBaseBean =
                 mRepository.userScheAddTime(
@@ -234,13 +234,12 @@ class FormViewModel : BaseViewModel<FormRepository>() {
             ).show()
             return
         }
-//        preTime.value!!.clear()
-//        for (value in noFullDayFrequencyValue) {
-//            if (value != "-1") {
-//                preTime.value!!.add(value)
-//            }
-//        }
         setPreTimes()
+        //设置时间的早上9点
+        if(dtag.value == DTAG_FULL_OF_DAY){
+            startTime.postValue("${TimeUtil.datePlus9Hours2Millis(DateUtils.string2Date(startTimeOnFormat.value,mDateForm.value))}")
+            endTime.postValue("${TimeUtil.datePlus9Hours2Millis(DateUtils.string2Date(endTimeOnFormat.value,mDateForm.value))}")
+        }
         initiateRequestNotState {
             val httpBaseBean =
                 mRepository.userScheEditTime(
@@ -376,6 +375,7 @@ class FormViewModel : BaseViewModel<FormRepository>() {
                     rrule
                 )
             )
+            Logger.d("add startTime=${startTime.value},endtime = ${endTime.value}")
             if (result == 0) {
                 var tempEventId =
                     SharedPreUtils.getLong(UIUtils.getContext(), Constant.TEMP_EVENT_ID, 0L);

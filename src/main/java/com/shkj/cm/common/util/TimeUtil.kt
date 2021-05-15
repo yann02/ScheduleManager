@@ -1,6 +1,7 @@
 package com.shkj.cm.common.util
 
 import android.util.Log
+import com.dosmono.logger.Logger
 import com.xuexiang.xutil.data.DateUtils
 import java.text.DateFormat
 import java.util.*
@@ -87,7 +88,8 @@ object TimeUtil {
     fun datePlus9Hours2Millis(date:Date):Long{
         var calendar  = Calendar.getInstance()
         calendar.time = date
-        calendar.add(Calendar.HOUR,10)
+        calendar.set(Calendar.HOUR_OF_DAY,9)
+        Logger.d("datePlus9Hours2Millis year = ${calendar.get(Calendar.YEAR)},month=${calendar.get(Calendar.MONTH)} day = ${calendar.get(Calendar.DAY_OF_MONTH)},hour=${calendar.get(Calendar.HOUR)}")
         return DateUtils.date2Millis(calendar.time)
     }
 
@@ -95,7 +97,7 @@ object TimeUtil {
     fun datePlus10Hours2Millis(date:Date):Long{
         var calendar  = Calendar.getInstance()
         calendar.time = date
-        calendar.add(Calendar.HOUR,11)
+        calendar.set(Calendar.HOUR,9)
         return DateUtils.date2Millis(calendar.time)
     }
 
