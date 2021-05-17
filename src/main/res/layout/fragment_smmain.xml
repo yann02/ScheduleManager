@@ -195,7 +195,7 @@
             app:week_bar_height="@dimen/px_80"
             app:week_text_color="@color/primary_of_font"
             app:week_text_size="@dimen/px_28"
-            app:month_view_show_mode="mode_fix"
+            app:month_view_show_mode="mode_all"
             app:select_mode="single_mode"/>
 
         <TextView
