@@ -91,21 +91,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.80" />
+            app:layout_constraintGuide_percent="0.82" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/gl_v8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.82" />
+            app:layout_constraintGuide_percent="0.84" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/gl_v9"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.92" />
+            app:layout_constraintGuide_percent="0.94" />
 
         <ImageButton
             android:id="@+id/ib_last_year"
