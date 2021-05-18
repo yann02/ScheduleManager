@@ -39,6 +39,7 @@
     <string name="end">结束</string>
     <string name="selected_for_start_time">开始时间选择</string>
     <string name="selected_for_end_time">结束时间选择</string>
+    <string name="delete">删除</string>
     <!--    重复 list-->
     <string name="notRepeat">不重复</string>
 

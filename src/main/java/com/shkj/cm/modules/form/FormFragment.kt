@@ -33,18 +33,18 @@ import com.xuexiang.xutil.data.DateUtils
 import kotlinx.android.synthetic.main.fragment_form2.*
 import java.util.*
 
-
+/**
+ * Copyright (C), 2015-2021, 海南双猴科技有限公司
+ * @Description: 日程表单页面（新增、编辑）
+ * @Author: Yingyan Wu
+ * @CreateDate: 2021/4/21 21:14
+ * History:
+ * @Author: 暂无
+ * @Date: 暂无
+ * @Description: 暂无
+ */
 class FormFragment : BaseLifeCycleFragment<FormViewModel, FragmentFormBinding>() {
-    /**
-     * Copyright (C), 2015-2021, 海南双猴科技有限公司
-     * @Description: 日程表单页面（新增、编辑）
-     * @Author: Yingyan Wu
-     * @CreateDate: 2021/4/21 21:14
-     * History:
-     * @Author: 暂无
-     * @Date: 暂无
-     * @Description: 暂无
-     */
+
     private var mStartTimePicker: TimePickerView? = null
     private var mEndTimePicker: TimePickerView? = null
     override fun getLayoutId() = R.layout.fragment_form
@@ -69,7 +69,7 @@ class FormFragment : BaseLifeCycleFragment<FormViewModel, FragmentFormBinding>()
                 return@setOnClickListener
             }
             //  添加日程
-            if (mViewModel.isEdit) mViewModel.onEditSchedule()
+            if (mViewModel.isEdit.value!!) mViewModel.onEditSchedule()
             else mViewModel.onAddSchedule()
         }
         //  监听标题输入
@@ -379,7 +379,7 @@ class FormFragment : BaseLifeCycleFragment<FormViewModel, FragmentFormBinding>()
         })
         mViewModel.success.observe(this, androidx.lifecycle.Observer {
             if (it) {
-                if (mViewModel.isEdit)
+                if (mViewModel.isEdit.value!!)
                     mViewModel.updateCalendarEvent(requireContext())
                 else
                     mViewModel.addCalendarEvent(requireContext())
@@ -461,7 +461,7 @@ class FormFragment : BaseLifeCycleFragment<FormViewModel, FragmentFormBinding>()
             mViewModel.isEditInit = true
             mViewModel.editScheduleEntity.postValue(this)
             mViewModel.tid = tid!!
-            mViewModel.isEdit = true
+            mViewModel.isEdit.postValue(true)
             mDataBinding.etTitle.setText(title)
             mViewModel.title.postValue(title)
             mDataBinding.tvTimeZone.text = gmt

@@ -1,6 +1,5 @@
 package com.shkj.cm.network
 
-import android.util.Log
 import com.alibaba.fastjson.util.IOUtils
 import com.alibaba.fastjson.util.IOUtils.UTF8
 import com.orhanobut.logger.Logger
@@ -18,28 +17,36 @@ class LoggerInterceptorForRaw : Interceptor {
     override fun intercept(chain: Interceptor.Chain?): Response {
         val orgRequest = chain!!.request()
         val response = chain.proceed(orgRequest)
-        val sb = bodyToString(orgRequest)
-//        if (orgRequest.method() == "POST" && body is FormBody) {
-//            sb.append(body.toString())
-//            //打印post请求的信息
-//            Logger.d(
-//                "code=" + response.code() + "|method=" + orgRequest.method() + "|url=" + orgRequest.url()
-//                        + "\n" + "headers:" + orgRequest.headers().toMultimap()
-//                        + "\n" + "post请求体:{" + sb.toString() + "}"
-//            )
-//        } else {
-//            //打印get请求的信息
-//            Logger.d(
-//                "code=" + response.code() + "|method=" + orgRequest.method() + "|url=" + orgRequest.url()
-//                        + "\n" + "headers:" + orgRequest.headers().toMultimap()
-//            )
-//        }
-        //打印post请求的信息
-        Logger.d(
-            "code=" + response.code() + "|method=" + orgRequest.method() + "|url=" + orgRequest.url()
-                    + "\n" + "headers:" + orgRequest.headers().toMultimap()
-                    + "\n" + "post请求体:" + sb.toString()
-        )
+        if (orgRequest.body() is FormBody) {
+            if (orgRequest.method() == "POST") {
+                val sb = StringBuilder()
+                val body1 = orgRequest.body() as FormBody
+                for (i in 0 until body1.size()) {
+                    sb.append(body1.encodedName(i) + "=" + body1.encodedValue(i) + ",")
+                }
+                sb.delete(sb.length - 1, sb.length)
+                //打印post请求的信息
+                Logger.d(
+                    "code=" + response.code() + "|method=" + orgRequest.method() + "|url=" + orgRequest.url()
+                            + "\n" + "headers:" + orgRequest.headers().toMultimap()
+                            + "\n" + "post请求体:{" + sb.toString() + "}"
+                )
+            } else {
+                //打印get请求的信息
+                Logger.d(
+                    "code=" + response.code() + "|method=" + orgRequest.method() + "|url=" + orgRequest.url()
+                            + "\n" + "headers:" + orgRequest.headers().toMultimap()
+                )
+            }
+        } else {
+            val sb = bodyToString(orgRequest)
+            //打印post请求的信息
+            Logger.d(
+                "code=" + response.code() + "|method=" + orgRequest.method() + "|url=" + orgRequest.url()
+                        + "\n" + "headers:" + orgRequest.headers().toMultimap()
+                        + "\n" + "post请求体:" + sb.toString()
+            )
+        }
         //返回json
         val responseBody = response.body()
         val contentLength = responseBody!!.contentLength()

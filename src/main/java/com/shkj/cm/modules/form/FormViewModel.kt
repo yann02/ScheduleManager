@@ -66,7 +66,8 @@ class FormViewModel : BaseViewModel<FormRepository>() {
 
     var startTimeStr = ""
     var endTimeStr = ""
-    var isEdit = false
+    var isEdit = MutableLiveData(false)
+//    var isEdit = false
     var isVoiceAdd = false
     var tid = ""
     val editScheduleEntity = MutableLiveData<ScheduleEntity>()
