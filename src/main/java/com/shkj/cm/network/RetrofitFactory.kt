@@ -48,7 +48,8 @@ class RetrofitFactory private constructor() {
         okHttpClient.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
         okHttpClient.writeTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
         okHttpClient.readTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS) // socket timeout
-        okHttpClient.addInterceptor(LoggerInterceptor())
+//        okHttpClient.addInterceptor(LoggerInterceptor())
+        okHttpClient.addInterceptor(LoggerInterceptorForRaw())
         return okHttpClient.build()
     }
 }

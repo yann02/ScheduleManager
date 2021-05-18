@@ -15,6 +15,9 @@ data class DaysByTheMonthEntity(
     val sys = "andriod"
     val sysVer = "1.0.0"
     val ver = "1.0"
+    override fun toString(): String {
+        return "DaysByTheMonthEntity好人呀"
+    }
 }
 
 data class BodyByDays(
