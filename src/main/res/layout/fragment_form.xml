@@ -377,7 +377,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/common_item_height_100px"
                         android:layout_marginTop="@dimen/common_margin_30px"
-                        app:is_add="true"></com.shkj.cm.widgets.FrequencyView>
+                        app:is_add="true"/>
 
 
                     <com.shkj.cm.widgets.FrequencyView
@@ -389,7 +389,7 @@
                         app:layout_constraintBottom_toTopOf="@+id/gl_v17"
                         app:layout_constraintEnd_toStartOf="@+id/gl_h6"
                         app:layout_constraintStart_toStartOf="@+id/gl_h2"
-                        app:layout_constraintTop_toTopOf="@+id/gl_v16"></com.shkj.cm.widgets.FrequencyView>
+                        app:layout_constraintTop_toTopOf="@+id/gl_v16"/>
 
                     <com.shkj.cm.widgets.FrequencyView
                         android:id="@+id/frequencyView3"
@@ -400,7 +400,7 @@
                         app:layout_constraintBottom_toTopOf="@+id/gl_v19"
                         app:layout_constraintEnd_toStartOf="@+id/gl_h6"
                         app:layout_constraintStart_toStartOf="@+id/gl_h2"
-                        app:layout_constraintTop_toBottomOf="@+id/gl_v18"></com.shkj.cm.widgets.FrequencyView>
+                        app:layout_constraintTop_toBottomOf="@+id/gl_v18"/>
 
 
                     <com.shkj.cm.widgets.FrequencyView
@@ -412,7 +412,7 @@
                         app:layout_constraintBottom_toTopOf="@+id/gl_v21"
                         app:layout_constraintEnd_toStartOf="@+id/gl_h6"
                         app:layout_constraintStart_toStartOf="@+id/gl_h2"
-                        app:layout_constraintTop_toBottomOf="@+id/gl_v20"></com.shkj.cm.widgets.FrequencyView>
+                        app:layout_constraintTop_toBottomOf="@+id/gl_v20"/>
 
 
                     <com.shkj.cm.widgets.FrequencyView
@@ -424,7 +424,7 @@
                         app:layout_constraintBottom_toTopOf="@+id/gl_v23"
                         app:layout_constraintEnd_toStartOf="@+id/gl_h6"
                         app:layout_constraintStart_toStartOf="@+id/gl_h2"
-                        app:layout_constraintTop_toBottomOf="@+id/gl_v22"></com.shkj.cm.widgets.FrequencyView>
+                        app:layout_constraintTop_toBottomOf="@+id/gl_v22"/>
 
 
                 </LinearLayout>
@@ -435,6 +435,7 @@
                     android:layout_height="@dimen/px_100"
                     android:layout_marginTop="@dimen/px_80"
                     android:background="@drawable/default_shape_of_btn_of_today"
+                    android:onClick="@{vm::deleteSchedule}"
                     android:padding="0dp"
                     android:text="@string/delete"
                     android:textColor="@color/primary_of_font"
@@ -450,7 +451,7 @@
                     android:layout_height="@dimen/px_40"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/btn_delete"/>
+                    app:layout_constraintTop_toBottomOf="@+id/btn_delete" />
 
 
                 <androidx.constraintlayout.widget.Guideline

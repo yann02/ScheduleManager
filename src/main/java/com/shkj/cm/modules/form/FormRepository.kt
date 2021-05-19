@@ -10,6 +10,9 @@ import com.shkj.cm.modules.form.entities.request.add.RequestEntityForAddSchedule
 import com.shkj.cm.modules.form.entities.request.add.RequestEntityForEditSchedule
 import com.shkj.cm.modules.form.entities.result.add.ResultEntityForAddSchedule
 import com.shkj.cm.modules.form.entities.result.add.ResultEntityForEditSchedule
+import com.shkj.cm.modules.list.entities.request.BodyDeleteScheduleForRequestEntity
+import com.shkj.cm.modules.list.entities.request.DeleteScheduleForRequestEntity
+import com.shkj.cm.modules.list.entities.result.DeleteScheduleForResultEntity
 
 /**
  * Copyright (C), 2015-2021, 海南双猴科技有限公司
@@ -97,5 +100,13 @@ class FormRepository(var loadState: MutableLiveData<State>) : ApiRepository() {
                 )
             )
         )
+    }
+
+    /**
+     * 删除单个用户日程
+     * @param tid 日程唯一标识ID
+     */
+    suspend fun deleteSchedule(tid: String): DeleteScheduleForResultEntity {
+        return apiService.deleteSchedule(DeleteScheduleForRequestEntity(BodyDeleteScheduleForRequestEntity(tid)))
     }
 }

@@ -39,7 +39,7 @@ class DetailFragment : BaseLifeCycleFragment<DetailViewModel, FragmentDetailBind
             findNavController().popBackStack()
         }
         mDataBinding.btnEdit.setOnClickListener {
-            navController(this,R.id.action_detailFragment_to_formFragment,Bundle().apply {
+            navController(this, R.id.action_detailFragment_to_formFragment, Bundle().apply {
                 putBoolean(
                     ConstantRouterParamKey.IS_EDIT,
                     true
@@ -61,6 +61,7 @@ class DetailFragment : BaseLifeCycleFragment<DetailViewModel, FragmentDetailBind
         com.xuexiang.xutil.common.logger.Logger.dTag("dosmono", "tid=$tId")
         mViewModel.remoteSchedulesById(tId)
     }
+
     lateinit var scheduleEntity: ScheduleEntity
     override fun initDataObserver() {
         mViewModel.remoteSuccess.observe(this, Observer {
@@ -80,7 +81,8 @@ class DetailFragment : BaseLifeCycleFragment<DetailViewModel, FragmentDetailBind
                 it.body.title,
                 it.body.preTime
             )
-            mDataBinding.tvSubtitleValue.text = if(it.body.title.length <= 20) it.body.title else it.body.title.substring(0,20)+"..."
+            mDataBinding.tvSubtitleValue.text =
+                if (it.body.title.length <= 20) it.body.title else it.body.title.substring(0, 20) + "..."
             mDataBinding.tvRepeatValue.text = when (it.body.freq) {
                 Constant.RULE_BY_DAY -> Constant.CHAR_BY_DAY
                 Constant.RULE_BY_MONTH -> Constant.CHAR_BY_MONTH
@@ -92,12 +94,12 @@ class DetailFragment : BaseLifeCycleFragment<DetailViewModel, FragmentDetailBind
                 if (it.body.dtag == 1) Constant.CHAR_NO_DAY else Constant.CHAR_DAY
             //设置开始时间
             mDataBinding.tvStartTimeValue.text = if (it.body.dtag == 1)
-                DateUtils.millis2String(it.body.startTime.toLong(),DateUtils.yyyyMMddHHmm.get())
-            else DateUtils.millis2String(it.body.startTime.toLong(),DateUtils.yyyyMMdd.get())
+                DateUtils.millis2String(it.body.startTime.toLong(), DateUtils.yyyyMMddHHmm.get())
+            else DateUtils.millis2String(it.body.startTime.toLong(), DateUtils.yyyyMMdd.get())
             //设置结束时间
             mDataBinding.tvEndTimeValue.text = if (it.body.dtag == 1)
-                DateUtils.millis2String(it.body.endTime.toLong(),DateUtils.yyyyMMddHHmm.get())
-            else DateUtils.millis2String(it.body.endTime.toLong(),DateUtils.yyyyMMdd.get())
+                DateUtils.millis2String(it.body.endTime.toLong(), DateUtils.yyyyMMddHHmm.get())
+            else DateUtils.millis2String(it.body.endTime.toLong(), DateUtils.yyyyMMdd.get())
 
             mDataBinding.tvTimezoneValue.text = it.body.gmt
             repeat(it.body.preTime.size) { index ->
@@ -122,6 +124,13 @@ class DetailFragment : BaseLifeCycleFragment<DetailViewModel, FragmentDetailBind
                         else -> Constant.CHAR_TODAY
                     }
                 }
+            }
+        })
+        viewModelOfMainActivity.deleteOnEdit.observe(this, Observer {
+            if (it) {
+                //  恢复默认值
+                viewModelOfMainActivity.deleteOnEdit.postValue(false)
+                findNavController().navigateUp()
             }
         })
     }

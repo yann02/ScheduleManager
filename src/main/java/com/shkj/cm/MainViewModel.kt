@@ -72,6 +72,8 @@ class MainViewModel : BaseViewModel<MainRepository>() {
         }
     }
 
+    var deleteOnEdit = MutableLiveData(false)
+
     private fun getSchemeCalendar(year: Int?, month: Int?, day: Int): Calendar {
         return Calendar().apply {
             year?.let {

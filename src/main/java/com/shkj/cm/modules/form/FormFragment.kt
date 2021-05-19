@@ -388,7 +388,12 @@ class FormFragment : BaseLifeCycleFragment<FormViewModel, FragmentFormBinding>()
 //                CalendarProviderManager.startCalendarForIntentToEdit(requireContext(), eventId)
             }
         })
-
+        mViewModel.deleted.observe(this, androidx.lifecycle.Observer {
+            if (it) {
+                findNavController().navigateUp()
+                viewModelOfMainActivity.deleteOnEdit.postValue(true)
+            }
+        })
     }
 
     private fun addFrequencyView(): FrequencyView? {

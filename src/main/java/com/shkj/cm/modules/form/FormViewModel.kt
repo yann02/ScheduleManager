@@ -2,11 +2,13 @@ package com.shkj.cm.modules.form
 
 import android.content.Context
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.annotation.ArrayRes
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
+import androidx.room.withTransaction
 import com.dosmono.logger.Logger
 import com.dosmono.platecommon.util.UIUtils
 import com.shkj.cm.R
@@ -20,6 +22,7 @@ import com.shkj.cm.common.initiateRequestNotState
 import com.shkj.cm.common.util.SharedPreUtils
 import com.shkj.cm.common.util.TimeUtil
 import com.shkj.cm.db.FrequencyEntity
+import com.shkj.cm.db.RemoteKeys
 import com.shkj.cm.db.RoomHelper
 import com.shkj.cm.modules.detail.entity.ScheduleEntity
 import com.shkj.cm.modules.form.entities.result.add.Body
@@ -67,7 +70,8 @@ class FormViewModel : BaseViewModel<FormRepository>() {
     var startTimeStr = ""
     var endTimeStr = ""
     var isEdit = MutableLiveData(false)
-//    var isEdit = false
+
+    //    var isEdit = false
     var isVoiceAdd = false
     var tid = ""
     val editScheduleEntity = MutableLiveData<ScheduleEntity>()
@@ -164,6 +168,8 @@ class FormViewModel : BaseViewModel<FormRepository>() {
 
     var success = MutableLiveData<Boolean>()
 
+    var deleted = MutableLiveData(false)
+
     /**
      * 创建日程
      */
@@ -180,9 +186,18 @@ class FormViewModel : BaseViewModel<FormRepository>() {
         }
         setPreTimes()
         Logger.d("startTime =${startTime.value},endTime = ${endTime.value}")
-        if(dtag.value == DTAG_FULL_OF_DAY){
-            startTime.postValue("${TimeUtil.datePlus9Hours2Millis(DateUtils.string2Date(startTimeOnFormat.value,mDateForm.value))}")
-            endTime.postValue("${TimeUtil.datePlus9Hours2Millis(DateUtils.string2Date(endTimeOnFormat.value,mDateForm.value))}")
+        if (dtag.value == DTAG_FULL_OF_DAY) {
+            startTime.postValue(
+                "${
+                    TimeUtil.datePlus9Hours2Millis(
+                        DateUtils.string2Date(
+                            startTimeOnFormat.value,
+                            mDateForm.value
+                        )
+                    )
+                }"
+            )
+            endTime.postValue("${TimeUtil.datePlus9Hours2Millis(DateUtils.string2Date(endTimeOnFormat.value, mDateForm.value))}")
         }
         initiateRequestNotState {
             val httpBaseBean =
@@ -207,15 +222,15 @@ class FormViewModel : BaseViewModel<FormRepository>() {
     }
 
 
-    fun setPreTimes(){
+    fun setPreTimes() {
         preTime.value!!.clear()
-        if(dtag.value == DTAG_NOT_FULL_OF_DAY) {
+        if (dtag.value == DTAG_NOT_FULL_OF_DAY) {
             for (value in noFullDayFrequencyValue) {
                 if (value != "-1") {
                     preTime.value!!.add(value)
                 }
             }
-        }else{
+        } else {
             for (value in fullDayFrequencyValue) {
                 if (value != "-1") {
                     preTime.value!!.add(value)
@@ -237,9 +252,18 @@ class FormViewModel : BaseViewModel<FormRepository>() {
         }
         setPreTimes()
         //设置时间的早上9点
-        if(dtag.value == DTAG_FULL_OF_DAY){
-            startTime.postValue("${TimeUtil.datePlus9Hours2Millis(DateUtils.string2Date(startTimeOnFormat.value,mDateForm.value))}")
-            endTime.postValue("${TimeUtil.datePlus9Hours2Millis(DateUtils.string2Date(endTimeOnFormat.value,mDateForm.value))}")
+        if (dtag.value == DTAG_FULL_OF_DAY) {
+            startTime.postValue(
+                "${
+                    TimeUtil.datePlus9Hours2Millis(
+                        DateUtils.string2Date(
+                            startTimeOnFormat.value,
+                            mDateForm.value
+                        )
+                    )
+                }"
+            )
+            endTime.postValue("${TimeUtil.datePlus9Hours2Millis(DateUtils.string2Date(endTimeOnFormat.value, mDateForm.value))}")
         }
         initiateRequestNotState {
             val httpBaseBean =
@@ -434,6 +458,36 @@ class FormViewModel : BaseViewModel<FormRepository>() {
             else -> {
                 //  全天
                 DateUtils.yyyyMMdd.get()!!
+            }
+        }
+    }
+
+    /**
+     * 监听用户点击了删除按钮
+     */
+    fun deleteSchedule(v: View) {
+        viewModelScope.launch {
+            //  删除一条服务器记录
+            val res = mRepository.deleteSchedule(tid)
+            if (res.code == 8000) {
+                Toast.makeText(UIUtils.getContext(), res.msg, Toast.LENGTH_SHORT).show()
+                withContext(Dispatchers.IO) {
+                    //  同步删除本地数据库对应的数据
+                    RoomHelper.appDatabase?.withTransaction {
+                        val frequencies = RoomHelper.scheduleDao?.queryFrequencyEntitiesOnSchedule(tid)
+                        if (!frequencies.isNullOrEmpty()) {
+                            for (frequency in frequencies) {
+                                CalendarProviderManager.deleteCalendarEvent(UIUtils.getContext(), frequency.eventId)
+                            }
+                        }
+                        //  本地创建数据
+                        RoomHelper.scheduleDao?.deleteScheduleTransaction(tid)
+                        //  接口获取的分页列表数据
+                        RoomHelper.listPageDao?.deleteScheduleTid(tid)
+                        RoomHelper.remoteKeysDao?.deleteKeyTid(tid)
+                        deleted.postValue(true)
+                    }
+                }
             }
         }
     }
