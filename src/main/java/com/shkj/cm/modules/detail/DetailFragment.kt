@@ -75,7 +75,7 @@ class DetailFragment : BaseLifeCycleFragment<DetailViewModel, FragmentDetailBind
                 it.body.endTime,
                 it.body.freq.toInt(),
                 it.body.gmt,
-                viewModelOfMainActivity.monoId,
+                viewModelOfMainActivity.monoId.value,
                 it.body.startTime,
                 it.body.tid,
                 it.body.title,

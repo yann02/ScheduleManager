@@ -23,19 +23,16 @@ import kotlinx.coroutines.launch
  * <author> <time> <version> <desc>
  * 作者姓名 修改时间 版本号 描述
  */
-//  测试用默认用户ID
-const val MONOID_DEFAULT = "2000206"
 
 class MainViewModel : BaseViewModel<MainRepository>() {
 
     /**
      * 用户id
      */
-    val monoId: String by lazy {
-        val user = PreferencesUtil.getMonoid(UIUtils.getContext())
-        val id = user?.monoid
-        //  不存在时则用默认id
-        if (id.isNullOrEmpty()) MONOID_DEFAULT else id
+    val monoId = MutableLiveData<String>()
+
+    init {
+        monoId.postValue(PreferencesUtil.getMonoid(UIUtils.getContext())?.monoid)
     }
 
     //  日历的年月
@@ -92,16 +89,17 @@ class MainViewModel : BaseViewModel<MainRepository>() {
      * 获取用户某日，所有日程
      */
     fun remoteSchedulesOnDay() {
-        selectorYear.value?.let { year ->
-            selectorMonth.value?.let { month ->
-                selectorDay.value?.let {
-                    //  sechStartTime 每天的开始时间：例如：2020-04-01 00:00:00的时间戳
-                    val sechStartTime = TimeUtil.getMilliStringByYearMonthDay(year, month, it)
-                    initiateRequestNotState {
-//                        Log.d("wyy", "获取用户某日，所有日程 monoId:$monoId")
-                        val httpBaseBean = mRepository.remoteSchedulesOnDay(monoId, sechStartTime = sechStartTime)
-                        if (httpBaseBean.code == 8000) {
-                            mSchedules.postValue(httpBaseBean.body)
+        if (!monoId.value.isNullOrEmpty()) {
+            selectorYear.value?.let { year ->
+                selectorMonth.value?.let { month ->
+                    selectorDay.value?.let {
+                        //  sechStartTime 每天的开始时间：例如：2020-04-01 00:00:00的时间戳
+                        val sechStartTime = TimeUtil.getMilliStringByYearMonthDay(year, month, it)
+                        initiateRequestNotState {
+                            val httpBaseBean = mRepository.remoteSchedulesOnDay(monoId.value!!, sechStartTime = sechStartTime)
+                            if (httpBaseBean.code == 8000) {
+                                mSchedules.postValue(httpBaseBean.body)
+                            }
                         }
                     }
                 }
@@ -113,16 +111,17 @@ class MainViewModel : BaseViewModel<MainRepository>() {
      * 获取某月内，用户所有日程管理的日期集合
      */
     fun remoteDaysByTheMonth() {
-        titleOfYear.value?.let { year ->
-            titleOfMonth.value?.let { month ->
-                //  sechStartTime 每天的开始时间：例如：2020-04-01 00:00:00的时间戳
-                val sechStartTime = TimeUtil.getMilliStringByYearMonthDay(year, month, 1)
-                jobOfDaysByMonth?.cancel()
-                jobOfDaysByMonth = viewModelScope.launch {
-//                    Log.d("wyy", "获取某月内，用户所有日程管理的日期集合 monoId:$monoId")
-                    val httpBaseBean = mRepository.remoteDaysByTheMonth(monoId, sechStartTime = sechStartTime)
-                    if (httpBaseBean.code == 8000) {
-                        mBodyOnDaysByTheMonthEntities.postValue(httpBaseBean.body)
+        if (!monoId.value.isNullOrEmpty()) {
+            titleOfYear.value?.let { year ->
+                titleOfMonth.value?.let { month ->
+                    //  sechStartTime 每天的开始时间：例如：2020-04-01 00:00:00的时间戳
+                    val sechStartTime = TimeUtil.getMilliStringByYearMonthDay(year, month, 1)
+                    jobOfDaysByMonth?.cancel()
+                    jobOfDaysByMonth = viewModelScope.launch {
+                        val httpBaseBean = mRepository.remoteDaysByTheMonth(monoId.value!!, sechStartTime = sechStartTime)
+                        if (httpBaseBean.code == 8000) {
+                            mBodyOnDaysByTheMonthEntities.postValue(httpBaseBean.body)
+                        }
                     }
                 }
             }

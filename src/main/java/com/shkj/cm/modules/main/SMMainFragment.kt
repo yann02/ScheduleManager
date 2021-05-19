@@ -1,10 +1,22 @@
 package com.shkj.cm.modules.main
 
+import android.app.AlertDialog
+import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
+import android.view.Gravity
 import android.view.View
+import android.view.ViewGroup
+import android.view.WindowManager
+import android.widget.TextView
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.dosmono.platecommon.util.PreferencesUtil
+import com.dosmono.platecommon.util.UIUtils
+import com.dosmono.settings.activity.rouyu.account.LoginActivity
+import com.dosmono.settings.utils.AccountUtils
 import com.haibin.calendarview.Calendar
 import com.haibin.calendarview.CalendarView
 import com.shkj.cm.MainViewModel
@@ -14,7 +26,6 @@ import com.shkj.cm.common.symbols.ConstantRouterParamKey
 import com.shkj.cm.common.util.CommonUtil
 import com.shkj.cm.databinding.FragmentSmmainBinding
 import com.xuexiang.xutil.data.DateUtils
-import java.util.*
 
 /**
  * Copyright (C), 2015-2021, 海南双猴科技有限公司
@@ -79,10 +90,17 @@ class SMMainFragment : BaseLifeCycleFragment<MainViewModel, FragmentSmmainBindin
         }
         mDataBinding.ibOnAdd.setOnClickListener {
             //  跳转到新建日程页面
-            try {
-                findNavController().navigate(R.id.action_smmainFragment_to_formFragment)
-            } catch (e: Exception) {
-                e.printStackTrace()
+            if (viewModelOfMainActivity.monoId.value.isNullOrEmpty()) {
+                onDialogForDeleteAllSchedule(
+                    requireContext().getString(R.string.not_login),
+                    requireContext().getString(R.string.goto_login)
+                )
+            } else {
+                try {
+                    findNavController().navigate(R.id.action_smmainFragment_to_formFragment)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
             }
         }
         mDataBinding.ibOnList.setOnClickListener {
@@ -162,6 +180,15 @@ class SMMainFragment : BaseLifeCycleFragment<MainViewModel, FragmentSmmainBindin
         viewModelOfMainActivity.underPointsForMonthDay.observe(this, Observer {
             mDataBinding.cvCanvasCalendar.setSchemeDate(it)
         })
+        //  监听用户ID的变化（存在用户未登录的情况）
+        viewModelOfMainActivity.monoId.observe(this, Observer {
+            if (it.isNotEmpty()){
+                //  加载当天日程
+                viewModelOfMainActivity.remoteSchedulesOnDay()
+                //  加载当月日程标记
+                viewModelOfMainActivity.remoteDaysByTheMonth()
+            }
+        })
     }
 
     /**
@@ -236,5 +263,44 @@ class SMMainFragment : BaseLifeCycleFragment<MainViewModel, FragmentSmmainBindin
             return true
         }
         return false
+    }
+
+    private fun onDialogForDeleteAllSchedule(msg: String, positiveString: String) {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(UIUtils.getContext())
+
+        val alertDialog: AlertDialog = builder.create()
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+            alertDialog.window?.setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT)
+        } else {
+            alertDialog.window?.setType(WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY)
+        }
+        val view: View = alertDialog.layoutInflater.inflate(R.layout.dialog_schedule, null)
+        val tvMessage: TextView = view.findViewById(R.id.tv_alert_message)
+        val tvPositive: TextView = view.findViewById(R.id.tv_positive)
+        tvMessage.text = msg
+        tvPositive.text = positiveString
+        builder.setView(view)
+        alertDialog.setView(view, 0, 0, 0, 0)
+        val wlp: WindowManager.LayoutParams = alertDialog.window?.attributes!!
+        wlp.gravity = Gravity.TOP or Gravity.CENTER_HORIZONTAL
+        wlp.y = 1143
+        alertDialog.show()
+        alertDialog.window?.setLayout(780, ViewGroup.LayoutParams.WRAP_CONTENT)
+        view.findViewById<TextView>(R.id.tv_positive).setOnClickListener {
+            Intent(requireContext(), LoginActivity::class.java).apply {
+                putExtra(LoginActivity.EXTRA_HAS_LOGIN_INFO, AccountUtils.isLogin(requireContext()))
+                startActivityForResult(this, 123)
+            }
+            alertDialog.dismiss()
+        }
+        view.findViewById<TextView>(R.id.tv_negative).setOnClickListener {
+            alertDialog.dismiss()
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        Log.d("wyy", "onActivityResult")
+        viewModelOfMainActivity.monoId.postValue(PreferencesUtil.getMonoid(UIUtils.getContext())?.monoid)
     }
 }

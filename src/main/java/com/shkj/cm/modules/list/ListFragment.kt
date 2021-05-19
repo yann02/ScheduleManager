@@ -44,7 +44,7 @@ class ListFragment : BaseLifeCycleFragment<ListViewModel, FragmentListBinding>()
         super.initView()
         showSuccess()
         //  初始化用户ID
-        mViewModel.monoId = viewModelOfMainActivity.monoId
+        mViewModel.monoId = viewModelOfMainActivity.monoId.value
         initAdapter()
         mDataBinding.ibOnBack.setOnClickListener {
             activity?.onBackPressed()
@@ -77,7 +77,9 @@ class ListFragment : BaseLifeCycleFragment<ListViewModel, FragmentListBinding>()
 
     override fun initData() {
         super.initData()
-        initPagingData()
+        if (!mViewModel.monoId.isNullOrEmpty()) {
+            initPagingData()
+        }
     }
 
     private fun initPagingData() {
@@ -93,7 +95,10 @@ class ListFragment : BaseLifeCycleFragment<ListViewModel, FragmentListBinding>()
         adapter = AdapterOnPageSchedules(object : PageScheduleViewHolder.OnPageListItemClickListener {
             override fun onItemClick(position: Int, tid: String) {
                 //  点击了日程列表的某一项
-                navController(this@ListFragment,R.id.action_listFragment_to_detailFragment,  Bundle().apply { putString(ConstantRouterParamKey.TID, tid) })
+                navController(
+                    this@ListFragment,
+                    R.id.action_listFragment_to_detailFragment,
+                    Bundle().apply { putString(ConstantRouterParamKey.TID, tid) })
 //                findNavController().navigate(
 //                    R.id.action_listFragment_to_detailFragment,
 //                    Bundle().apply { putString(ConstantRouterParamKey.TID, tid) })
@@ -112,13 +117,13 @@ class ListFragment : BaseLifeCycleFragment<ListViewModel, FragmentListBinding>()
         mDataBinding.rvList.adapter = adapter
     }
 
-    private fun voiceDelete(){
+    private fun voiceDelete() {
         arguments?.getString("handle")?.apply {
             MaterialDialog.Builder(requireContext())
                 .content(R.string.tip_of_delete_all_schedule)
                 .positiveText(R.string.confirm)
                 .negativeText(R.string.cancel)
-                .onPositive { _, _ -> mViewModel.deleteAllOfSchedules()  }
+                .onPositive { _, _ -> mViewModel.deleteAllOfSchedules() }
                 .show()
         }
     }
@@ -155,4 +160,5 @@ class ListFragment : BaseLifeCycleFragment<ListViewModel, FragmentListBinding>()
         view.findViewById<TextView>(R.id.tv_negative).setOnClickListener {
             alertDialog.dismiss()
         }
-    }}
+    }
+}

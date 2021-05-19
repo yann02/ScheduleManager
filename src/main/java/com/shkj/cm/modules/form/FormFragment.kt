@@ -54,7 +54,7 @@ class FormFragment : BaseLifeCycleFragment<FormViewModel, FragmentFormBinding>()
     override fun initView() {
         super.initView()
         showSuccess()
-        mViewModel.monoId = viewModelOfMainActivity.monoId
+        mViewModel.monoId = viewModelOfMainActivity.monoId.value!!
 
         requestPermission()
         //  监听用户点击返回

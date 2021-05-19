@@ -1,7 +1,5 @@
 <resources>
     <string name="app_name">CalendarManager</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <!--    main page start-->
     <string name="title">日程备忘</string>
     <string name="title_of_calendar">%d年 %d月</string>
@@ -9,6 +7,8 @@
     <string name="am">上午</string>
     <string name="pm">下午</string>
     <string name="not_schedule">没有日程</string>
+    <string name="not_login">日程备忘的记录与个人账号关联，您尚未登陆账号！</string>
+    <string name="goto_login">去登陆</string>
     <!--    main page end-->
     <!--    form page start-->
     <string name="save">保存</string>

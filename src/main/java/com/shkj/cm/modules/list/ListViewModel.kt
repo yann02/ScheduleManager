@@ -28,7 +28,7 @@ import kotlin.math.log
  * 作者姓名 修改时间 版本号 描述
  */
 class ListViewModel : BaseViewModel<ListRepository>() {
-    var monoId = ""
+    var monoId: String? = null
     var currentScheduleResult: Flow<PagingData<Data>>? = null
 
     //  上次删除一条日程后是否能取到新数据 默认为true，为false时，下次删除一条日程不必再请求接口获取补充的数据（用于确保分页获取数据时，前后端数据一致）
@@ -42,7 +42,7 @@ class ListViewModel : BaseViewModel<ListRepository>() {
         if (lastResult != null) {
             return lastResult
         }
-        val newResult: Flow<PagingData<Data>> = mRepository.getScheduleResultStream(monoId).cachedIn(viewModelScope)
+        val newResult: Flow<PagingData<Data>> = mRepository.getScheduleResultStream(monoId!!).cachedIn(viewModelScope)
         currentScheduleResult = newResult
         return newResult
     }
@@ -80,7 +80,7 @@ class ListViewModel : BaseViewModel<ListRepository>() {
                             page?.let {
                                 //  第一页page传1,我们要获取服务器第page+1条数据
                                 val response =
-                                    mRepository.getMeetUserScheManagePage(curPage = it + 1, monoId = monoId, pageSize = 1)
+                                    mRepository.getMeetUserScheManagePage(curPage = it + 1, monoId = monoId!!, pageSize = 1)
                                 val jobs = response.body.datas
                                 hasSchedule = jobs.isNotEmpty()
                                 if (hasSchedule) {
@@ -125,8 +125,11 @@ class ListViewModel : BaseViewModel<ListRepository>() {
      * 清空所有日程
      */
     fun deleteAllOfSchedules() {
+        if (monoId.isNullOrEmpty()) {
+            return
+        }
         viewModelScope.launch {
-            val res = mRepository.deleteAllOfSchedules(monoId)
+            val res = mRepository.deleteAllOfSchedules(monoId!!)
             if (res.code == 8000) {
                 Toast.makeText(UIUtils.getContext(), res.msg, Toast.LENGTH_SHORT).show()
                 withContext(Dispatchers.IO) {

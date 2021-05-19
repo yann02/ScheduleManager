@@ -109,4 +109,7 @@ dependencies {
 
     //日历
     implementation 'com.haibin:calendarview:3.7.1'
+
+    //设置模块 用于登录页面跳转
+    implementation rootProject.ext.dependencies["lib-paltesetting"]
 }
