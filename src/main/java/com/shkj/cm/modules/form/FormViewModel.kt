@@ -1,8 +1,14 @@
 package com.shkj.cm.modules.form
 
+import android.app.AlertDialog
 import android.content.Context
+import android.os.Build
 import android.util.Log
+import android.view.Gravity
 import android.view.View
+import android.view.ViewGroup
+import android.view.WindowManager
+import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.ArrayRes
 import androidx.lifecycle.MutableLiveData
@@ -463,9 +469,44 @@ class FormViewModel : BaseViewModel<FormRepository>() {
     }
 
     /**
-     * 监听用户点击了删除按钮
+     * 用户点击了删除按钮
      */
     fun deleteSchedule(v: View) {
+        onDialogForDeleteAllSchedule(UIUtils.getContext().getString(R.string.tip_of_delete_schedule))
+    }
+
+    private fun onDialogForDeleteAllSchedule(msg: String) {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(UIUtils.getContext())
+
+        val alertDialog: AlertDialog = builder.create()
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+            alertDialog.window?.setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT)
+        } else {
+            alertDialog.window?.setType(WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY)
+        }
+        val view: View = alertDialog.layoutInflater.inflate(R.layout.dialog_schedule, null)
+        val tvMessage: TextView = view.findViewById(R.id.tv_alert_message)
+        tvMessage.text = msg
+        builder.setView(view)
+        alertDialog.setView(view, 0, 0, 0, 0)
+        val wlp: WindowManager.LayoutParams = alertDialog.window?.attributes!!
+        wlp.gravity = Gravity.TOP or Gravity.CENTER_HORIZONTAL
+        wlp.y = 1143
+        alertDialog.show()
+        alertDialog.window?.setLayout(780, ViewGroup.LayoutParams.WRAP_CONTENT)
+        view.findViewById<TextView>(R.id.tv_positive).setOnClickListener {
+            deleteSchedule()
+            alertDialog.dismiss()
+        }
+        view.findViewById<TextView>(R.id.tv_negative).setOnClickListener {
+            alertDialog.dismiss()
+        }
+    }
+
+    /**
+     * 删除一条日程
+     */
+    private fun deleteSchedule(){
         viewModelScope.launch {
             //  删除一条服务器记录
             val res = mRepository.deleteSchedule(tid)

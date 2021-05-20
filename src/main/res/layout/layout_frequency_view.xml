@@ -12,11 +12,21 @@
         android:layout_weight="1"
         android:orientation="vertical">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/ib_down"
+                android:layout_width="@dimen/icon_size_of_year_or_month"
+                android:layout_height="@dimen/icon_size_of_year_or_month"
+                android:background="@android:color/transparent"
+                android:src="@mipmap/ic_down48"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
 
             <com.xuexiang.xui.widget.spinner.materialspinner.MaterialSpinner
                 android:id="@+id/materialspinner"
@@ -30,23 +40,15 @@
                 android:textSize="@dimen/font_size_form_left"
                 app:ms_arrow_image="@mipmap/ic_down48"
                 app:ms_entries="@array/no_all_day_array"
-                app:ms_hide_arrow="true"></com.xuexiang.xui.widget.spinner.materialspinner.MaterialSpinner>
+                app:ms_hide_arrow="true"/>
 
-            <ImageButton
-                android:id="@+id/ib_down"
-                android:layout_width="@dimen/icon_size_of_year_or_month"
-                android:layout_height="@dimen/icon_size_of_year_or_month"
-                android:layout_gravity="center_vertical"
-                android:background="@android:color/transparent"
-                android:src="@mipmap/ic_down48" />
-
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
             android:id="@+id/frequency_underline"
             android:layout_width="match_parent"
             android:layout_height="@dimen/space_line_height"
-            android:background="@color/under_line"></TextView>
+            android:background="@color/under_line"/>
 
     </LinearLayout>
 

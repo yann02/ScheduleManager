@@ -300,6 +300,18 @@
                     app:layout_constraintRight_toLeftOf="@+id/gl_h3"
                     app:layout_constraintTop_toTopOf="@+id/gl_v11" />
 
+                <ImageButton
+                    android:id="@+id/ib_on_drop_for_repeat"
+                    android:layout_width="@dimen/icon_size_of_year_or_month"
+                    android:layout_height="@dimen/icon_size_of_year_or_month"
+                    android:background="@android:color/transparent"
+                    android:src="@mipmap/ic_down48"
+                    android:focusable="false"
+                    android:clickable="false"
+                    app:layout_constraintBottom_toTopOf="@+id/gl_v14"
+                    app:layout_constraintRight_toLeftOf="@+id/gl_h3"
+                    app:layout_constraintTop_toTopOf="@+id/gl_v13" />
+
 
                 <com.xuexiang.xui.widget.spinner.materialspinner.MaterialSpinner
                     android:id="@+id/tv_not_repeat_content"
@@ -335,16 +347,6 @@
                     android:textSize="@dimen/font_size_form_left"
                     app:layout_constraintBottom_toTopOf="@+id/gl_v14"
                     app:layout_constraintRight_toLeftOf="@+id/gl_h2"
-                    app:layout_constraintTop_toTopOf="@+id/gl_v13" />
-
-                <ImageButton
-                    android:id="@+id/ib_on_drop_for_repeat"
-                    android:layout_width="@dimen/icon_size_of_year_or_month"
-                    android:layout_height="@dimen/icon_size_of_year_or_month"
-                    android:background="@android:color/transparent"
-                    android:src="@mipmap/ic_down48"
-                    app:layout_constraintBottom_toTopOf="@+id/gl_v14"
-                    app:layout_constraintRight_toLeftOf="@+id/gl_h3"
                     app:layout_constraintTop_toTopOf="@+id/gl_v13" />
 
 

@@ -1,15 +1,23 @@
 package com.shkj.cm.modules.form
 
 import android.Manifest
+import android.app.AlertDialog
+import android.media.MediaPlayer
+import android.os.Build
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.Gravity
 import android.view.View
+import android.view.ViewGroup
+import android.view.WindowManager
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.dosmono.library.opus.Logger
+import com.dosmono.platecommon.util.UIUtils
 import com.permissionx.guolindev.PermissionX
 
 import com.permissionx.guolindev.request.ExplainScope
@@ -238,11 +246,7 @@ class FormFragment : BaseLifeCycleFragment<FormViewModel, FragmentFormBinding>()
             mViewModel.mDateForm.value
         )
         if (!checkTimeValidity(tempStartTimeOnFormat, mViewModel.endTimeOnFormat.value!!)) {
-            MaterialDialog.Builder(requireContext())
-                .title(R.string.check_time_tip)
-                .content(R.string.check_time_content)
-                .positiveText(R.string.check_time_close)
-                .show()
+            showDialog(requireContext().getString(R.string.check_time_content))
             return
         }
         mViewModel.startTimeOnFormat.postValue(
@@ -299,16 +303,36 @@ class FormFragment : BaseLifeCycleFragment<FormViewModel, FragmentFormBinding>()
             mViewModel.mDateForm.value
         )
         if (!checkTimeValidity(mViewModel.startTimeOnFormat.value!!, tempEndTimeOnFormat)) {
-            MaterialDialog.Builder(requireContext())
-                .title(R.string.check_time_tip)
-                .content(R.string.check_time_content)
-                .positiveText(R.string.check_time_close)
-                .show()
+            showDialog(requireContext().getString(R.string.check_time_content))
             return
         }
         mViewModel.endTimeOnFormat.postValue(tempEndTimeOnFormat)
         mViewModel.endTime.postValue(DateUtils.date2Millis(date).toString())
         setRepeatLevel(mViewModel.startTimeOnFormat.value!!, tempEndTimeOnFormat)
+    }
+
+    fun showDialog(msg: String) {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(UIUtils.getContext())
+        val alertDialog: AlertDialog = builder.create()
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+            alertDialog.window?.setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT)
+        } else {
+            alertDialog.window?.setType(WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY)
+        }
+        val view: View = alertDialog.layoutInflater.inflate(R.layout.alert_dialog, null)
+        val tvMessage: TextView = view.findViewById(R.id.tv_alert_message)
+        tvMessage.text = msg
+        builder.setView(view)
+        alertDialog.setView(view, 0, 0, 0, 0)
+        val wlp: WindowManager.LayoutParams = alertDialog.window?.attributes!!
+        wlp.gravity = Gravity.TOP or Gravity.CENTER_HORIZONTAL
+        wlp.y = 1143
+        alertDialog.setCanceledOnTouchOutside(false)
+        alertDialog.show()
+        alertDialog.window?.setLayout(780, ViewGroup.LayoutParams.WRAP_CONTENT)
+        view.findViewById<TextView>(R.id.tv_positive).setOnClickListener {
+            alertDialog.dismiss()
+        }
     }
 
     //检查起始时间的有效性
