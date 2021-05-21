@@ -119,12 +119,13 @@ class ListFragment : BaseLifeCycleFragment<ListViewModel, FragmentListBinding>()
 
     private fun voiceDelete() {
         arguments?.getString("handle")?.apply {
-            MaterialDialog.Builder(requireContext())
-                .content(R.string.tip_of_delete_all_schedule)
-                .positiveText(R.string.confirm)
-                .negativeText(R.string.cancel)
-                .onPositive { _, _ -> mViewModel.deleteAllOfSchedules() }
-                .show()
+            onDialogForDeleteAllSchedule(getString(R.string.tip_of_delete_all_schedule), true)
+//            MaterialDialog.Builder(requireContext())
+//                .content(R.string.tip_of_delete_all_schedule)
+//                .positiveText(R.string.confirm)
+//                .negativeText(R.string.cancel)
+//                .onPositive { _, _ -> mViewModel.deleteAllOfSchedules() }
+//                .show()
         }
     }
 

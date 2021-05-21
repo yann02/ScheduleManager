@@ -23,6 +23,7 @@
     <color name="default_bg_of_button_for_save">#32C5FF</color>
     <color name="et_hint_color">#50FFFFFF</color>
     <color name="font_color_of_form_left">#99FFFFFF</color>
+    <color name="spinner_item_bg">#00001537</color>
     <!--    form page end-->
 
     <!--    main page start-->

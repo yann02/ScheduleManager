@@ -69,6 +69,11 @@ class FormFragment : BaseLifeCycleFragment<FormViewModel, FragmentFormBinding>()
         mDataBinding.ibOnBack.setOnClickListener {
             activity?.onBackPressed()
         }
+        //  TODO 生产环境要去掉
+        mDataBinding.tvTitle.setOnClickListener {
+            var eventId = SharedPreUtils.getLong(UIUtils.getContext(), "tempEventId", 0L)
+            CalendarProviderManager.startCalendarForIntentToEdit(requireContext(), eventId)
+        }
         //  监听用户点击保存按钮
         mDataBinding.btnSave.setOnClickListener {
             //  用户点击了保存按钮
