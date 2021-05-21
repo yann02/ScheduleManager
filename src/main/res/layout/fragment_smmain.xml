@@ -42,14 +42,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.48" />
+            app:layout_constraintGuide_percent="0.52" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/gl_h3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.52" />
+            app:layout_constraintGuide_percent="0.56" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/gl_v2"
@@ -91,23 +91,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.82" />
+            app:layout_constraintGuide_percent="0.88" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/gl_v8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.84" />
+            app:layout_constraintGuide_percent="0.90" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/gl_v9"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.94" />
+            app:layout_constraintGuide_percent="1" />
 
-        <ImageButton
+        <ImageView
             android:id="@+id/ib_last_year"
             android:layout_width="@dimen/icon_size_of_year_or_month"
             android:layout_height="@dimen/icon_size_of_year_or_month"
@@ -118,11 +118,21 @@
             app:layout_constraintLeft_toLeftOf="@+id/gl_h1"
             app:layout_constraintTop_toBottomOf="@+id/gl_v3" />
 
-        <ImageButton
+        <Button
+            android:layout_width="@dimen/px_68"
+            android:layout_height="@dimen/px_68"
+            android:id="@+id/btn_last_year"
+            android:background="@android:color/transparent"
+            app:layout_constraintRight_toRightOf="@+id/ib_last_year"
+            app:layout_constraintBottom_toTopOf="@+id/gl_v4"
+            app:layout_constraintTop_toBottomOf="@+id/gl_v3"/>
+
+
+        <ImageView
             android:id="@+id/ib_last_month"
             android:layout_width="@dimen/icon_size_of_year_or_month"
             android:layout_height="@dimen/icon_size_of_year_or_month"
-            android:layout_marginStart="@dimen/space_of_icon_of_year_with_month"
+            android:layout_marginStart="@dimen/margin_30_px"
             android:background="@android:color/transparent"
             android:scaleType="fitStart"
             android:src="@mipmap/ic_month_left_n"
@@ -130,7 +140,16 @@
             app:layout_constraintLeft_toRightOf="@+id/ib_last_year"
             app:layout_constraintTop_toBottomOf="@+id/gl_v3" />
 
-        <ImageButton
+        <Button
+            android:layout_width="@dimen/px_68"
+            android:layout_height="@dimen/px_68"
+            android:id="@+id/btn_last_month"
+            android:background="@android:color/transparent"
+            app:layout_constraintRight_toRightOf="@+id/ib_last_month"
+            app:layout_constraintBottom_toTopOf="@+id/gl_v4"
+            app:layout_constraintTop_toBottomOf="@+id/gl_v3"/>
+
+        <ImageView
             android:id="@+id/ib_next_year"
             android:layout_width="@dimen/icon_size_of_year_or_month"
             android:layout_height="@dimen/icon_size_of_year_or_month"
@@ -141,12 +160,21 @@
             app:layout_constraintRight_toRightOf="@+id/gl_h2"
             app:layout_constraintTop_toBottomOf="@+id/gl_v3" />
 
-        <ImageButton
+        <Button
+            android:layout_width="@dimen/px_68"
+            android:layout_height="@dimen/px_68"
+            android:id="@+id/btn_next_month"
+            android:background="@android:color/transparent"
+            app:layout_constraintLeft_toLeftOf="@+id/ib_next_month"
+            app:layout_constraintBottom_toTopOf="@+id/gl_v4"
+            app:layout_constraintTop_toBottomOf="@+id/gl_v3"/>
+
+        <ImageView
             android:id="@+id/ib_next_month"
             android:layout_width="@dimen/icon_size_of_year_or_month"
             android:layout_height="@dimen/icon_size_of_year_or_month"
             android:layout_marginStart="@dimen/space_of_icon_of_year_with_month"
-            android:layout_marginEnd="@dimen/space_of_icon_of_year_with_month"
+            android:layout_marginEnd="@dimen/margin_30_px"
             android:background="@android:color/transparent"
             android:scaleType="fitEnd"
             android:src="@mipmap/ic_month_right_n"
@@ -154,13 +182,22 @@
             app:layout_constraintRight_toLeftOf="@+id/ib_next_year"
             app:layout_constraintTop_toBottomOf="@+id/gl_v3" />
 
+        <Button
+            android:layout_width="@dimen/px_68"
+            android:layout_height="@dimen/px_68"
+            android:id="@+id/btn_next_year"
+            android:background="@android:color/transparent"
+            app:layout_constraintLeft_toLeftOf="@+id/ib_next_year"
+            app:layout_constraintBottom_toTopOf="@+id/gl_v4"
+            app:layout_constraintTop_toBottomOf="@+id/gl_v3"/>
+
         <TextView
             android:id="@+id/tv_title_of_calendar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{@string/title_of_calendar(vm.titleOfYear,vm.titleOfMonth)}"
             android:textColor="@color/primary_of_font"
-            android:textSize="@dimen/font_size_of_title_of_calendar"
+            android:textSize="@dimen/px_40"
             app:layout_constraintBottom_toTopOf="@+id/gl_v4"
             app:layout_constraintLeft_toRightOf="@+id/ib_last_month"
             app:layout_constraintRight_toLeftOf="@+id/ib_next_month"
@@ -179,10 +216,10 @@
             android:id="@+id/cv_canvas_calendar"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:calendar_height="@dimen/px_80"
+            app:calendar_height="@dimen/px_88"
             app:current_day_text_color="@color/primary_of_font"
             app:current_month_text_color="@color/primary_of_font"
-            app:day_text_size="@dimen/px_28"
+            app:day_text_size="@dimen/font_size_day_of_list"
             app:layout_constraintBottom_toBottomOf="@+id/gl_v7"
             app:layout_constraintLeft_toLeftOf="@+id/gl_h1"
             app:layout_constraintRight_toRightOf="@+id/gl_h2"
@@ -192,9 +229,9 @@
             app:selected_text_color="@color/selector_color_calendar"
             app:selected_theme_color="@color/selector_color_calendar"
             app:week_background="@android:color/transparent"
-            app:week_bar_height="@dimen/px_80"
+            app:week_bar_height="@dimen/px_88"
             app:week_text_color="@color/primary_of_font"
-            app:week_text_size="@dimen/px_28"
+            app:week_text_size="@dimen/font_size_day_of_list"
             app:month_view_show_mode="mode_all"
             app:select_mode="single_mode"/>
 

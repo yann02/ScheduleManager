@@ -66,25 +66,25 @@ class SMMainFragment : BaseLifeCycleFragment<MainViewModel, FragmentSmmainBindin
             //  设置选择的日期为今天的日期
             setSelectorDateToTheToday()
         }
-        mDataBinding.ibLastYear.setOnClickListener {
+        mDataBinding.btnLastYear.setOnClickListener {
             //  上一年
             viewModelOfMainActivity.titleOfYear.value?.let {
                 mDataBinding.cvCanvasCalendar.monthViewPager.currentItem =
                     mDataBinding.cvCanvasCalendar.monthViewPager.currentItem - 12
             }
         }
-        mDataBinding.ibNextYear.setOnClickListener {
+        mDataBinding.btnNextYear.setOnClickListener {
             //  下一年
             viewModelOfMainActivity.titleOfYear.value?.let {
                 mDataBinding.cvCanvasCalendar.monthViewPager.currentItem =
                     mDataBinding.cvCanvasCalendar.monthViewPager.currentItem + 12
             }
         }
-        mDataBinding.ibLastMonth.setOnClickListener {
+        mDataBinding.btnLastMonth.setOnClickListener {
             //  上一月
             mDataBinding.cvCanvasCalendar.scrollToPre()
         }
-        mDataBinding.ibNextMonth.setOnClickListener {
+        mDataBinding.btnNextMonth.setOnClickListener {
             //  下一月
             mDataBinding.cvCanvasCalendar.scrollToNext()
         }
