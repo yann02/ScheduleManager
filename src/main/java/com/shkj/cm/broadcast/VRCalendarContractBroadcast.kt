@@ -17,6 +17,7 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.TextView
 import android.widget.Toast
+import com.dosmono.platecommon.util.PreferencesUtil
 import com.dosmono.platecommon.util.UIUtils
 import com.orhanobut.logger.Logger
 import com.shkj.cm.R
@@ -39,7 +40,8 @@ class VRCalendarContractBroadcast : BroadcastReceiver() {
             arrayOf(
                 CalendarContract.CalendarAlerts.TITLE,
                 CalendarContract.CalendarAlerts.DTSTART,
-                CalendarContract.CalendarAlerts.DTEND
+                CalendarContract.CalendarAlerts.DTEND,
+                CalendarContract.CalendarAlerts.DESCRIPTION
             ),
             selection,
             arrayOf(alertTime),
@@ -52,8 +54,15 @@ class VRCalendarContractBroadcast : BroadcastReceiver() {
                 val title = cursor.getString(cursor.getColumnIndex(CalendarContract.Events.TITLE))
                 val startTime = cursor.getString(cursor.getColumnIndex(CalendarContract.Events.DTSTART))
                 val endTime = cursor.getString(cursor.getColumnIndex(CalendarContract.Events.DTEND))
-                Log.d("dosmono", "time = $title,startTime = $startTime,endTime = $endTime")
-                showDialog(title)
+                val description = cursor.getString(cursor.getColumnIndex(CalendarContract.Events.DESCRIPTION))
+                Log.d("dosmono", "time = $title,startTime = $startTime,endTime = $endTime,description=$description")
+                val monoid = PreferencesUtil.getMonoid(UIUtils.getContext())?.monoid
+                if (!monoid.isNullOrEmpty()) {
+                    if (description.equals(monoid)){
+                        //  只对当前用户弹出提醒
+                        showDialog(title)
+                    }
+                }
             }
 
         } catch (e: Exception) {
@@ -61,6 +70,7 @@ class VRCalendarContractBroadcast : BroadcastReceiver() {
         }
 
     }
+
     private val ringtonePath = "/system/media/audio/alarms/Alarm_Classic.ogg"
     fun showDialog(msg: String) {
         val builder: AlertDialog.Builder = AlertDialog.Builder(UIUtils.getContext())

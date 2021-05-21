@@ -8,6 +8,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment.findNavController
 import com.shkj.cm.base.view.BaseLifeCycleActivity
 import com.shkj.cm.common.Constant
+import com.shkj.cm.common.calendar.CalendarProviderManager
 import com.shkj.cm.databinding.ActivitySmmainBinding
 import com.shkj.cm.widgets.NormalDialogByFragment
 import com.xuexiang.xui.XUI
@@ -23,6 +24,8 @@ class SMMainActivity : BaseLifeCycleActivity<MainViewModel, ActivitySmmainBindin
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
         actionBar?.hide()
         dispatch()
+        val accountId = CalendarProviderManager.obtainCalendarAccountID(this)
+        Log.d("wyy", "accountId:$accountId")
     }
 
     private fun setDecorViewVisible(isVisible: Boolean) {

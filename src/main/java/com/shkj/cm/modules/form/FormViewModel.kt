@@ -398,7 +398,7 @@ class FormViewModel : BaseViewModel<FormRepository>() {
                 context,
                 CalendarEvent(
                     title.value,
-                    title.value,
+                    monoId,
                     "Earth",
                     startTime.value!!.toLong(),
                     endTime.value!!.toLong(),

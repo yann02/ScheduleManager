@@ -143,7 +143,7 @@ class FormFragment : BaseLifeCycleFragment<FormViewModel, FragmentFormBinding>()
         }
 
         mDataBinding.tvTitle.setOnClickListener {
-            var eventId = SharedPreUtils.getLong(requireContext(), "tempEventId", 0L)
+            val eventId = SharedPreUtils.getLong(requireContext(), "tempEventId", 0L)
             CalendarProviderManager.startCalendarForIntentToEdit(requireContext(), eventId)
         }
 

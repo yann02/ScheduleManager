@@ -6,6 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.dosmono.platecommon.util.PreferencesUtil
 import com.dosmono.platecommon.util.UIUtils
 import com.shkj.cm.modules.list.entities.result.Data
 
@@ -44,7 +45,7 @@ abstract class AppDataBase : RoomDatabase() {
                         INSTANCE = Room.databaseBuilder(
                             context,
                             AppDataBase::class.java,
-                            UIUtils.getContext().packageName
+                            UIUtils.getContext().packageName + PreferencesUtil.getMonoid(UIUtils.getContext())?.monoid
                         )
                             .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4)
                             .build()
