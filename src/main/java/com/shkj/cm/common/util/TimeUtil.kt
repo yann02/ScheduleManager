@@ -161,7 +161,6 @@ object TimeUtil {
         calendar.set(year, month - 1, day, 0, 0, 0)
         val date = calendar.time
         val formDateString = DateUtils.date2String(date, DateUtils.yyyyMMddHHmmss.get())
-        Log.d("wyy", "formDateString:$formDateString")
         return DateUtils.string2Millis(formDateString, DateUtils.yyyyMMddHHmmss.get()).toString()
     }
 

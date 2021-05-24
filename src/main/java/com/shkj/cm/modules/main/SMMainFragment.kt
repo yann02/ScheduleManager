@@ -300,7 +300,6 @@ class SMMainFragment : BaseLifeCycleFragment<MainViewModel, FragmentSmmainBindin
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        Log.d("wyy", "onActivityResult")
         viewModelOfMainActivity.monoId.postValue(PreferencesUtil.getMonoid(UIUtils.getContext())?.monoid)
     }
 }

@@ -82,16 +82,6 @@ public class CalendarProviderManager {
             // 存在日历账户，获取第一个账户的ID
             if (count > 0) {
                 cursor.moveToFirst();
-                String zero = cursor.getString(0);
-                String one = cursor.getString(1);
-                String two = cursor.getString(2);
-                String three = cursor.getString(3);
-                String four = cursor.getString(4);
-                Log.d("wyy", "zero:" + zero);
-                Log.d("wyy", "one:" + one);
-                Log.d("wyy", "two:" + two);
-                Log.d("wyy", "three:" + three);
-                Log.d("wyy", "four:" + four);
                 return cursor.getInt(cursor.getColumnIndex(CalendarContract.Calendars._ID));
             } else {
                 return -1;

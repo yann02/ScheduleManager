@@ -1,41 +1,28 @@
 package com.shkj.cm.broadcast
 
-import android.app.AlarmManager
 import android.app.AlertDialog
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.media.MediaPlayer
-import android.media.RingtoneManager
 import android.os.Build
-import android.provider.AlarmClock
 import android.provider.CalendarContract
-import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.TextView
-import android.widget.Toast
 import com.dosmono.platecommon.util.PreferencesUtil
 import com.dosmono.platecommon.util.UIUtils
-import com.orhanobut.logger.Logger
 import com.shkj.cm.R
-import com.xuexiang.xutil.tip.ToastUtils
-import java.lang.Exception
 
 
 class VRCalendarContractBroadcast : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
-//        ToastUtils.toast(
-//            "接收到" +
-//                    "事件！", Toast.LENGTH_LONG
-//        )
-        Log.d("dosmono", "接收到事件！")
         val uri = intent.data!!
         val alertTime = uri.lastPathSegment!!
         val selection = CalendarContract.CalendarAlerts.ALARM_TIME + "=?"
-        val cursor = context.contentResolver.query(
+        context.contentResolver.query(
             CalendarContract.CalendarAlerts.CONTENT_URI_BY_INSTANCE,
             arrayOf(
                 CalendarContract.CalendarAlerts.TITLE,
@@ -46,29 +33,27 @@ class VRCalendarContractBroadcast : BroadcastReceiver() {
             selection,
             arrayOf(alertTime),
             null
-        )
-
-        try {
+        ).use { cursor ->
             cursor?.apply {
                 moveToFirst()
-                val title = cursor.getString(cursor.getColumnIndex(CalendarContract.Events.TITLE))
-                val startTime = cursor.getString(cursor.getColumnIndex(CalendarContract.Events.DTSTART))
-                val endTime = cursor.getString(cursor.getColumnIndex(CalendarContract.Events.DTEND))
-                val description = cursor.getString(cursor.getColumnIndex(CalendarContract.Events.DESCRIPTION))
-                Log.d("dosmono", "time = $title,startTime = $startTime,endTime = $endTime,description=$description")
-                val monoid = PreferencesUtil.getMonoid(UIUtils.getContext())?.monoid
-                if (!monoid.isNullOrEmpty()) {
-                    if (description.equals(monoid)){
-                        //  只对当前用户弹出提醒
-                        showDialog(title)
+                for (i in 1..count) {
+                    val title = getString(getColumnIndex(CalendarContract.Events.TITLE))
+//                    val startTime = getString(getColumnIndex(CalendarContract.Events.DTSTART))
+//                    val endTime = getString(getColumnIndex(CalendarContract.Events.DTEND))
+                    val description = getString(getColumnIndex(CalendarContract.Events.DESCRIPTION))
+                    val monoid = PreferencesUtil.getMonoid(UIUtils.getContext())?.monoid
+                    if (!monoid.isNullOrEmpty()) {
+                        if (description.equals(monoid)) {
+                            //  只对当前用户弹出提醒
+                            showDialog(title)
+                        }
+                    }
+                    if (i < count) {
+                        moveToNext()
                     }
                 }
             }
-
-        } catch (e: Exception) {
-            e.printStackTrace()
         }
-
     }
 
     private val ringtonePath = "/system/media/audio/alarms/Alarm_Classic.ogg"
